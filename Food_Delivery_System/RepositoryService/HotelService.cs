@@ -76,35 +76,44 @@ namespace Food_Delivery.RepositoryService
             try
             {
                var hotel=db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail.HotelId);
-               //var hotelnumber=db.Hotel.FirstOrDefault(x=>x.ContactNumber==hotelDetail.ContactNumber);
-               if(hotel != null )
+               if(hotel != null)
                 {
-                    if(hotel != null)
+
+                    var hotelEmail = db.Hotel.Where(x => x.Email == hotelDetail.Email).ToList();
+                    var hotelContactnum = db.Hotel.Where(x => x.ContactNumber == hotelDetail.ContactNumber).ToList();
+                    if (hotelEmail!=null)
                     {
-                        hotel.HotelId = hotelDetail.HotelId;
-                        hotel.ContactNumber = hotelDetail.ContactNumber;
-                        //hotel.Location = hotelDetail.Location;
-                        hotel.HotelName = hotelDetail.HotelName;
-                        hotel.CreatedOn = hotelDetail.CreatedOn;
-                        hotel.IsActive = hotelDetail.IsActive;
-                        db.Update(hotel);
-                        db.SaveChanges();
+                        msg.Success = false;
+                        msg.Message = "This Email Id Already taked";
+                        return msg;
+                    }
+                    else if(hotelContactnum != null)
+                    {
+                        msg.Success = false;
+                        msg.Message = "This Contact Number Already taked";
+                        return msg;
                     }
                     else
                     {
-                        msg.Message = "The Mobile Number Already Registered";
+                        hotel.Email = hotelDetail.Email;
+                        hotel.Type = hotelDetail.Type;
+                        hotel.ContactNumber = hotelDetail.ContactNumber;
+                        hotel.Address = hotelDetail.Address;
+                        hotel.HotelName = hotelDetail.HotelName;
+                        hotel.IsActive = hotelDetail.IsActive;
+                        db.Update(hotel);
+                        db.SaveChanges();
                         msg.Success = true;
+                        msg.Message = "The hotel updated succesfully";
+                        return msg;
                     }
-                    
-                    msg.Message = "The hotel updated succesfully";
-                    msg.Success=true;
-                    
                 }
                 else
                 {
                     msg.Message = "The hotel Id Not Registered";
                     msg.Success = false;
                 }
+               return msg;
             }
             catch(Exception ex)
             {
@@ -146,6 +155,26 @@ namespace Food_Delivery.RepositoryService
             return msg ;
         }
 
+
+        public IEnumerable<Hotel>  GetHotelType(string hoteltype)
+        {
+
+           var  hotelType = db.Hotel.Where(x=>x.Type==hoteltype).ToList();
+           return hotelType;
+           
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         //public IEnumerable<LFoodDetail> GetFoodDetail(int hotelId)
         //{
 
@@ -170,14 +199,14 @@ namespace Food_Delivery.RepositoryService
         //    var result = (from Role in db.Role
         //                  join Hotel in db.Hotel on Role.RoleId equals Hotel.RoleId
         //                  where Hotel.ContactNumber == contactNumber && Hotel.Password == password
-                       
+
         //                  select new LoginDto()
         //                  {
         //                      Password = Hotel.Password,
         //                      ContactNumber = Hotel.ContactNumber,
         //                      RoleId = Hotel.RoleId,
         //                      HotelId = Hotel.HotelId,
-                              
+
         //                      RoleNmae = Role.RoleName
         //                  }).FirstOrDefault();
         //    return result;

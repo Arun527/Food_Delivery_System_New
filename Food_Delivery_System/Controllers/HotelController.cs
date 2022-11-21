@@ -68,5 +68,13 @@ namespace Food_Delivery.Controllers
             var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
             return hotel;
         }
+
+        [HttpGet("GetType/{hoteltype}")]
+
+        public IEnumerable<Hotel> GetHotelType(string hoteltype)
+        {
+            var hotel = _hotel.GetHotelType(hoteltype);
+            return hotel;
+        }
     }
 }

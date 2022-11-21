@@ -63,9 +63,6 @@ namespace Food_Delivery.RepositoryService
                     msg.Message = "The Food Type Inserted Succesfully";
                     msg.Success = true;
 
-              
-                
-
             }
             catch (Exception ex)
             {
@@ -137,6 +134,13 @@ namespace Food_Delivery.RepositoryService
             return msg;
         }
 
+        public IEnumerable<Food> GetFoodType(string foodtype)
+        {
+
+            var foodType = db.Food.Where(x => x.Type == foodtype).ToList();
+            return foodType;
+
+        }
 
         //public IEnumerable<FoodDto> GetAllFood()
         //{

@@ -62,5 +62,13 @@ namespace Food_Delivery.Controllers
             return hotel;
         }
 
+        [HttpGet("GetType/{Foodtype}")]
+
+        public IEnumerable<Food> GetHotelType(string foodtype)
+        {
+            var foodType = _food.GetFoodType(foodtype);
+            return foodType;
+        }
+
     }
 }
