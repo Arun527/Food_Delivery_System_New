@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliverySystem.Migrations
 {
     [DbContext(typeof(FoodDeliveryDbContext))]
-    [Migration("20221118114118_Initial")]
-    partial class Initial
+    [Migration("20221121052722_add-name")]
+    partial class addname
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,6 +85,10 @@ namespace FoodDeliverySystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeliveryPersonName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -187,10 +191,6 @@ namespace FoodDeliverySystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
@@ -237,7 +237,7 @@ namespace FoodDeliverySystem.Migrations
                     b.Property<int>("OrderDetailId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TrackingStatus")
+                    b.Property<string>("ShipmentStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderShipmentDetailId");
