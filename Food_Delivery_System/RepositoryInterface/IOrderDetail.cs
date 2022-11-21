@@ -6,7 +6,7 @@ namespace Food_Delivery.RepositoryInterface
     {
         public IEnumerable<OrderDetail> GetAll();
         public OrderDetail GetOrderDetail(int orderDetailId);
-       public Messages InsertOrderDetail(OrderRequest orderDetail);
+        public Messages InsertOrderDetail(OrderRequest orderDetail);
         public Messages UpdateOrderDetail(OrderDetail orderDetail);
         public Messages DeleteOrderDetail(int orderDetailId);
 

@@ -47,7 +47,7 @@ namespace Food_Delivery.RepositoryService
                 }
                 db.SaveChanges();
                 msg.Success = true;
-                msg.Message = "The order Added Succesfully";
+                msg.Message = "Your Order Is Placed!!";
                 return msg;
 
             }

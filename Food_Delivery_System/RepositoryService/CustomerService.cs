@@ -1,6 +1,7 @@
 ﻿
 using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using ServiceStack.Messaging;
 
 namespace Food_Delivery.RepositoryService
@@ -23,8 +24,30 @@ namespace Food_Delivery.RepositoryService
 
         public Customer GetCustomerDetail(int customerId)
         {
-            var getId = db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
-            return getId;
+           
+            try
+            {
+
+                var getId = db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
+                if (getId != null)
+                {
+                    return getId;
+                }
+                else
+                {
+                    throw new Exception("This id not Registered");
+                }
+                
+                
+
+            }
+              
+            catch(Exception)
+            {
+                throw;
+            }
+         
+            
         }
 
 
@@ -40,13 +63,14 @@ namespace Food_Delivery.RepositoryService
                 {
 
                     msg.Success = false;
-                    msg.Message = "This Customer Already Exists";
-
+                    msg.Message = "This Contact Number Already Exists";
+                    return msg;
                 }
                 if (customerEmail != null)
                 {
                     msg.Success = false;
                     msg.Message = "This EmailId Already Exists";
+                    
                 }
                 else
                 {
@@ -54,7 +78,7 @@ namespace Food_Delivery.RepositoryService
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "This  Customer Added Succesfully";
-                    return msg;
+                   
                 }
                 return msg;
             }
@@ -78,10 +102,9 @@ namespace Food_Delivery.RepositoryService
                 {
                     updateCustomer.Name = customer.Name;
                     updateCustomer.Email = customer.Email;
-              
                     updateCustomer.Gender = customer.Gender;
                     updateCustomer.Address = customer.Address;
-
+                    updateCustomer.ContactNumber=customer.ContactNumber;
                     db.Update(updateCustomer);
                     db.SaveChanges();
                     msg.Success = true;
@@ -96,8 +119,6 @@ namespace Food_Delivery.RepositoryService
                 return msg;
             }
         }
-
-
         public Messages DeleteCustomerDetail(int customerId)
         {
             Messages msg = new Messages();
@@ -108,6 +129,11 @@ namespace Food_Delivery.RepositoryService
                 db.SaveChanges();
                 msg.Success = true;
                 msg.Message = "Customer Deleted Succesfully";
+            }
+            else
+            {
+                msg.Success = false;
+                msg.Message = "This Customer Id Not Registered";
             }
             return msg;
         }

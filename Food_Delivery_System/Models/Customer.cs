@@ -12,8 +12,6 @@ namespace Food_Delivery.Models
     {
         [Key]
         public int CustomerId { get; set; }
-      
-     
         public string Name { get; set; }
         public string ContactNumber { get; set; }
         public string? Gender { get; set; }

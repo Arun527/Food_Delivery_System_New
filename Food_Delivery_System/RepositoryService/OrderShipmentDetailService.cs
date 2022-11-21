@@ -51,7 +51,7 @@ namespace Food_Delivery.RepositoryService
                     db.Add(orderShipment);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = " OrderShipmentDetail Added Succesfully";
+                    msg.Message = " Your Order Is Out Of Delivery!!";
                     return msg;
                 }
                 return msg;

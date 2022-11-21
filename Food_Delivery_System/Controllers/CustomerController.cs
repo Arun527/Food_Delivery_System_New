@@ -47,7 +47,7 @@ namespace Food_Delivery.Controllers
         }
 
 
-        [HttpDelete("/api/Customer/Delete/{id}")]
+        [HttpDelete("/api/Customer/Delete/{customerId}")]
         public Messages DeleteCustomerDetail(int customerId)
         {
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
