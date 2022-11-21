@@ -10,7 +10,7 @@ namespace Food_Delivery.RepositoryInterface
         public Messages InsertOrderShipmentDetail(OrderShipmentDetail orderShipment);
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment);
         public Messages DeleteOrderShipmentDetail(int orderShipmentId);
-        public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId);
-        public IEnumerable<InvoiceDetail> GetAllInvoiceDetail();
+        //public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId);
+        //public IEnumerable<InvoiceDetail> GetAllInvoiceDetail();
     }
 }

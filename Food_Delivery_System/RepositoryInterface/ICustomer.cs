@@ -14,6 +14,6 @@ namespace Food_Delivery.RepositoryInterface
         public Messages DeleteCustomerDetail(int customerId);
 
    
-        public LoginDto loginbyid(string contactNumber, string password); 
+     
     }
 }

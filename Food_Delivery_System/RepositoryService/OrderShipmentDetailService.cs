@@ -133,7 +133,7 @@ namespace Food_Delivery.RepositoryService
                                     OrderId = orderDetail.OrderId,
                                     CustomerName = customer.Name,
                                     FoodName = food.FoodName,
-                                    Orderdate = order.Orderdate,
+                                    //Orderdate = order.Orderdate,
                                     Price = food.Price,
                                     Quantity = orderDetail.Quantity,
                                     TotalPrice = food.Price * orderDetail.Quantity
@@ -155,7 +155,7 @@ namespace Food_Delivery.RepositoryService
                                     OrderId = orderDetail.OrderId,
                                     CustomerName = customer.Name,
                                     FoodName = food.FoodName,
-                                    Orderdate = order.Orderdate,
+                                  //  Orderdate = order.Orderdate,
                                     Price = food.Price,
                                     Quantity = orderDetail.Quantity,
                                     TotalPrice = food.Price * orderDetail.Quantity

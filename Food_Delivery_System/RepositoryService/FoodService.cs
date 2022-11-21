@@ -138,48 +138,48 @@ namespace Food_Delivery.RepositoryService
         }
 
 
-        public IEnumerable<FoodDto> GetAllFood()
-        {
+        //public IEnumerable<FoodDto> GetAllFood()
+        //{
 
-            {
-                var employeeleave = (from food in db.Food
-                                     join hotel in db.Hotel on food.HotelId equals hotel.HotelId
-                                       select new FoodDto
-                                     {
-                                         FoodId = food.FoodId,
-                                         FoodName=food.FoodName,
-                                         HotelId = hotel.HotelId,
-                                         HotelName=hotel.HotelName,
-                                         Price=food.Price,
-                                         Iamgepath=food.Iamgepath,
-                                         Location=hotel.Location,
+        //    {
+        //        var employeeleave = (from food in db.Food
+        //                             join hotel in db.Hotel on food.HotelId equals hotel.HotelId
+        //                               select new FoodDto
+        //                             {
+        //                                 FoodId = food.FoodId,
+        //                                 FoodName=food.FoodName,
+        //                                 HotelId = hotel.HotelId,
+        //                                 HotelName=hotel.HotelName,
+        //                                 Price=food.Price,
+        //                                 Iamgepath=food.Iamgepath,
+        //                                 Location=hotel.Location,
 
-                                     }).ToList();
-                return employeeleave;
-            }
-        }
-
-
+        //                             }).ToList();
+        //        return employeeleave;
+        //    }
+        //}
 
 
 
-        public IEnumerable<FoodDto> GetFoodByHotelId(int hotelId)
-        {
 
-            {
-                var employeeleave = (from food in db.Food
-                                     join hotel in db.Hotel on food.HotelId equals hotel.HotelId
-                                     where hotel.HotelId == hotelId
-                                     select new FoodDto
-                                     {
-                                         FoodName = food.FoodName,
-                                         HotelName = hotel.HotelName,
-                                         Price = food.Price,
-                                         Iamgepath = food.Iamgepath,
-                                     }).ToList();
-                return employeeleave;
-            }
-        }
+
+        //public IEnumerable<FoodDto> GetFoodByHotelId(int hotelId)
+        //{
+
+        //    {
+        //        var employeeleave = (from food in db.Food
+        //                             join hotel in db.Hotel on food.HotelId equals hotel.HotelId
+        //                             where hotel.HotelId == hotelId
+        //                             select new FoodDto
+        //                             {
+        //                                 FoodName = food.FoodName,
+        //                                 HotelName = hotel.HotelName,
+        //                                 Price = food.Price,
+        //                                 Iamgepath = food.Iamgepath,
+        //                             }).ToList();
+        //        return employeeleave;
+        //    }
+        //}
 
 
 

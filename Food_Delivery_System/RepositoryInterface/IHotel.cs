@@ -14,9 +14,9 @@ namespace Food_Delivery.RepositoryInterface
         public Messages UpdateHotelDetail (Hotel hotelDetail);
 
         public Messages DeleteHotelDetail(int hotelDetailId);
-        public IEnumerable<LFoodDetail> GetFoodDetail(int id);
+        //public IEnumerable<LFoodDetail> GetFoodDetail(int id);
     
-        public LoginDto loginbyid(string contactNumber, string password);
+        //public LoginDto loginbyid(string contactNumber, string password);
 
     }
 }

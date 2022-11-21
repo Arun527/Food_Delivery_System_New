@@ -78,7 +78,7 @@ namespace Food_Delivery.RepositoryService
                 {
                     updateCustomer.Name = customer.Name;
                     updateCustomer.Email = customer.Email;
-                    updateCustomer.Password = customer.Password;
+              
                     updateCustomer.Gender = customer.Gender;
                     updateCustomer.Address = customer.Address;
 
@@ -112,25 +112,25 @@ namespace Food_Delivery.RepositoryService
             return msg;
         }
 
-        public LoginDto loginbyid(string contactNumber, string password)
-        {
-            var result = (from Role in db.Role
-                          join Customer in db.Customer on Role.RoleId equals Customer.RoleId
+        //public LoginDto loginbyid(string contactNumber, string password)
+        //{
+        //    var result = (from Role in db.Role
+        //                  join Customer in db.Customer on Role.RoleId equals Customer.RoleId
                         
                          
-                          where Customer.ContactNumber == contactNumber && Customer.Password == password
+        //                  where Customer.ContactNumber == contactNumber && Customer.Password == password
                         
-                            select new LoginDto()
-                            {
-                             Password = Customer.Password,
-                             ContactNumber=Customer.ContactNumber,
-                             RoleId=Role.RoleId,
-                             CustomerId=Customer.CustomerId,
-                             Gender=Customer.Gender,
-                             RoleNmae=Role.RoleName
-                            }).FirstOrDefault();
-            return result;
-            }
+        //                    select new LoginDto()
+        //                    {
+        //                     Password = Customer.Password,
+        //                     ContactNumber=Customer.ContactNumber,
+        //                     RoleId=Role.RoleId,
+        //                     CustomerId=Customer.CustomerId,
+        //                     Gender=Customer.Gender,
+        //                     RoleNmae=Role.RoleName
+        //                    }).FirstOrDefault();
+        //    return result;
+        //    }
 
     }
 

@@ -92,23 +92,23 @@ namespace Food_Delivery.RepositoryService
             return msg;
         }
 
-        public LoginDto loginbyid(string contactNumber, string password)
-        {
-            var result = (from Role in db.Role
+        //public LoginDto loginbyid(string contactNumber, string password)
+        //{
+        //    var result = (from Role in db.Role
                         
-                          join DeliveryPerson in db.DeliveryPerson on Role.RoleId equals DeliveryPerson.RoleId
-                          where DeliveryPerson.ContactNumber == contactNumber && DeliveryPerson.Password == password
-                          select new LoginDto()
-                          {
-                              Password = DeliveryPerson.Password,
-                              ContactNumber = DeliveryPerson.ContactNumber,
-                              RoleId = Role.RoleId,
+        //                  join DeliveryPerson in db.DeliveryPerson on Role.RoleId equals DeliveryPerson.RoleId
+        //                  where DeliveryPerson.ContactNumber == contactNumber && DeliveryPerson.Password == password
+        //                  select new LoginDto()
+        //                  {
+        //                      Password = DeliveryPerson.Password,
+        //                      ContactNumber = DeliveryPerson.ContactNumber,
+        //                      RoleId = Role.RoleId,
                             
                            
-                              RoleNmae = Role.RoleName
-                          }).FirstOrDefault();
-            return result;
-        }
+        //                      RoleNmae = Role.RoleName
+        //                  }).FirstOrDefault();
+        //    return result;
+        //}
 
     }
 }

@@ -64,18 +64,18 @@ namespace Food_Delivery.Controllers
             return deleteOrderShipment;
         }
 
-        [HttpGet("/api/OrderShipmentDetail/Invoice/{CustomerId}")]
-        public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
-        {
-            return _orderShipmentDetail.GetCustomerOrderDetailsById(CustomerId);
-        }
+        //[HttpGet("/api/OrderShipmentDetail/Invoice/{CustomerId}")]
+        //public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
+        //{
+        //    return _orderShipmentDetail.GetCustomerOrderDetailsById(CustomerId);
+        //}
 
 
-        [HttpGet("/api/OrderShipmentDetail/Invoice/Getall")]
-        public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
-        {
-            return _orderShipmentDetail.GetAllInvoiceDetail();
-        }
+        //[HttpGet("/api/OrderShipmentDetail/Invoice/Getall")]
+        //public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
+        //{
+        //    return _orderShipmentDetail.GetAllInvoiceDetail();
+        //}
 
     }
 }
