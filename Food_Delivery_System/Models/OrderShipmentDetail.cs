@@ -17,7 +17,7 @@ namespace Food_Delivery.Models
         [ForeignKey("OrderDetailId")]
         public OrderDetail? OrderDetail { get; set; }
 
-        public string? ShipmentStatus { get; set; }
+        public string? TrackingStatus { get; set; } = "Out Of Delivery";
 
 
     }

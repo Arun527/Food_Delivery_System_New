@@ -31,7 +31,8 @@ namespace Food_Delivery.RepositoryService
                 Orders order = new Orders();
                 order.CustomerId = orderDetail.CustomerId;
                 db.orders.Add(order);
-                var orderid = orderDetail.OrderId;
+                db.SaveChanges();
+                var orderid = order.OrderId;
 
                 foreach (var FoodType in orderDetail.Food)
                 {
@@ -40,7 +41,9 @@ namespace Food_Delivery.RepositoryService
                         CustomerId = orderDetail.CustomerId,
                         OrderId = orderid,
                         Quantity = FoodType.Quantity,
+                        HotelId = FoodType.HotelId,
                         FoodId = FoodType.FoodId,
+                        OrderStatus=orderDetail.OrderStatus
 
                     };
                     db.Add(foodtype);
