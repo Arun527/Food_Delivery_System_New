@@ -1,5 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +44,7 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpPost("/api/OrderShipmentDetail/Add")]
-        public Messages InsertOrderShipmentDetail(OrderShipmentDetail orderShipment)
+        public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
             return orderShipmentDetail;

@@ -100,15 +100,18 @@ namespace Food_Delivery.RepositoryService
                 var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
                 if (updateCustomer != null)
                 {
-                    updateCustomer.Name = customer.Name;
-                    updateCustomer.Email = customer.Email;
-                    updateCustomer.Gender = customer.Gender;
-                    updateCustomer.Address = customer.Address;
-                    updateCustomer.ContactNumber=customer.ContactNumber;
-                    db.Update(updateCustomer);
-                    db.SaveChanges();
-                    msg.Success = true;
-                    msg.Message = "Customer Updated Succesfully!!";
+                   
+                        updateCustomer.Name = customer.Name;
+                        updateCustomer.Email = customer.Email;
+                        updateCustomer.Gender = customer.Gender;
+                        updateCustomer.Address = customer.Address;
+                        updateCustomer.ContactNumber = customer.ContactNumber;
+                        db.Update(updateCustomer);
+                        db.SaveChanges();
+                        msg.Success = true;
+                        msg.Message = "Customer Updated Succesfully!!";
+                    
+                  
                 }
                 return msg;
             }
@@ -142,10 +145,10 @@ namespace Food_Delivery.RepositoryService
         //{
         //    var result = (from Role in db.Role
         //                  join Customer in db.Customer on Role.RoleId equals Customer.RoleId
-                        
-                         
+
+
         //                  where Customer.ContactNumber == contactNumber && Customer.Password == password
-                        
+
         //                    select new LoginDto()
         //                    {
         //                     Password = Customer.Password,
@@ -157,6 +160,21 @@ namespace Food_Delivery.RepositoryService
         //                    }).FirstOrDefault();
         //    return result;
         //    }
+
+
+        public Customer  GetNumber(string Number)
+        {
+           
+
+
+            var custbfomer = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
+           
+               
+            return custbfomer;
+
+        }
+
+
 
     }
 

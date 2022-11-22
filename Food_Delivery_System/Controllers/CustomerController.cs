@@ -1,7 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
-using ServiceStack.Messaging;
 
 namespace Food_Delivery.Controllers
 {
@@ -10,7 +9,6 @@ namespace Food_Delivery.Controllers
     public class CustomerController : Controller
     {
         ICustomer _customer;
-
         public CustomerController(ICustomer customer)
         {
             _customer = customer;
@@ -42,8 +40,18 @@ namespace Food_Delivery.Controllers
         [HttpPut("/api/Customer/Update")]
         public Messages UpdateCustomerDetail([FromBody] Customer customer)
         {
-            var updateCustomer = _customer.UpdateCustomerDetail(customer);
-            return updateCustomer;
+            Messages messages = new Messages();
+            var check = _customer.Equals(customer.ContactNumber);
+            if (check )
+            {
+                var updateCustomer = _customer.UpdateCustomerDetail(customer);
+                return updateCustomer;  
+            }
+            else
+            {
+                messages.Message = "Mobile number already taked";
+            }
+            return messages;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -28,39 +29,28 @@ namespace Food_Delivery.RepositoryService
             return getId;
         }
 
-        public Messages InsertOrderShipmentDetail(OrderShipmentDetail orderShipment)
+        public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages msg = new Messages();
-            try
+           
+            foreach(var request in orderShipment.ShipmentRequest)
             {
-                var deliveryPersonId = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == orderShipment.DeliveryPersonId);
-                var orderDetailId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderShipment.OrderDetailId);
 
-                if (deliveryPersonId == null)
+                var shipment = new OrderShipmentDetail()
                 {
-                    msg.Success = false;
-                    msg.Message = "This DeliveryPersonId id not registered";
-                }
-                else if (orderDetailId == null)
-                {
-                    msg.Success = false;
-                    msg.Message = "This orderDetailId id not registered";
-                }
-                else
-                {
-                    db.Add(orderShipment);
-                    db.SaveChanges();
-                    msg.Success = true;
-                    msg.Message = " Your Order Is Out Of Delivery!!";
-                    return msg;
-                }
-                return msg;
+                    DeliveryPersonId=orderShipment.DeliveryPersonId,
+                    OrderDetailId = request.OrderDetailId
+                };
+
+                 db.Add(shipment);
             }
-            catch (Exception ex)
-            {
-                msg.Message = ex.Message;
+
+                db.SaveChanges();
+                msg.Success = true;
+                msg.Message = " Your Order Is Out Of Delivery!!";
                 return msg;
-            }
+           
+            
         }
 
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment)

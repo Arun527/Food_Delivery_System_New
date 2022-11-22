@@ -13,7 +13,8 @@ namespace Food_Delivery.RepositoryInterface
 
         public Messages DeleteCustomerDetail(int customerId);
 
-   
-     
+        public Customer GetNumber(string Number);
+
+
     }
 }
