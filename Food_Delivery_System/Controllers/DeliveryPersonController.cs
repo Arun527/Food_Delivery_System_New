@@ -37,10 +37,10 @@ namespace Food_Delivery.Controllers
 
 
         [HttpPost("/api/DeliveryPerson/Add")]
-        public Messages InsertDeliveryPerson(DeliveryPerson deliveryPerson)
+        public IActionResult InsertDeliveryPerson(DeliveryPerson deliveryPerson)
         {
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
-            return insertDeliveryPerson;
+            return Ok(insertDeliveryPerson);
         }
 
         [HttpPut("/api/DeliveryPerson/Update")]

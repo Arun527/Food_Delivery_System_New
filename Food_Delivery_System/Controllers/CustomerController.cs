@@ -20,46 +20,42 @@ namespace Food_Delivery.Controllers
             var obj = _customer.GetAll();
             return Ok(obj);
         }
-
+         
 
         [HttpGet("/api/Customer/Get/{customerId}")]
         public IActionResult GetCustomerDetail(int customerId)
         {
             var obj = _customer.GetCustomerDetail(customerId);
+            if(obj == null)
+            {
+                return NotFound();
+            }
             return Ok(obj);
         }
 
 
         [HttpPost("/api/Customer/Add")]
-        public Messages InsertCustomerDetail(Customer customer)
+        public IActionResult InsertCustomerDetail(Customer customer)
         {
             var insertCustomer = _customer.InsertCustomerDetail(customer);
-            return insertCustomer;
+            return Ok(insertCustomer);
         }
 
         [HttpPut("/api/Customer/Update")]
-        public Messages UpdateCustomerDetail([FromBody] Customer customer)
+        public IActionResult UpdateCustomerDetail([FromBody] Customer customer)
         {
-            Messages messages = new Messages();
-            var check = _customer.Equals(customer.ContactNumber);
-            if (check )
-            {
+                
                 var updateCustomer = _customer.UpdateCustomerDetail(customer);
-                return updateCustomer;  
-            }
-            else
-            {
-                messages.Message = "Mobile number already taked";
-            }
-            return messages;
+                return Ok(updateCustomer);  
+                
         }
 
 
         [HttpDelete("/api/Customer/Delete/{customerId}")]
-        public Messages DeleteCustomerDetail(int customerId)
+        public IActionResult DeleteCustomerDetail(int customerId)
         {
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
-            return deleteCustomer;
+            return Ok(deleteCustomer);
         }
 
     }

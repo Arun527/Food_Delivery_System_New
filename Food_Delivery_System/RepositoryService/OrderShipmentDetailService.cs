@@ -7,6 +7,8 @@ namespace Food_Delivery.RepositoryService
     public class OrderShipmentDetailService : IOrderShipmentDetail
     {
         private readonly FoodDeliveryDbContext db;
+
+
         public OrderShipmentDetailService(FoodDeliveryDbContext foodDeliveryDbContext)
         {
             this.db = foodDeliveryDbContext;
@@ -32,10 +34,8 @@ namespace Food_Delivery.RepositoryService
         public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages msg = new Messages();
-           
             foreach(var request in orderShipment.ShipmentRequest)
             {
-
                 var shipment = new OrderShipmentDetail()
                 {
                     DeliveryPersonId=orderShipment.DeliveryPersonId,
@@ -44,13 +44,10 @@ namespace Food_Delivery.RepositoryService
 
                  db.Add(shipment);
             }
-
                 db.SaveChanges();
                 msg.Success = true;
                 msg.Message = " Your Order Is Out Of Delivery!!";
                 return msg;
-           
-            
         }
 
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment)
@@ -76,7 +73,6 @@ namespace Food_Delivery.RepositoryService
                 {
                     orderShipmentId.DeliveryPersonId = orderShipment.DeliveryPersonId;
                     orderShipmentId.OrderDetailId = orderShipment.OrderDetailId;
-
                     db.Update(orderShipment);
                     db.SaveChanges();
                     msg.Success = true;
@@ -109,48 +105,53 @@ namespace Food_Delivery.RepositoryService
         }
 
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
-        {
-
-            // var foodId=db.OrderDetail.FirstOrDefault(x => x.FoodId == );
-            var orderDetails = (from orderDetail in db.OrderDetail
-                                join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
-                                join food in db.Food on orderDetail.FoodId equals food.FoodId
-                                join order in db.orders on orderDetail.OrderId equals order.OrderId
-                                where orderDetail.CustomerId == customer.CustomerId
-                                select new InvoiceDetail
-                                {
-                                    InvoiceNumber = orderDetail.OrderDetailId,
-                                    OrderId = orderDetail.OrderId,
-                                    CustomerName = customer.Name,
-                                    FoodName = food.FoodName,
-                                    //Orderdate = order.Orderdate,
-                                    Price = food.Price,
-                                    Quantity = orderDetail.Quantity,
-                                    TotalPrice = food.Price * orderDetail.Quantity
-                                }).ToList();
-            return orderDetails;
+        { 
+                    var orderDetails = (from orderDetail in db.OrderDetail
+                                        join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
+                                        join food in db.Food on orderDetail.FoodId equals food.FoodId
+                                        join order in db.orders on orderDetail.OrderId equals order.OrderId
+                                        where orderDetail.CustomerId == CustomerId
+                                        select new InvoiceDetail
+                                        {
+                                            InvoiceNumber = orderDetail.OrderDetailId,
+                                            OrderId = orderDetail.OrderId,
+                                            CustomerName = customer.Name,
+                                            FoodName = food.FoodName,
+                                            Orderdate = order.OrderdateTime,
+                                            Price = food.Price,
+                                            Quantity = orderDetail.Quantity,
+                                            TotalPrice = food.Price * orderDetail.Quantity
+                                        }).ToList();
+                    return orderDetails;
         }
 
         public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
         {
-            // var foodId = db.OrderDetail.FirstOrDefault(x => x.FoodId == orderShipment.FoodId);
-
-            var orderDetails = (from orderDetail in db.OrderDetail
-                                join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
-                                join food in db.Food on orderDetail.FoodId equals food.FoodId
-                                join order in db.orders on orderDetail.OrderId equals order.OrderId
-                                select new InvoiceDetail
-                                {
-                                    InvoiceNumber = orderDetail.OrderDetailId,
-                                    OrderId = orderDetail.OrderId,
-                                    CustomerName = customer.Name,
-                                    FoodName = food.FoodName,
-                                  //  Orderdate = order.Orderdate,
-                                    Price = food.Price,
-                                    Quantity = orderDetail.Quantity,
-                                    TotalPrice = food.Price * orderDetail.Quantity
-                                }).ToList();
-            return orderDetails;
+            try
+            {
+                
+                var orderDetails = (from orderDetail in db.OrderDetail
+                                    join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
+                                    join food in db.Food on orderDetail.FoodId equals food.FoodId
+                                    join order in db.orders on orderDetail.OrderId equals order.OrderId
+                                    select new InvoiceDetail
+                                    {
+                                        InvoiceNumber = orderDetail.OrderDetailId,
+                                        OrderId = orderDetail.OrderId,
+                                        CustomerName = customer.Name,
+                                        FoodName = food.FoodName,
+                                        Orderdate = order.OrderdateTime,
+                                        Price = food.Price,
+                                        Quantity = orderDetail.Quantity,
+                                        TotalPrice = food.Price * orderDetail.Quantity
+                                    }).ToList();
+                return orderDetails;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+           
 
         }
 

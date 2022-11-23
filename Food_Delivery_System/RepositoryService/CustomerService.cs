@@ -3,6 +3,7 @@ using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using ServiceStack.Messaging;
+using System.Data.SqlTypes;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -16,7 +17,7 @@ namespace Food_Delivery.RepositoryService
             this.db = foodDeliveryDbContext;
         }
 
-        public IEnumerable<Customer> GetAll()
+        public  IEnumerable<Customer> GetAll()
         {
             return db.Customer.ToList();
         }
@@ -27,19 +28,9 @@ namespace Food_Delivery.RepositoryService
            
             try
             {
-
+                Message message = new Message();    
                 var getId = db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
-                if (getId != null)
-                {
-                    return getId;
-                }
-                else
-                {
-                    throw new Exception("This id not Registered");
-                }
-                
-                
-
+                return getId;
             }
               
             catch(Exception)
@@ -61,7 +52,6 @@ namespace Food_Delivery.RepositoryService
 
                 if (customerNum != null)
                 {
-
                     msg.Success = false;
                     msg.Message = "This Contact Number Already Exists";
                     return msg;
@@ -78,7 +68,6 @@ namespace Food_Delivery.RepositoryService
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "This  Customer Added Succesfully";
-                   
                 }
                 return msg;
             }
@@ -93,34 +82,63 @@ namespace Food_Delivery.RepositoryService
         public Messages UpdateCustomerDetail(Customer customer)
         {
             Messages msg = new Messages();
+           
             try
             {
+                var updateCustomerid = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
+                var updateCustomer = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
                 msg.Success = false;
                 msg.Message = "This Customer id not registered";
-                var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
-                if (updateCustomer != null)
+                if (updateCustomerid != null) //check customer id valid or not 
                 {
-                   
-                        updateCustomer.Name = customer.Name;
-                        updateCustomer.Email = customer.Email;
-                        updateCustomer.Gender = customer.Gender;
-                        updateCustomer.Address = customer.Address;
-                        updateCustomer.ContactNumber = customer.ContactNumber;
-                        db.Update(updateCustomer);
+
+
+                    if (updateCustomer != null)  //check contact number already enter  or not
+                    {
+                        var contactNumber = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
+                        var id = contactNumber.CustomerId;
+                        if (contactNumber != null && customer.CustomerId != id)  //check same customer  number or not
+                        {
+                            msg.Success = false;
+                            msg.Message = "This Mobile   Already taked";
+                        }
+                        else
+                        {
+
+                            updateCustomer.Name = customer.Name;
+                            updateCustomer.Email = customer.Email;
+                            updateCustomer.Gender = customer.Gender;
+                            updateCustomer.Address = customer.Address;
+                            updateCustomer.ContactNumber = customer.ContactNumber;
+                            db.Update(updateCustomer);
+                            db.SaveChanges();
+                            msg.Success = true;
+                            msg.Message = "Customer Updated Succesfully!!";
+                        }
+                    }
+                    else
+                    {
+                        updateCustomerid.Name = customer.Name;
+                        updateCustomerid.Email = customer.Email;
+                        updateCustomerid.Gender = customer.Gender;
+                        updateCustomerid.Address = customer.Address;
+                        updateCustomerid.ContactNumber = customer.ContactNumber;
+                        db.Update(updateCustomerid);
                         db.SaveChanges();
                         msg.Success = true;
                         msg.Message = "Customer Updated Succesfully!!";
-                    
-                  
+                    }
+
                 }
                 return msg;
             }
 
             catch (Exception ex)
             {
-                msg.Message = ex.Message;
-                return msg;
+                msg.Message=ex.Message;
+                
             }
+            return msg;
         }
         public Messages DeleteCustomerDetail(int customerId)
         {
