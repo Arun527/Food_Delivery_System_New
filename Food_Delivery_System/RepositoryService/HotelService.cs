@@ -1,6 +1,7 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using ServiceStack.Messaging;
+using System.Transactions;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -76,25 +77,39 @@ namespace Food_Delivery.RepositoryService
             try
             {
                var hotel=db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail.HotelId);
-               if(hotel != null)
-                {
+                var updateEmail= db.Hotel.FirstOrDefault(x=>x.Email==hotelDetail.Email);
+                msg.Message = "The hotel Id Not Registered";
+                msg.Success = false;
+                if (hotel != null)
+               {
+                        if (updateEmail!=null)
+                        {
+                              var hotelEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
+                              var id = hotelEmail.HotelId;
 
-                    var hotelEmail = db.Hotel.Where(x => x.Email == hotelDetail.Email).ToList();
-                    var hotelContactnum = db.Hotel.Where(x => x.ContactNumber == hotelDetail.ContactNumber).ToList();
-                    if (hotelEmail!=null)
-                    {
-                        msg.Success = false;
-                        msg.Message = "This Email Id Already taked";
-                        return msg;
-                    }
-                    else if(hotelContactnum != null)
-                    {
-                        msg.Success = false;
-                        msg.Message = "This Contact Number Already taked";
-                        return msg;
-                    }
-                    else
-                    {
+                           if (id!=null && hotelDetail.HotelId!=id)
+                           {
+                                 msg.Success = false;
+                                 msg.Message = "This Email Id Already taked";
+                                 return msg;
+                           }
+                           else
+                           {
+                            hotel.Email = hotelDetail.Email;
+                            hotel.Type = hotelDetail.Type;
+                            hotel.ContactNumber = hotelDetail.ContactNumber;
+                            hotel.Address = hotelDetail.Address;
+                            hotel.HotelName = hotelDetail.HotelName;
+                            hotel.IsActive = hotelDetail.IsActive;
+                            db.Update(hotel);
+                            db.SaveChanges();
+                            msg.Success = true;
+                            msg.Message = "The hotel updated succesfully";
+                            return msg;
+                           }
+                        }
+                     else
+                     {
                         hotel.Email = hotelDetail.Email;
                         hotel.Type = hotelDetail.Type;
                         hotel.ContactNumber = hotelDetail.ContactNumber;
@@ -106,13 +121,9 @@ namespace Food_Delivery.RepositoryService
                         msg.Success = true;
                         msg.Message = "The hotel updated succesfully";
                         return msg;
-                    }
-                }
-                else
-                {
-                    msg.Message = "The hotel Id Not Registered";
-                    msg.Success = false;
-                }
+                     }
+
+               }
                return msg;
             }
             catch(Exception ex)

@@ -1,6 +1,7 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
+using System.Security.Cryptography;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -41,8 +42,11 @@ namespace Food_Delivery.RepositoryService
                     DeliveryPersonId=orderShipment.DeliveryPersonId,
                     OrderDetailId = request.OrderDetailId
                 };
-
-                 db.Add(shipment);
+              
+                var status = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == shipment.OrderDetailId);
+                status.OrderStatus = "Thankyou For Your Valuble Order";
+                
+                db.Add(shipment);
             }
                 db.SaveChanges();
                 msg.Success = true;
@@ -159,3 +163,5 @@ namespace Food_Delivery.RepositoryService
 
     }
 }
+
+

@@ -33,7 +33,7 @@ namespace Food_Delivery.Models
 
         public int Quantity { get; set; }
 
-        public string OrderStatus { get; set; }
+        public string? OrderStatus { get; set; }
 
 
     }

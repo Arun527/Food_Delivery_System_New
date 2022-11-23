@@ -13,11 +13,13 @@ namespace Food_Delivery.Controllers
         
         IOrders _order;
         IOrderShipmentDetail _orderShipmentDetail;
+        IOrderDetail _orderDetail;
 
-        public OrderShipmentDetailController(IOrders order, IOrderShipmentDetail orderShipmentDetail)
+        public OrderShipmentDetailController(IOrders order, IOrderShipmentDetail orderShipmentDetail, IOrderDetail orderDetail)
         {
             _order = order;
             _orderShipmentDetail=orderShipmentDetail;
+            _orderDetail=orderDetail;
         }
 
 

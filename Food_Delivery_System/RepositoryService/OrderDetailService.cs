@@ -24,7 +24,7 @@ namespace Food_Delivery.RepositoryService
         }
 
         public Messages InsertOrderDetail(OrderRequest orderDetail)
-        {
+        {   
             Messages msg = new Messages();
             try
             {
@@ -60,6 +60,8 @@ namespace Food_Delivery.RepositoryService
                 return msg;
             }
         }
+
+
 
 
         public Messages UpdateOrderDetail(OrderDetail orderDetail)
@@ -102,7 +104,6 @@ namespace Food_Delivery.RepositoryService
             }
             return msg;
         }
-
 
     }
 }
