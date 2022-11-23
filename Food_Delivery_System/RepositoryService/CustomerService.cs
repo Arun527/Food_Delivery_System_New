@@ -109,9 +109,7 @@ namespace Food_Delivery.RepositoryService
                         db.Update(updateCustomer);
                         db.SaveChanges();
                         msg.Success = true;
-                        msg.Message = "Customer Updated Succesfully!!";
-                    
-                  
+                        msg.Message = "Customer Updated Succesfully!!"; 
                 }
                 return msg;
             }

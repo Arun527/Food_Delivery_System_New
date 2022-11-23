@@ -9,7 +9,6 @@
 
     public class OrderShipmentList
     {
-
         public int OrderDetailId { get; set; }
     }
 

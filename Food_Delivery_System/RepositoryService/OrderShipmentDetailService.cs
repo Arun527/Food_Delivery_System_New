@@ -1,12 +1,14 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
+using System.Security.Cryptography;
 
 namespace Food_Delivery.RepositoryService
 {
     public class OrderShipmentDetailService : IOrderShipmentDetail
     {
         private readonly FoodDeliveryDbContext db;
+     
         public OrderShipmentDetailService(FoodDeliveryDbContext foodDeliveryDbContext)
         {
             this.db = foodDeliveryDbContext;
@@ -32,6 +34,8 @@ namespace Food_Delivery.RepositoryService
         public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages msg = new Messages();
+
+            
            
             foreach(var request in orderShipment.ShipmentRequest)
             {
@@ -41,16 +45,19 @@ namespace Food_Delivery.RepositoryService
                     DeliveryPersonId=orderShipment.DeliveryPersonId,
                     OrderDetailId = request.OrderDetailId
                 };
-
-                 db.Add(shipment);
+              
+                var status = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == shipment.OrderDetailId);
+                status.OrderStatus = "Thankyou For Your Valuble Order";
+                
+                db.Add(shipment);
             }
+            
+            
 
-                db.SaveChanges();
+            db.SaveChanges();
                 msg.Success = true;
                 msg.Message = " Your Order Is Out Of Delivery!!";
                 return msg;
-           
-            
         }
 
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment)
@@ -158,3 +165,5 @@ namespace Food_Delivery.RepositoryService
 
     }
 }
+
+
