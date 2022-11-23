@@ -17,19 +17,15 @@ namespace Food_Delivery.Models
         [ForeignKey("OrderId")]
         public Orders? Orders { get; set; }
 
-      
         public  int? FoodId { get; set; }
 
         [ForeignKey("FoodId")]
         public Food? Food { get; set; }
 
-
         public int? HotelId { get; set; }
 
         [ForeignKey("HotelId")]
         public Hotel? Hotel { get; set; }
-
-        
 
         public int Quantity { get; set; }
 

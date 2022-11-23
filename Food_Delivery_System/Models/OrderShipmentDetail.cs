@@ -19,6 +19,8 @@ namespace Food_Delivery.Models
 
         public string? TrackingStatus { get; set; } = "Out Of Delivery";
 
+        public string? TrackingStatusDescription { get; set; } = "ThankYou For Your Valuable Order..";
+
 
     }
 }

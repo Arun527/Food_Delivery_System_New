@@ -46,9 +46,6 @@ namespace Food_Delivery.RepositoryService
                     OrderDetailId = request.OrderDetailId
                 };
               
-                var status = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == shipment.OrderDetailId);
-                status.OrderStatus = "Thankyou For Your Valuble Order";
-                
                 db.Add(shipment);
             }
             
@@ -161,6 +158,21 @@ namespace Food_Delivery.RepositoryService
 
         }
 
+        public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
+        {
+
+            var orderDetails = (from Orders in db.orders
+                                join orderdetail in db.OrderDetail on Orders.OrderId equals orderdetail.OrderId
+                                where orderdetail.OrderId == orderId
+                                select new TrackingDetail
+                                {
+                                    OrderId =orderdetail.OrderId,
+                                    OrderStatus= orderdetail.OrderStatus,
+                                
+                                }).ToList();
+            return orderDetails;
+
+        }
 
 
     }

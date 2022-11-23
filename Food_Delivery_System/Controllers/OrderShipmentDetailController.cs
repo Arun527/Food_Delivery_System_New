@@ -80,5 +80,12 @@ namespace Food_Delivery.Controllers
         //    return _orderShipmentDetail.GetAllInvoiceDetail();
         //}
 
+
+        [HttpGet("/api/OrderShipmentDetail/Tracking/{orderId}")]
+        public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
+        {
+            return _orderShipmentDetail.TrackingStatus(orderId);
+        }
+
     }
 }
