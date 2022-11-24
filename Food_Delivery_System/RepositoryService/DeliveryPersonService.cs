@@ -1,6 +1,7 @@
 ﻿
 using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using ServiceStack.Messaging;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -23,6 +24,18 @@ namespace Food_Delivery.RepositoryService
             return getId;
         }
 
+        public DeliveryPerson GetDeliveryPersonByNumber(string Number)
+        {
+            try
+            {     
+                var getId = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == Number);
+                return getId;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public Messages InsertDeliveryPerson(DeliveryPerson deliveryPerson)
         {

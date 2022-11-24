@@ -17,66 +17,95 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetCustomerList()
+        public IActionResult GetHotelList()
         {
             Messages msg=new Messages();
             var hotel = _hotel.GetAll();
-            if(hotel != null)
+            if(hotel == null)
             {
-                return Ok(hotel);
+                return NotFound("Hotel List Is Not Found");
             }
 
-            msg.Message = "The Hotel List Is Empty";
-            msg.Success = false;
-            return Ok(msg);
+            return Ok(hotel);
         }
 
-        [HttpGet("Get/{hotelid}")]
-        public IActionResult GetCustomerById(int hotelId)
+        [HttpGet("{hotelid}")]
+        public IActionResult GetHotelById(int hotelId)
         {
             Messages msg = new Messages();
             var hotel = _hotel.GetHotelById(hotelId);
             if (hotel == null)
             {
-                return NotFound();
+                return NotFound("The Hotel Id Is Not Found");
             }
 
-            msg.Message = "The Hotel Id Not Registered";
-            msg.Success = false;
-            return Ok(msg);
+            return Ok(hotel);
         }
 
         [HttpPost("")]
-        public Messages AddHotelDetail(Hotel detaile)
+        public IActionResult AddHotelDetail(Hotel detaile)
         {
-                var hoteldetail = _hotel.InsertHotelDetail(detaile);
-                return hoteldetail;
+            var number = _hotel.GetHotelDetailByNumber(detaile.ContactNumber);
+            if (number != null)
+            {
+                return Conflict("Contact Number Already Taked");
+            }
+            var email = _hotel.GetHotelDetailByEmail(detaile.Email);
+            if (email != null)
+            {
+                return Conflict("Email Id Already Taked");
+            }
+
+            var hoteldetail = _hotel.InsertHotelDetail(detaile);
+            return Created("https://localhost:7187/Api/Hotel/" + detaile.HotelId + "", hoteldetail);
         }
 
 
         [HttpPut("")]
 
-        public Messages UpdateHotelDetail(Hotel hotel)
+        public IActionResult UpdateHotelDetail(Hotel hotel)
         {
-            var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
+            var id = _hotel.GetHotelById(hotel.HotelId);
+            if(id == null)
+            {
+                return NotFound("Hotel Id Not Found");
+            }
+            if (hotel.HotelId == 0)
+            {
+                return BadRequest("The Hotel Field Is Required");
+            }
 
-            return hotelUpdate;
+            var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
+            if (hotelUpdate.Success == false)
+            {
+                return Conflict("The Contact Number Already Taked");
+            }
+
+            return Ok(hotelUpdate);
         }
 
         [HttpDelete("/{hotelDetailId}")]
 
-        public Messages DeleteHotelDetail(int hotelDetailId)
+        public IActionResult DeleteHotelDetail(int hotelDetailId)
         {
             var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
-            return hotel;
+            if(hotel == null)
+            {
+                return NotFound("The Hotel Id Not Found");
+            }
+            return Ok(hotel);
         }
 
-        [HttpGet("GetType/{hoteltype}")]
+        [HttpGet("Type/{hoteltype}")]
 
-        public IEnumerable<Hotel> GetHotelType(string hoteltype)
+        public  IActionResult GetHotelType(string hoteltype)
         {
             var hotel = _hotel.GetHotelType(hoteltype);
-            return hotel;
+            if(hotel.Count() == 0)
+            {
+                return NotFound("The Hotel Type Not Found");
+            }
+            return Ok(hotel);
         }
     }
 }

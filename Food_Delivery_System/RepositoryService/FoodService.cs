@@ -78,7 +78,8 @@ namespace Food_Delivery.RepositoryService
             try
             {
                 var food = db.Food.FirstOrDefault(x => x.FoodId == foodType.FoodId);
-                if (food != null)
+                var hotel=db.Hotel.FirstOrDefault(x=>x.HotelId == foodType.HotelId);
+                if (food != null && hotel != null)
                 {
                     food.FoodName=foodType.FoodName;
                     

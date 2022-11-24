@@ -7,7 +7,8 @@ namespace Food_Delivery.RepositoryInterface
         public IEnumerable<Hotel> GetAll();
         public Hotel GetHotelById(int hotelId);
 
-      
+        public Hotel GetHotelDetailByNumber(string Number);
+        public Hotel GetHotelDetailByEmail(String Email);
 
         public Messages InsertHotelDetail(Hotel hotelDetail);
 

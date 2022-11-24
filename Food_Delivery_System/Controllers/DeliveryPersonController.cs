@@ -20,42 +20,68 @@ namespace Food_Delivery.Controllers
         }
 
 
-        [HttpGet("/api/DeliveryPerson/Getall")]
+        [HttpGet("Getall")]
         public IActionResult GetAllDeliveryPersons()
         {
             var obj = _deliveryperson.GetAllDeliveryPersons();
+            if(obj == null)
+            {
+                return NotFound("Delivery Person Is Not Found");
+            }
             return Ok(obj);
         }
 
 
-        [HttpGet("/api/DeliveryPerson/Get/{deliveryPersonId}")]
-        public DeliveryPerson GetDeliveryPerson(int deliveryPersonId)
+        [HttpGet("{deliveryPersonId}")]
+        public IActionResult GetDeliveryPerson(int deliveryPersonId)
         {
+        
             var obj = _deliveryperson.GetDeliveryPerson(deliveryPersonId);
-            return obj;
+            if (obj == null)
+            {
+               
+                return NotFound("This Delivery Person Id Is Not Found");
+            }
+            return Ok(obj);
         }
 
 
-        [HttpPost("/api/DeliveryPerson/Add")]
+        [HttpPost("/api/DeliveryPerson")]
         public IActionResult InsertDeliveryPerson(DeliveryPerson deliveryPerson)
         {
+            var number = _deliveryperson.GetDeliveryPersonByNumber(deliveryPerson.ContactNumber);
+            if (number != null)
+            {
+                return NotFound("This Contact  Number  Already Taked");
+            }
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
             return Ok(insertDeliveryPerson);
         }
 
-        [HttpPut("/api/DeliveryPerson/Update")]
-        public Messages UpdateDeliveryPerson([FromBody]DeliveryPerson deliveryPerson)
+        [HttpPut("/api/DeliveryPerson")]
+        public IActionResult UpdateDeliveryPerson([FromBody]DeliveryPerson deliveryPerson)
         {
+            var update = _deliveryperson.GetDeliveryPerson(deliveryPerson.DeliveryPersonId);
+            if(update == null)
+            {
+                return NotFound("This Delivery Person Id Not Found");
+            }
             var updateDeliveryPerson = _deliveryperson.UpdateDeliveryPerson(deliveryPerson);
-            return updateDeliveryPerson;
+
+            return Ok(updateDeliveryPerson);
         }
 
 
-        [HttpDelete("/api/DeliveryPerson/Delete/{id}")]
-        public Messages DeleteDeliveryPerson(int deliveryPersonId)
+        [HttpDelete("{deliveryPersonId}")]
+        public IActionResult DeleteDeliveryPerson(int deliveryPersonId)
         {
-            var deleteDeliveryPerson = _deliveryperson.DeleteDeliveryPerson(deliveryPersonId);
-            return deleteDeliveryPerson;
+            var id = _deliveryperson.GetDeliveryPerson(deliveryPersonId);
+            if (id == null)
+            {
+                return NotFound("This Delivery Person Id Is Not Found");
+            }
+            var DeliveryPerson = _deliveryperson.DeleteDeliveryPerson(deliveryPersonId);
+            return Ok(DeliveryPerson);
         }
 
     }
