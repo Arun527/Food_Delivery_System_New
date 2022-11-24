@@ -11,7 +11,7 @@ namespace Food_Delivery.RepositoryInterface
         public Customer GetCustomerDetailByEmail(String Email);
         public Messages InsertCustomerDetail(Customer customer);
 
-        public Messages UpdateCustomerDetail(Customer customer);
+        public Messages UpdateCustomerDetail(Customer customer);  
 
         public Messages DeleteCustomerDetail(int customerId);
 
