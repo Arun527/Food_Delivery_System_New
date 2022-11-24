@@ -20,21 +20,17 @@ namespace Food_Delivery.Models
         [JsonIgnore]
         public Orders? Orders { get; set; }
 
-      
         public  int? FoodId { get; set; }
 
         [ForeignKey("FoodId")]
         [JsonIgnore]
         public Food? Food { get; set; }
 
-
         public int? HotelId { get; set; }
 
         [ForeignKey("HotelId")]
         [JsonIgnore]
         public Hotel? Hotel { get; set; }
-
-        
 
         public int Quantity { get; set; }
 

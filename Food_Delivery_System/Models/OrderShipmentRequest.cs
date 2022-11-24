@@ -5,7 +5,6 @@
         public int OrderShipmentDetailId { get; set; }
         public int DeliveryPersonId { get; set; }
         public List<OrderShipmentList> ShipmentRequest { get; set; }    
-
     }
 
     public class OrderShipmentList

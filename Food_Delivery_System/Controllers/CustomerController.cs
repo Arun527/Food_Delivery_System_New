@@ -29,7 +29,7 @@ namespace Food_Delivery.Controllers
         }
          
 
-        [HttpGet("{customerId}")]
+        [HttpGet("/api/Customer/{customerId}")]
         public IActionResult GetCustomerDetail(int customerId)
         {
             Messages messages = new Messages();
@@ -67,7 +67,7 @@ namespace Food_Delivery.Controllers
             return Created("https://localhost:7187/Api/customer/"+customer.CustomerId+"", insertCustomer);
         }
 
-        [HttpPut("")]
+        [HttpPut("/api/Customer")]
         public IActionResult UpdateCustomerDetail([FromBody] Customer customer)
         {
             Messages messages=new Messages();
@@ -94,7 +94,7 @@ namespace Food_Delivery.Controllers
         }
 
 
-        [HttpDelete("{customerId}")]
+        [HttpDelete("/api/Customer/{customerId}")]
         public IActionResult DeleteCustomerDetail(int customerId)
         {
             var id = _customer.GetCustomerDetailById(customerId);

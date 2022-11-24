@@ -22,6 +22,8 @@ namespace Food_Delivery.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
+            Messages messages = new Messages();
+            messages.Message = "Food List Is Empty";
             var food = _food.GetAll();
             if(food == null)
             {

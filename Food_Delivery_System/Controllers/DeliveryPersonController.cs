@@ -55,7 +55,7 @@ namespace Food_Delivery.Controllers
                 return NotFound("This Contact  Number  Already Taked");
             }
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
-            return Ok(insertDeliveryPerson);
+            return insertDeliveryPerson;
         }
 
         [HttpPut("/api/DeliveryPerson")]
