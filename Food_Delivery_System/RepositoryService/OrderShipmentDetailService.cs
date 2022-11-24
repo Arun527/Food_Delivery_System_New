@@ -8,7 +8,7 @@ namespace Food_Delivery.RepositoryService
     public class OrderShipmentDetailService : IOrderShipmentDetail
     {
         private readonly FoodDeliveryDbContext db;
-     
+
         public OrderShipmentDetailService(FoodDeliveryDbContext foodDeliveryDbContext)
         {
             this.db = foodDeliveryDbContext;
@@ -25,9 +25,9 @@ namespace Food_Delivery.RepositoryService
             return getId;
         }
 
-        public OrderShipmentDetail GetOrderDetailById(int Id)
+        public OrderShipmentDetail GetOrderShipmentDetailById(int Id)
         {
-            var getId = db.OrderShipmentDetail.FirstOrDefault(x => x.OrderDetailId == Id);
+            var getId = db.OrderShipmentDetail.FirstOrDefault(x => x.OrderShipmentDetailId == Id);
             return getId;
         }
 
@@ -35,51 +35,38 @@ namespace Food_Delivery.RepositoryService
         {
             Messages msg = new Messages();
 
-            
-           
-            foreach(var request in orderShipment.ShipmentRequest)
+
+
+            foreach (var request in orderShipment.ShipmentRequest)
             {
 
                 var shipment = new OrderShipmentDetail()
                 {
-                    DeliveryPersonId=orderShipment.DeliveryPersonId,
+                    DeliveryPersonId = orderShipment.DeliveryPersonId,
                     OrderDetailId = request.OrderDetailId
                 };
-              
+
                 db.Add(shipment);
             }
-            
-            
+
+
 
             db.SaveChanges();
-                msg.Success = true;
-                msg.Message = " Your Order Is Out Of Delivery!!";
-                return msg;
+            msg.Success = true;
+            msg.Message = " Your Order Is Out For Delivery!!";
+            return msg;
         }
 
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment)
         {
             Messages msg = new Messages();
             try
-            {
-                var deliveryPersonId = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == orderShipment.DeliveryPersonId);
-                var orderDetailId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderShipment.OrderDetailId);
-                var orderShipmentId = db.OrderShipmentDetail.FirstOrDefault(x => x.OrderShipmentDetailId == orderShipment.OrderShipmentDetailId);
-
-                if (deliveryPersonId == null)
+            { 
+                var id = db.OrderShipmentDetail.FirstOrDefault(x=>x.OrderShipmentDetailId==orderShipment.OrderShipmentDetailId);
+                if (id!= null)
                 {
-                    msg.Success = false;
-                    msg.Message = "This DeliveryPersonId id not registered";
-                }
-                if (orderDetailId == null)
-                {
-                    msg.Success = false;
-                    msg.Message = "This orderDetailId id not registered";
-                }
-                if (orderShipmentId != null)
-                {
-                    orderShipmentId.DeliveryPersonId = orderShipment.DeliveryPersonId;
-                    orderShipmentId.OrderDetailId = orderShipment.OrderDetailId;
+                    id.DeliveryPersonId = orderShipment.DeliveryPersonId;
+                    id.OrderDetailId = orderShipment.OrderDetailId;
 
                     db.Update(orderShipment);
                     db.SaveChanges();
@@ -115,12 +102,11 @@ namespace Food_Delivery.RepositoryService
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
         {
 
-            // var foodId=db.OrderDetail.FirstOrDefault(x => x.FoodId == );
             var orderDetails = (from orderDetail in db.OrderDetail
                                 join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
                                 join food in db.Food on orderDetail.FoodId equals food.FoodId
                                 join order in db.orders on orderDetail.OrderId equals order.OrderId
-                                where orderDetail.CustomerId == customer.CustomerId
+                                where orderDetail.CustomerId == CustomerId
                                 select new InvoiceDetail
                                 {
                                     InvoiceNumber = orderDetail.OrderDetailId,
@@ -137,8 +123,7 @@ namespace Food_Delivery.RepositoryService
 
         public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
         {
-            // var foodId = db.OrderDetail.FirstOrDefault(x => x.FoodId == orderShipment.FoodId);
-
+        
             var orderDetails = (from orderDetail in db.OrderDetail
                                 join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
                                 join food in db.Food on orderDetail.FoodId equals food.FoodId
@@ -149,7 +134,7 @@ namespace Food_Delivery.RepositoryService
                                     OrderId = orderDetail.OrderId,
                                     CustomerName = customer.Name,
                                     FoodName = food.FoodName,
-                                  //  Orderdate = order.Orderdate,
+                                    //  Orderdate = order.Orderdate,
                                     Price = food.Price,
                                     Quantity = orderDetail.Quantity,
                                     TotalPrice = food.Price * orderDetail.Quantity
@@ -166,27 +151,15 @@ namespace Food_Delivery.RepositoryService
                                 where orderdetail.OrderId == orderId
                                 select new TrackingDetail
                                 {
-                                    OrderId =orderdetail.OrderId,
-                                    OrderStatus= orderdetail.OrderStatus,
-                                
+                                    OrderId = orderdetail.OrderId,
+                                    OrderStatus = orderdetail.OrderStatus,
+
                                 }).ToList();
             return orderDetails;
 
         }
 
-        public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
-        {
-
-
-
-            var orderDetails = (from Orders in db.orders
-                                join orderdetail in db.OrderDetail on Orders.OrderId equals orderdetail.OrderId
-                                where orderdetail.OrderId == orderId
-                                select new TrackingDetail
-                                {
-                                    OrderId = orderdetail.OrderId,
-                                    OrderStatus = orderdetail.OrderStatus,
-
+      
     }
 }
 

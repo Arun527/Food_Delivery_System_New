@@ -7,12 +7,12 @@ namespace Food_Delivery.RepositoryInterface
     {
         public IEnumerable<OrderShipmentDetail> GetAllOrderShipmentDetail();
         public OrderShipmentDetail GetDeliveryPersonById(int Id);
-        public OrderShipmentDetail GetOrderDetailById(int Id);
+        public OrderShipmentDetail GetOrderShipmentDetailById(int Id);
         public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment);
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment);
         public Messages DeleteOrderShipmentDetail(int orderShipmentId);
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId);
-        
-        public IEnumerable<InvoiceDetail> GetAllInvoiceDetail();
+        public IEnumerable<TrackingDetail> TrackingStatus(int orderId);
+           public IEnumerable<InvoiceDetail> GetAllInvoiceDetail();
     }
 }

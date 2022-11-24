@@ -72,8 +72,11 @@ namespace Food_Delivery.RepositoryService
                 msg.Success = false;
                 msg.Message = "This OrderId not registered";
                 var updateOrder = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetail.OrderDetailId);
-                if (updateOrder != null)
+                var update = db.OrderDetail.FirstOrDefault(x => x.OrderStatus == orderDetail.OrderStatus);
+                if (updateOrder != null && update.OrderStatus=="Order Placed")
                 {
+                    updateOrder.HotelId= orderDetail.HotelId;
+                    updateOrder.FoodId = orderDetail.FoodId;
                     updateOrder.Quantity = orderDetail.Quantity;
                     db.Update(updateOrder);
                     db.SaveChanges();

@@ -77,7 +77,7 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult UpdateCustomer(int CustomerId)
         {
-            var update=_customer.GetCustomerDetail(CustomerId);
+            var update=_customer.GetCustomerDetailById(CustomerId);
             return View(update);
         }
 

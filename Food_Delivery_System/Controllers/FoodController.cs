@@ -20,41 +20,44 @@ namespace Food_Delivery.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
+            Messages messages = new Messages();
+            messages.Message = "Food List Is Empty";
             var food = _food.GetAll();
+            if(food == null)
+            {
+                return NotFound(messages.Message);
+            }
             return Ok(food);
         }
 
-        [HttpGet("Get/{Id}")]
-        public IActionResult GetAll(int Id)
+        [HttpGet("{Id}")]
+        public IActionResult GetFoodById(int Id)
         {
-            Messages msg = new Messages();
+            Messages messages = new Messages();
+            messages.Message = "FoodId Id Is Not Found";
             var hotel = _food.GetFoodTypeById(Id);
-            if(hotel != null)
+            if(hotel == null)
             {
-                var food = _food.GetFoodTypeById(Id);
-                return Ok(food);
+                return NotFound(messages.Message);
             }
-            msg.Message = "The Food Id Not Registered";
-            msg.Success = false;
-            return Ok(msg);
-
+            return Ok(hotel);
         }
 
-        [HttpPost("Add")]
+        [HttpPost("")]
         public Messages InsertFoodType(Food food)
         {
             var fooddetail = _food.InsertFoodType(food);
             return fooddetail;
         }
 
-        [HttpPut("Update")]
+        [HttpPut("")]
         public Messages UpdateFoodType(Food food)
         {
             var fooddetail = _food.UpdateFood(food);
             return fooddetail;
         }
 
-        [HttpDelete("Delete/{foodId}")]
+        [HttpDelete("{foodId}")]
 
         public Messages DeleteFoodType(int foodId)
         {

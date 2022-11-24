@@ -17,7 +17,7 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetCustomerList()
+        public IActionResult GetHotelList()
         {
             Messages msg=new Messages();
             var hotel = _hotel.GetAll();
@@ -32,7 +32,7 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpGet("Get/{hotelid}")]
-        public IActionResult GetCustomerById(int hotelId)
+        public IActionResult GetHotelById(int hotelId)
         {
             Messages msg = new Messages();
             var hotel = _hotel.GetHotelById(hotelId);
@@ -49,8 +49,8 @@ namespace Food_Delivery.Controllers
         [HttpPost("")]
         public Messages AddHotelDetail(Hotel detaile)
         {
-                var hoteldetail = _hotel.InsertHotelDetail(detaile);
-                return hoteldetail;
+            var hoteldetail = _hotel.InsertHotelDetail(detaile);
+            return hoteldetail;
         }
 
 

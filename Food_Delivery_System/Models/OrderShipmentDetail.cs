@@ -20,7 +20,7 @@ namespace Food_Delivery.Models
         [JsonIgnore]
         public OrderDetail? OrderDetail { get; set; }
 
-        public string? TrackingStatus { get; set; } = "Out Of Delivery";
+        public string? TrackingStatus { get; set; } = "Out For Delivery";
 
         public string? TrackingStatusDescription { get; set; } = "ThankYou For Your Valuable Order..";
 

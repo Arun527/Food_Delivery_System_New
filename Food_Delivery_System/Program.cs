@@ -2,6 +2,7 @@ using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery.RepositoryService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FoodDeliveryDbContext>(OPtions =>
 {
     OPtions.UseSqlServer(builder.Configuration.GetConnectionString("ConStr"));
+    OPtions.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICustomer, CustomerService>();

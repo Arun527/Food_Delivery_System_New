@@ -24,30 +24,19 @@ namespace Food_Delivery.RepositoryService
 
         public Customer GetCustomerDetailById(int customerId)
         {
-           
+
             try
             {
-
+                Message message = new Message();
                 var getId = db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
-                if (getId != null)
-                {
-                    return getId;
-                }
-                else
-                {
-                    throw new Exception("This id not Registered");
-                }
-                
-                
-
+                return getId;
             }
-              
-            catch(Exception)
+
+            catch (Exception)
             {
                 throw;
             }
-         
-            
+
         }
 
 
