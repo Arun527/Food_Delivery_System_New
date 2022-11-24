@@ -174,6 +174,18 @@ namespace Food_Delivery.RepositoryService
 
         }
 
+        public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
+        {
+
+
+
+            var orderDetails = (from Orders in db.orders
+                                join orderdetail in db.OrderDetail on Orders.OrderId equals orderdetail.OrderId
+                                where orderdetail.OrderId == orderId
+                                select new TrackingDetail
+                                {
+                                    OrderId = orderdetail.OrderId,
+                                    OrderStatus = orderdetail.OrderStatus,
 
     }
 }

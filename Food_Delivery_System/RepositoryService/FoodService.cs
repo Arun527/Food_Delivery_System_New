@@ -81,10 +81,10 @@ namespace Food_Delivery.RepositoryService
                 if (food != null)
                 {
                     food.FoodName=foodType.FoodName;
-                    food.HotelId=foodType.HotelId;
+                    
                     food.Price = foodType.Price;
-                    food.FoodId=foodType.FoodId;
-                    db.Update(foodType);
+                  
+                    db.Update(food);
                     db.SaveChanges();
                     msg.Message = "The Food  Is Updated Succesfully";
                     msg.Success = true;
@@ -116,7 +116,7 @@ namespace Food_Delivery.RepositoryService
                 {
                     db.Food.Remove(food);
                     db.SaveChanges();
-                    msg.Message = "The Food Type Is Deleted Succesfully";
+                    msg.Message = "The Food  Is Deleted Succesfully";
                     msg.Success = true;
                 }
                 else

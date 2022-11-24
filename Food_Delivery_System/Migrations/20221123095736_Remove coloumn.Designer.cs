@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliverySystem.Migrations
 {
     [DbContext(typeof(FoodDeliveryDbContext))]
-    [Migration("20221121140103_add-name-")]
-    partial class addname
+    [Migration("20221123095736_Remove coloumn")]
+    partial class Removecoloumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,9 +86,6 @@ namespace FoodDeliverySystem.Migrations
 
                     b.Property<string>("DeliveryPersonName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeliveryStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
@@ -203,7 +200,6 @@ namespace FoodDeliverySystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OrderStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")

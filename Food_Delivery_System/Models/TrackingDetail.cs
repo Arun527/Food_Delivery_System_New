@@ -2,6 +2,7 @@
 {
     public class TrackingDetail
     {
+
         public int OrderId { get; set; }
         public string? OrderStatus { get; set; }
         public string? TrackingStatus { get; set; } = "Out Of Delivery";

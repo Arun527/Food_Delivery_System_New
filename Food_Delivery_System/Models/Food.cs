@@ -4,6 +4,7 @@ using ForeignKeyAttribute = System.ComponentModel.DataAnnotations.Schema.Foreign
 using RangeAttribute = System.ComponentModel.DataAnnotations.RangeAttribute;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Food_Delivery.Models
 {
@@ -21,12 +22,13 @@ namespace Food_Delivery.Models
         public  int? HotelId { get; set; }
 
         [ForeignKey("HotelId")]
+        [JsonIgnore]
         public Hotel? Hotel { get; set; }
 
         public string? Type { get; set; }
 
-        [NotMapped]
-        public IFormFile? CoverPhoto { get; set; }
+        //[NotMapped]
+        //public IFormFile? CoverPhoto { get; set; }
 
     }
 

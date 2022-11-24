@@ -17,47 +17,91 @@ namespace Food_Delivery.Controllers
         [HttpGet("/api/Customer/Getall")]
         public IActionResult GetAll()
         {
+            Messages messages = new Messages();
+            messages.Message = "Customer List Is Empty";
             var obj = _customer.GetAll();
+            if (obj == null)
+            {
+                return NotFound(messages.Message);
+            }
+
             return Ok(obj);
         }
 
 
-        [HttpGet("/api/Customer/Get/{customerId}")]
+        [HttpGet("/api/Customer/{customerId}")]
         public IActionResult GetCustomerDetail(int customerId)
         {
-            var obj = _customer.GetCustomerDetail(customerId);
+            Messages messages = new Messages();
+            messages.Message = "Customer Id Is Not Found";
+            var obj = _customer.GetCustomerDetailById(customerId);
+            if(obj == null)
+            {
+                return NotFound(messages.Message);
+            }
             return Ok(obj);
         }
 
 
-        [HttpPost("/api/Customer/Add")]
-        public Messages InsertCustomerDetail(Customer customer)
-        {
-            var insertCustomer = _customer.InsertCustomerDetail(customer);
-            return insertCustomer;
-        }
-
-        [HttpPut("/api/Customer/Update")]
-        public Messages UpdateCustomerDetail([FromBody] Customer customer)
+        [HttpPost("/api/Customer")]
+        public IActionResult InsertCustomerDetail(Customer customer)
         {
             Messages messages = new Messages();
-            var check = _customer.Equals(customer.ContactNumber);
-            if (check )
+            var number = _customer.GetCustomerDetailByNumber(customer.ContactNumber);
+            var email=_customer.GetCustomerDetailByEmail(customer.Email);
+            
+
+            if (number != null)
             {
-                var updateCustomer = _customer.UpdateCustomerDetail(customer);
-                return updateCustomer;  
+                messages.Message = "The Phone  Number Already Taked";
+                return Conflict(messages.Message);
             }
-            else
+            if (email != null)
             {
-                messages.Message = "Mobile number already taked";
+                messages.Message = "The Email  Id Already Taked";
+                return Conflict(messages.Message);
             }
-            return messages;
+            var insertCustomer = _customer.InsertCustomerDetail(customer);
+            
+            
+            return Created("https://localhost:7187/Api/customer/"+customer.CustomerId+"", insertCustomer);
+        }
+
+        [HttpPut("/api/Customer")]
+        public IActionResult UpdateCustomerDetail([FromBody] Customer customer)
+        {
+            Messages messages=new Messages();
+            if (customer.CustomerId == 0)
+            {
+               
+                return BadRequest("The CustomerId Field Is Required");
+            }
+            var id = _customer.GetCustomerDetailById(customer.CustomerId);
+            if (id == null)
+            {
+                return NotFound(id);
+            }
+            var updateCustomer = _customer.UpdateCustomerDetail(customer);
+           
+            if(updateCustomer.Success== false)
+            {
+                messages.Message = "The Contact Number Already Taked";
+                return  Conflict(messages.Message);
+            }
+           
+            return Ok(updateCustomer);  
+                
         }
 
 
-        [HttpDelete("/api/Customer/Delete/{customerId}")]
-        public Messages DeleteCustomerDetail(int customerId)
+        [HttpDelete("/api/Customer/{customerId}")]
+        public IActionResult DeleteCustomerDetail(int customerId)
         {
+            var id = _customer.GetCustomerDetailById(customerId);
+            if (id == null)
+            {
+                return NotFound(id);
+            }
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
             return deleteCustomer;
         }
