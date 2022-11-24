@@ -44,13 +44,40 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult CustomerDetail()
         {
+            return View();
+        }
+
+        public IActionResult GetAll(JqueryDatatableParam param)
+        {
             var customerdetail = _customer.GetAll();
-            return View(customerdetail);
+
+            if (!string.IsNullOrEmpty(param.sSearch))
+            {
+                customerdetail = customerdetail.Where(x => x.Name.Contains(param.sSearch.ToLower())
+                                              || x.ContactNumber.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Email.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToString().Contains(param.sSearch.ToLower()));
+            }
+
+
+            var displayResult = customerdetail.Skip(param.iDisplayStart)
+                .Take(param.iDisplayLength).ToList();
+            var totalRecords = customerdetail.Count();
+
+
+
+            return Json(new
+            {
+                param.sEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = displayResult
+            });
         }
 
         public IActionResult UpdateCustomer(int CustomerId)
         {
-            var update=_customer.GetCustomerDetail(CustomerId);
+            var update=_customer.GetCustomerDetailById(CustomerId);
             return View(update);
         }
 

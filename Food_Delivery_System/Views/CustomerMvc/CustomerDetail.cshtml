@@ -1,64 +1,94 @@
 ﻿@using Food_Delivery.Models
-@model Customer
+@model List<Food_Delivery.Models.Customer>
 @{
     ViewData["Title"] = "Admin";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row" style="width:100%">
+    <div class="col-sm-12">
+        <table class="table table-bordered table-striped" id="Customer">
+            <thead style="background-color:khaki;text-align:center">
+                <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Contact Number </th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">My Orders</th>
+                    <th scope="col">Action</th>
+                </tr>
 
-<div class="card-body " id="card" style=" margin-top:8%; background-color:white; margin-left: 30%;margin-right: 30%; color: black;">
+            </thead>
 
-      @using(Html.BeginForm(FormMethod.Post))
-    {
-        <div class="row col-md-10 offset-2 mt-5 ">
-            <div class="col-md-6">CustomerId</div>
-            <div class="col-md-6"> @Model.CustomerId</div>
-        </div>
+        </table>
+    </div>
 
-
-        <div class="row col-md-10 offset-2  mt-2">
-            <div class="col-md-6">Customer Name</div>
-            <div class="col-md-6">@Model.Name</div>
-        </div>
-
-
-        <div class="row col-md-10 offset-2  mt-2">
-            <div class="col-md-6">Mobile</div>
-            <div class="col-md-6">@Model.ContactNumber</div>
-        </div>
-        <div class="row col-md-10 offset-2  mt-2">
-            <div class="col-md-6">Email</div>
-            <div class="col-md-6">@Model.Email</div>
-        </div>
-
-     
-
-
-        <div class="row col-md-10 offset-2  mt-2">
-            <div class="col-md-6">Gender</div>
-            <div class="col-md-6">@Model.Gender</div>
-        </div>
-        <div class="row col-md-10 offset-2  mt-2">
-            <div class="col-md-6">Address</div>
-            <div class="col-md-6">  <td>@Model.Address</td> </div>
-        </div>
-
-
-        <div class="row col-md-10 offset-2  mt-2">
-            <div class="col-md-6">Email</div>
-            <div class="col-md-6">@Model.Email</div>
-        </div>
-
-
-        <div class="row col-md-2 offset-7 mt-5">
-            <a class="btn btn-primary text-white" href="/CustomerMvc/UpdateCustomer?CustomerId=@Model.CustomerId">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
-                </svg>  Edit
-            </a>
-        </div>
-
-
-
-
-        }
 </div>
+  
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            bindDatatable();
+        });
+
+        function bindDatatable() {
+            datatable = $('#Customer')
+                .DataTable({
+                    "sAjaxSource": "/CustomerMvc/GetAll",
+                    "bServerSide": true,
+                    "bProcessing": true,
+                    "bSearchable": true,
+                    "order": [[1, 'asc']],
+                    "language": {
+                        "emptyTable": "No record found.",
+                        "processing":
+                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> '
+                    },
+                    "columns": [
+                        {
+                            "data": "name",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "contactNumber",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "email",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "address",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+
+                            "searchable": false,
+                            'render': function (data, type, row) {
+                                return "<a href=/FoodMvc/GetFoodByHotelId?hotelId=" + row.hotelId + " class='btn btn-primary'> Food Details </a>"
+                            }
+
+                        },
+                        {
+
+                            "searchable": false,
+                            'render': function (data, type, row) {
+                                return "<a href=/FoodMvc/GetFoodByHotelId?hotelId=" + row.hotelId + " class='btn btn-primary'> Food Details </a>"
+                            },
+                            "searchable": false,
+                            'render': function (data, type, row) {
+                                return "<a href=/FoodMvc/GetFoodByHotelId?hotelId=" + row.hotelId + " class='btn btn-primary'> Food Details </a>"
+                            }
+
+                        },
+                    ]
+                });
+        }
+
+    </script>
+}

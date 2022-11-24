@@ -60,7 +60,7 @@ namespace Food_Delivery.Controllers
         }
 
 
-        [HttpDelete("/api/OrderShipmentDetail/Delete/{id}")]
+        [HttpDelete("/api/OrderShipmentDetail/Delete/{orderShipmentId}")]
         public Messages DeleteOrderShipmentDetail(int orderShipmentId)
         {
             var deleteOrderShipment = _orderShipmentDetail.DeleteOrderShipmentDetail(orderShipmentId);
@@ -78,6 +78,12 @@ namespace Food_Delivery.Controllers
         public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
         {
             return _orderShipmentDetail.GetAllInvoiceDetail();
+        }
+
+        [HttpGet("/api/OrderShipmentDetail/Tracking/{orderId}")]
+        public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
+        {
+            return _orderShipmentDetail.TrackingStatus(orderId);
         }
 
     }

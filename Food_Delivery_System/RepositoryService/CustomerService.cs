@@ -23,7 +23,7 @@ namespace Food_Delivery.RepositoryService
         }
 
 
-        public Customer GetCustomerDetail(int customerId)
+        public Customer GetCustomerDetailById(int customerId)
         {
            
             try
@@ -41,6 +41,45 @@ namespace Food_Delivery.RepositoryService
             
         }
 
+
+
+        public Customer GetCustomerDetailByNumber(string Number)
+        {
+
+            try
+            {
+                Message message = new Message();
+                var getId = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
+                return getId;
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+
+
+        }
+
+
+
+        public Customer GetCustomerDetailByEmail(String Email)
+        {
+
+            try
+            {
+                Message message = new Message();
+                var getId = db.Customer.FirstOrDefault(x => x.Email == Email);
+                return getId;
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+
+
+        }
 
         public Messages InsertCustomerDetail(Customer customer)
         {
@@ -192,8 +231,7 @@ namespace Food_Delivery.RepositoryService
 
         }
 
-
-
+      
     }
 
  }

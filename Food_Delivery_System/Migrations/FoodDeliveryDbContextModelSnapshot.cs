@@ -85,9 +85,6 @@ namespace FoodDeliverySystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DeliveryStatus")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
@@ -200,7 +197,6 @@ namespace FoodDeliverySystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OrderStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")

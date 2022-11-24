@@ -46,24 +46,24 @@ namespace Food_Delivery.Controllers_Mvc
             return View();
         }
 
-        public async Task<IActionResult> AddFood(Food foodType)
-        {
-            var uploadDirecotroy = "Css/Image/";
+        //public async Task<IActionResult> AddFood(Food foodType)
+        //{
+        //    var uploadDirecotroy = "Css/Image/";
 
-            string location = "~wwwroot/Css/Image/";
-            var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, uploadDirecotroy);
+        //    string location = "~wwwroot/Css/Image/";
+        //    var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, uploadDirecotroy);
 
-            if (!Directory.Exists(uploadPath))
-                Directory.CreateDirectory(uploadPath);
+        //    if (!Directory.Exists(uploadPath))
+        //        Directory.CreateDirectory(uploadPath);
 
-            var fileName = Guid.NewGuid() + Path.GetExtension(foodType.CoverPhoto.FileName);
-            var Iamgepath = Path.Combine(uploadPath, fileName);
-            await foodType.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create)); ;
-            foodType.ImageId = fileName;
+        //    var fileName = Guid.NewGuid() + Path.GetExtension(foodType.CoverPhoto.FileName);
+        //    var Iamgepath = Path.Combine(uploadPath, fileName);
+        //    await foodType.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create)); ;
+        //    foodType.ImageId = fileName;
 
-            _food.InsertFoodType(foodType);
-            return RedirectToAction("GetAllFood");
-        }   
+        //    _food.InsertFoodType(foodType);
+        //    return RedirectToAction("GetAllFood");
+        //}   
 
         public IActionResult Food(Food foodType)
         {

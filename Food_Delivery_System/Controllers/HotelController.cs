@@ -36,16 +36,17 @@ namespace Food_Delivery.Controllers
         {
             Messages msg = new Messages();
             var hotel = _hotel.GetHotelById(hotelId);
-            if (hotel != null)
+            if (hotel == null)
             {
-                return Ok(hotel);
+                return NotFound();
             }
+
             msg.Message = "The Hotel Id Not Registered";
             msg.Success = false;
             return Ok(msg);
         }
 
-        [HttpPost("Add")]
+        [HttpPost("")]
         public Messages AddHotelDetail(Hotel detaile)
         {
                 var hoteldetail = _hotel.InsertHotelDetail(detaile);
@@ -53,15 +54,16 @@ namespace Food_Delivery.Controllers
         }
 
 
-        [HttpPut("Update")]
+        [HttpPut("")]
 
         public Messages UpdateHotelDetail(Hotel hotel)
         {
             var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
+
             return hotelUpdate;
         }
 
-        [HttpDelete("Delete/{hotelDetailId}")]
+        [HttpDelete("/{hotelDetailId}")]
 
         public Messages DeleteHotelDetail(int hotelDetailId)
         {

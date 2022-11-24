@@ -6,7 +6,9 @@ namespace Food_Delivery.RepositoryInterface
     public interface ICustomer
     {
         public  IEnumerable<Customer> GetAll();
-        public Customer GetCustomerDetail(int customerId);
+        public Customer GetCustomerDetailById(int customerId);
+        public Customer GetCustomerDetailByNumber(String Number);
+        public Customer GetCustomerDetailByEmail(String Email);
         public Messages InsertCustomerDetail(Customer customer);
 
         public Messages UpdateCustomerDetail(Customer customer);
