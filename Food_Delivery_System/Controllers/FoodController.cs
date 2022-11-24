@@ -64,12 +64,6 @@ namespace Food_Delivery.Controllers
                 return NotFound("The Food Id Not Found");
             }
            
-            //var hotel = _hotel.GetHotelById(food);
-
-            //if (food.HotelId ==)
-            //{
-            //    return NotFound("The Hotel Id Not Found");
-            //}
 
             var fooddetail = _food.UpdateFood(food);
             if (fooddetail.Success == false)

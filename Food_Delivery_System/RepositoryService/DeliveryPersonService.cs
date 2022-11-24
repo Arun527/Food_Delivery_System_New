@@ -71,7 +71,8 @@ namespace Food_Delivery.RepositoryService
                 msg.Success = false;
                 msg.Message = "This DeliveryPersonId not registered";
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
-                if (updateDeliveryPerson != null)
+
+                if (updateDeliveryPerson != null )
                 {
                     updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
                     updateDeliveryPerson.Gender= deliveryPerson.Gender;
