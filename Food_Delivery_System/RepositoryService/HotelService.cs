@@ -114,15 +114,17 @@ namespace Food_Delivery.RepositoryService
             {
                var hotel=db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail.HotelId);
                 var updateEmail= db.Hotel.FirstOrDefault(x=>x.Email==hotelDetail.Email);
+                var updateNumber = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
                 msg.Message = "The hotel Id Not Registered";
                 msg.Success = false;
                 if (hotel != null)
                 {
-                        if (updateEmail!=null)
+                        if (updateEmail!=null && updateNumber!=null)
                         {
                               var hotelEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
                               var id = hotelEmail.HotelId;
-                        var number = hotelEmail.ContactNumber;
+                              var hotelnum = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
+                              var number = hotelnum.HotelId;
 
                            if (id!=null && hotelDetail.HotelId!=id)
                            {
@@ -130,12 +132,12 @@ namespace Food_Delivery.RepositoryService
                                  msg.Message = "This Email Id Already taked";
                                  return msg;
                            }
-                           if (number != null && hotelDetail.HotelId != id)
-                           {
+                        if (number != null && hotelDetail.HotelId != number)
+                        {
                             msg.Success = false;
                             msg.Message = "This Contact Number  Already taked";
                             return msg;
-                           }
+                        }
                         else
                            {
                             hotel.Email = hotelDetail.Email;

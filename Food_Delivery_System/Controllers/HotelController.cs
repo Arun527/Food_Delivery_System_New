@@ -74,7 +74,6 @@ namespace Food_Delivery.Controllers
             {
                 return BadRequest("The Hotel Field Is Required");
             }
-
             var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
             if (hotelUpdate.Message.Equals( "This Email Id Already taked"))
             {
