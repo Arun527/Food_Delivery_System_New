@@ -16,7 +16,7 @@ namespace Food_Delivery.RepositoryService
 
         public IEnumerable<OrderShipmentDetail> GetAllOrderShipmentDetail()
         {
-            return db.OrderShipmentDetail.ToList();
+                return db.OrderShipmentDetail.ToList();
         }
 
         public OrderShipmentDetail GetDeliveryPersonById(int Id)

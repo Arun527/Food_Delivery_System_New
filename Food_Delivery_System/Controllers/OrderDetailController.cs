@@ -1,5 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -16,11 +17,12 @@ namespace Food_Delivery.Controllers
         IHotel _hotel;
         IFood _food;
 
-        public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel)
+        public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel,IFood food)
         {
             _orderDetail = orderDetail;
             _customer = customer;
             _hotel = hotel;
+            _food = food;
         }
 
 
@@ -58,8 +60,26 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("The Customer Id Is Not Found");
             }
-            //var hotelId = _food.GetFoodTypeById(food);
-            //if (hotelId == null)
+            OrderShipmentRequest ord = new OrderShipmentRequest();
+            //var user =
+            List<FoodDetaile> obj = new List<FoodDetaile>();
+            obj = food.Food;
+            foreach (FoodDetaile foodDetaile in obj)
+            {
+                var foo = _food.GetFoodTypeById(foodDetaile.FoodId);
+                if (foo == null)
+                {
+                    return NotFound("The Food Id Is Not Found");
+                }
+                var hot = _hotel.GetHotelById(foodDetaile.HotelId);
+                if (hot == null)
+                {
+                    return NotFound("The Hotel Id Is Not Found");
+                }
+            }
+            //var Food = _hotel.GetHotelById().Where(x => x.HotelId ==))
+            //var hotelId = _food.GetFoodTypeById();
+            ////if (hotelId == null)
             //{
             //    return NotFound("The Hotel Id Is Not Found");
             //}
@@ -69,7 +89,7 @@ namespace Food_Delivery.Controllers
             //    return NotFound("The Food Id Is Not Found");
             //}
             var orderDetail = _orderDetail.InsertOrderDetail(food);
-            return Created("https://localhost:7187/Api/OrderDetail/" + food.OrderDetailId + "",orderDetail);
+            return Created("https://localhost:7187/Api/OrderDetail/" +food.OrderId + "",orderDetail);
         }
 
         [HttpPut("")]

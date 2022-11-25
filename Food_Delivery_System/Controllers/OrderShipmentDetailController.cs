@@ -73,7 +73,18 @@ namespace Food_Delivery.Controllers
         {
             Messages messages = new Messages();
             var deliveryPerson = _orderShipmentDetail.GetDeliveryPersonById(orderShipment.DeliveryPersonId);
-            if(orderShipment.DeliveryPersonId==0)
+            List<OrderShipmentList>obj = new List<OrderShipmentList>();
+            obj = orderShipment.ShipmentRequest;
+            foreach(OrderShipmentList item in obj)
+            {
+                var order=_orderDetail.GetOrderDetail(item.OrderDetailId);
+
+                if (order == null)
+                {
+                    return BadRequest("The Order Detail Id Is Not Found");
+                }
+            }
+            if (orderShipment.DeliveryPersonId==0)
             {
               return BadRequest("The DeliveryPersonId Field Is Required");
             }
@@ -170,7 +181,7 @@ namespace Food_Delivery.Controllers
         public IActionResult TrackingStatus(int orderId)
         {
             Messages messages = new Messages();
-            var customerId = _orderDetail.GetOrderDetail(orderId);
+            var customerId = _order.GetOrder(orderId);
             if (customerId == null)
             {
                 messages.Message = "The Order Id Is NotFound";

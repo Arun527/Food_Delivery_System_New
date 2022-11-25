@@ -88,7 +88,7 @@ namespace Food_Delivery.Controllers
             return Ok(hotel);
         }
 
-        [HttpGet("GetType/{Foodtype}")]
+        [HttpGet("GetType/{foodtype}")]
 
         public IActionResult GetHotelType(string foodtype)
         {

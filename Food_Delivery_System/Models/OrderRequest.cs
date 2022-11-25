@@ -5,7 +5,8 @@
 
         public int CustomerId { get; set; }
         public int OrderId { get; set; }
-        public int OrderDetailId { get; set; }
+        //public int OrderDetailId { get; set; }
+
         public string OrderStatus { get; set; } = "Order Placed";
         public List<FoodDetaile> Food { get; set; }
 
