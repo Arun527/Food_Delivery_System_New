@@ -7,6 +7,8 @@ namespace Food_Delivery.RepositoryInterface
     {
         public  IEnumerable<Customer> GetAll();
         public Customer GetCustomerDetailById(int customerId);
+
+        public IEnumerable<Customer> GetCustomerDetailByIsActive(bool isActive);
         public Customer GetCustomerDetailByNumber(String Number);
         public Customer GetCustomerDetailByEmail(String Email);
         public Messages InsertCustomerDetail(Customer customer);

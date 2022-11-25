@@ -39,7 +39,25 @@ namespace Food_Delivery.RepositoryService
 
         }
 
+        public IEnumerable<Customer> GetCustomerDetailByIsActive(bool isActive)
+        {
 
+            try
+            {
+                Message message = new Message();
+                
+                var customerList = db.Customer.Where(x => x.IsActive == isActive).ToList();
+             
+             
+                return customerList;
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
         public Customer GetCustomerDetailByNumber(string Number)
         {
@@ -137,6 +155,7 @@ namespace Food_Delivery.RepositoryService
                         var contact = contactNumber.CustomerId;
                         var EmailId = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
                         var Id = EmailId.CustomerId;
+
                         if (contact != null && customer.CustomerId != contact)
                         {
 
@@ -158,6 +177,7 @@ namespace Food_Delivery.RepositoryService
                             updateCustomer.Gender = customer.Gender;
                             updateCustomer.Address = customer.Address;
                             updateCustomer.ContactNumber = customer.ContactNumber;
+                            updateCustomer.IsActive = customer.IsActive;
                             db.Update(updateCustomer);
                             db.SaveChanges();
                             msg.Success = true;
@@ -172,6 +192,7 @@ namespace Food_Delivery.RepositoryService
                         updateCustomer.Gender = customer.Gender;
                         updateCustomer.Address = customer.Address;
                         updateCustomer.ContactNumber = customer.ContactNumber;
+                        updateCustomer.IsActive = customer.IsActive;
                         db.Update(updateCustomer);
                         db.SaveChanges();
                         msg.Success = true;

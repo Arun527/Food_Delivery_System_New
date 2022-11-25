@@ -41,6 +41,23 @@ namespace Food_Delivery.Controllers
             }
             return Ok(obj);
         }
+        [HttpGet("IsActive/{isActive}")]
+        public IActionResult GetCustomerDetailByIsActive(bool isActive)
+        {
+           
+            var obj = _customer.GetCustomerDetailByIsActive(isActive);
+
+            if (obj == null)
+            {
+                return NotFound("Customer Id Is Not Found");
+            }
+
+            if (obj.Count() == 0)
+            {
+                return NotFound("Customer List Is Empty");
+            }
+            return Ok(obj);
+        }
 
         [HttpGet("ContactNumber/{contactNumber}")]
         public IActionResult GetCustomerDetailByNumber(string contactNumber)
