@@ -88,11 +88,12 @@ namespace Food_Delivery.Controllers
 
         public IActionResult DeleteHotelDetail(int hotelDetailId)
         {
-            var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
-            if(hotel == null)
+            var id = _hotel.GetHotelById(hotelDetailId);
+            if (id == null)
             {
                 return NotFound("The Hotel Id Not Found");
             }
+            var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
             return Ok(hotel);
         }
 

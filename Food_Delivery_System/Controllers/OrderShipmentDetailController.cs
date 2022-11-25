@@ -170,7 +170,7 @@ namespace Food_Delivery.Controllers
         public IActionResult TrackingStatus(int orderId)
         {
             Messages messages = new Messages();
-            var customerId = _orderDetail.GetOrderDetail(orderId);
+            var customerId = _order.GetOrder(orderId);
             if (customerId == null)
             {
                 messages.Message = "The Order Id Is NotFound";
