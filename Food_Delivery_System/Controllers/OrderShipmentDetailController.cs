@@ -52,7 +52,8 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound(messages.Message);
             }
-            return Ok(obj);
+            var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
+            return Ok(delivery);
         }
 
         [HttpGet("{Id}")]
@@ -72,7 +73,7 @@ namespace Food_Delivery.Controllers
         public IActionResult InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages messages = new Messages();
-            var deliveryPerson = _orderShipmentDetail.GetDeliveryPersonById(orderShipment.DeliveryPersonId);
+            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
             List<OrderShipmentList>obj = new List<OrderShipmentList>();
             obj = orderShipment.ShipmentRequest;
             foreach(OrderShipmentList item in obj)
@@ -94,7 +95,7 @@ namespace Food_Delivery.Controllers
                 return NotFound(messages.Message);
             }
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
-            return Ok(orderShipmentDetail);
+                return Ok(orderShipmentDetail);
         }
 
         [HttpPut("")]
@@ -102,7 +103,7 @@ namespace Food_Delivery.Controllers
         {
             Messages messages = new Messages();
             var ordershipmentId= _orderShipmentDetail.GetOrderShipmentDetailById(orderShipment.OrderShipmentDetailId);
-            var deliveryPerson = _orderShipmentDetail.GetDeliveryPersonById(orderShipment.DeliveryPersonId);
+            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
             var orderDetail = _orderDetail.GetOrderDetail(orderShipment.OrderDetailId);
             if (ordershipmentId == null)
             {

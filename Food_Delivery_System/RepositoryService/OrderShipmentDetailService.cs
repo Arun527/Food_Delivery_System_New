@@ -99,6 +99,24 @@ namespace Food_Delivery.RepositoryService
             return msg;
         }
 
+
+        public IEnumerable<InvoiceDeliveryPerson> GetdeliveryPersonById(int deliveryPersonId)
+        {
+
+            var orderDetails = (from ordershipment in db.OrderShipmentDetail
+                                join deliveryPerson in db.DeliveryPerson on ordershipment.DeliveryPersonId equals deliveryPerson.DeliveryPersonId
+                                join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId
+                                where ordershipment.DeliveryPersonId == deliveryPersonId
+                                select new InvoiceDeliveryPerson
+                                {
+                                 DeliveryPersonId = ordershipment.DeliveryPersonId,
+                                 OrderDetailId = ordershipment.OrderDetailId,   
+                                 OrderShipmentDetailId = ordershipment.OrderShipmentDetailId,
+                                   
+                                }).ToList();
+            return orderDetails;
+        }
+
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
         {
 
