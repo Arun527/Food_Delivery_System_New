@@ -117,7 +117,7 @@ namespace Food_Delivery.RepositoryService
                 msg.Message = "The hotel Id Not Registered";
                 msg.Success = false;
                 if (hotel != null)
-               {
+                {
                         if (updateEmail!=null)
                         {
                               var hotelEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
