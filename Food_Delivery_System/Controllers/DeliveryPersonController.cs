@@ -61,13 +61,18 @@ namespace Food_Delivery.Controllers
         [HttpPut("/api/DeliveryPerson")]
         public IActionResult UpdateDeliveryPerson([FromBody]DeliveryPerson deliveryPerson)
         {
+            Messages messages = new Messages();
             var update = _deliveryperson.GetDeliveryPerson(deliveryPerson.DeliveryPersonId);
             if(update == null)
             {
                 return NotFound("This Delivery Person Id Not Found");
             }
             var updateDeliveryPerson = _deliveryperson.UpdateDeliveryPerson(deliveryPerson);
-
+            if(messages.Success==false)
+            {
+                messages.Message = "The Contact Number Already Taked";
+                return Conflict(messages.Message);
+            }
             return Ok(updateDeliveryPerson);
         }
 

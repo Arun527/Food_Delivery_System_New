@@ -76,9 +76,13 @@ namespace Food_Delivery.Controllers
             }
 
             var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
-            if (hotelUpdate.Success == false)
+            if (hotelUpdate.Message.Equals( "This Email Id Already taked"))
             {
-                return Conflict("The Contact Number Already Taked");
+                return Conflict("The Email Already Taked");
+            }
+            if (hotelUpdate.Message.Equals("This Contact Number  Already taked"))
+            {
+                return Conflict("This Contact Number  Already taked");
             }
 
             return Ok(hotelUpdate);

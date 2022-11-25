@@ -122,6 +122,7 @@ namespace Food_Delivery.RepositoryService
                         {
                               var hotelEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
                               var id = hotelEmail.HotelId;
+                        var number = hotelEmail.ContactNumber;
 
                            if (id!=null && hotelDetail.HotelId!=id)
                            {
@@ -129,7 +130,13 @@ namespace Food_Delivery.RepositoryService
                                  msg.Message = "This Email Id Already taked";
                                  return msg;
                            }
-                           else
+                           if (number != null && hotelDetail.HotelId != id)
+                           {
+                            msg.Success = false;
+                            msg.Message = "This Contact Number  Already taked";
+                            return msg;
+                           }
+                        else
                            {
                             hotel.Email = hotelDetail.Email;
                             hotel.Type = hotelDetail.Type;

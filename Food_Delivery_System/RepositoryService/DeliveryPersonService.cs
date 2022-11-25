@@ -97,19 +97,22 @@ namespace Food_Delivery.RepositoryService
                 msg.Success = false;
                 msg.Message = "This DeliveryPersonId not registered";
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
+                var number = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
 
-                if (updateDeliveryPerson != null )
+                if (updateDeliveryPerson != null)
                 {
-                    updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
-                    updateDeliveryPerson.Gender= deliveryPerson.Gender;
-                    db.Update(updateDeliveryPerson);
-                    db.SaveChanges();
-                    msg.Success = true;
-                    msg.Message = "DeliveryPerson Updated Succesfully!!";
+                    
+                        updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
+                        updateDeliveryPerson.Gender = deliveryPerson.Gender;
+                        db.Update(updateDeliveryPerson);
+                        db.SaveChanges();
+                        msg.Success = true;
+                        msg.Message = "DeliveryPerson Updated Succesfully!!";
+                    
                 }
-                return msg;
+                    return msg;
+                
             }
-
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
