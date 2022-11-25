@@ -84,7 +84,7 @@ namespace Food_Delivery.Controllers
             return Ok(hotelUpdate);
         }
 
-        [HttpDelete("/{hotelDetailId}")]
+        [HttpDelete("{hotelDetailId}")]
 
         public IActionResult DeleteHotelDetail(int hotelDetailId)
         {
@@ -101,11 +101,12 @@ namespace Food_Delivery.Controllers
 
         public  IActionResult GetHotelType(string hoteltype)
         {
-            var hotel = _hotel.GetHotelType(hoteltype);
-            if(hotel.Count() == 0)
+            var type=_hotel.GetHotelType(hoteltype);
+            if(type == null)
             {
                 return NotFound("The Hotel Type Not Found");
             }
+            var hotel = _hotel.GetHotelType(hoteltype);
             return Ok(hotel);
         }
     }

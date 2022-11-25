@@ -47,8 +47,12 @@ namespace Food_Delivery.Controllers
         [HttpPost("")]
         public IActionResult InsertFoodType(Food food)
         {
-            int id = (int)food.HotelId;
-            var hotel = _hotel.GetHotelById(id);
+            Messages messages = new Messages();
+            if (food.HotelId == 0)
+            {
+                return BadRequest("The HotelId Field Is Required");
+            }
+            var hotel = _hotel.GetHotelById(food.HotelId.Value);
             if(hotel == null)
             {
                 return NotFound("The Hotel Id Not Found");
@@ -88,7 +92,7 @@ namespace Food_Delivery.Controllers
             return Ok(hotel);
         }
 
-        [HttpGet("GetType/{Foodtype}")]
+        [HttpGet("GetType/{foodtype}")]
 
         public IActionResult GetHotelType(string foodtype)
         {

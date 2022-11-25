@@ -12,7 +12,7 @@ namespace Food_Delivery.Models
     {
         [Key]
         public int FoodId { get; set; }
-        [System.ComponentModel.DataAnnotations.StringLength(13, MinimumLength = 10)]
+        [System.ComponentModel.DataAnnotations.StringLength(32, MinimumLength = 2)]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please enter the Food Name Minimum length of 2 maximum length of 32")]
 
         public string? FoodName { get; set; }

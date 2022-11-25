@@ -36,7 +36,8 @@ namespace FoodDeliverySystem.Migrations
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -53,7 +54,8 @@ namespace FoodDeliverySystem.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.HasKey("CustomerId");
 
@@ -112,7 +114,9 @@ namespace FoodDeliverySystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FoodId"));
 
                     b.Property<string>("FoodName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<int?>("HotelId")
                         .HasColumnType("int");
@@ -233,7 +237,6 @@ namespace FoodDeliverySystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrackingStatusDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderShipmentDetailId");

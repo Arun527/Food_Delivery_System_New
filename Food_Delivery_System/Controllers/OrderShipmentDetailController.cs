@@ -73,7 +73,18 @@ namespace Food_Delivery.Controllers
         {
             Messages messages = new Messages();
             var deliveryPerson = _orderShipmentDetail.GetDeliveryPersonById(orderShipment.DeliveryPersonId);
-            if(orderShipment.DeliveryPersonId==0)
+            List<OrderShipmentList>obj = new List<OrderShipmentList>();
+            obj = orderShipment.ShipmentRequest;
+            foreach(OrderShipmentList item in obj)
+            {
+                var order=_orderDetail.GetOrderDetail(item.OrderDetailId);
+
+                if (order == null)
+                {
+                    return BadRequest("The Order Detail Id Is Not Found");
+                }
+            }
+            if (orderShipment.DeliveryPersonId==0)
             {
               return BadRequest("The DeliveryPersonId Field Is Required");
             }

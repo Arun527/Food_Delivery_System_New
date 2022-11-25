@@ -1,5 +1,4 @@
-﻿
-using Food_Delivery.Models;
+﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using ServiceStack.Messaging;
 
@@ -43,15 +42,42 @@ namespace Food_Delivery.RepositoryService
             try
             {
                 var deliveryPersonId = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
+                var delivery=db.DeliveryPerson.FirstOrDefault(x=>x.ContactNumber==deliveryPerson.ContactNumber);
                 msg.Success = false;
                 msg.Message = "This DeliveryPerson Already Exists";
                 if (deliveryPersonId == null)
                 {
-                    db.Add(deliveryPerson);
-                    db.SaveChanges();
-                    msg.Success = true;
-                    msg.Message = "DeliveryPerson Added Succesfully";
-                    return msg;
+                    if (delivery != null)
+                    {
+                        var contactnimber = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
+                        var id = deliveryPerson.DeliveryPersonId;
+                        if(id !=null && deliveryPerson.DeliveryPersonId != null)
+                        {
+                            msg.Success = false;
+                            msg.Message = "The Contact Number Already taked";
+                            return msg;
+                        }
+                        else
+                        {
+                            db.Add(deliveryPerson);
+                            db.SaveChanges();
+                            msg.Success = true;
+                            msg.Message = "DeliveryPerson Added Succesfully";
+                            return msg;
+
+                        }
+
+                    }
+
+
+                    else
+                    {
+                        db.Add(deliveryPerson);
+                        db.SaveChanges();
+                        msg.Success = true;
+                        msg.Message = "DeliveryPerson Added Succesfully";
+                        return msg;
+                    }
                 }
                 return msg;
             }
@@ -105,24 +131,5 @@ namespace Food_Delivery.RepositoryService
             }
             return msg;
         }
-
-        //public LoginDto loginbyid(string contactNumber, string password)
-        //{
-        //    var result = (from Role in db.Role
-                        
-        //                  join DeliveryPerson in db.DeliveryPerson on Role.RoleId equals DeliveryPerson.RoleId
-        //                  where DeliveryPerson.ContactNumber == contactNumber && DeliveryPerson.Password == password
-        //                  select new LoginDto()
-        //                  {
-        //                      Password = DeliveryPerson.Password,
-        //                      ContactNumber = DeliveryPerson.ContactNumber,
-        //                      RoleId = Role.RoleId,
-                            
-                           
-        //                      RoleNmae = Role.RoleName
-        //                  }).FirstOrDefault();
-        //    return result;
-        //}
-
     }
 }

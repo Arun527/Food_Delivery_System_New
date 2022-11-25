@@ -1,5 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace Food_Delivery.Controllers
         ICustomer _customer;
         IHotel _hotel;
         IFood _food;
+        IOrders _orders;
 
-        public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel)
+        public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel,IFood food , IOrders orders)
         {
             _orderDetail = orderDetail;
             _customer = customer;
             _hotel = hotel;
+            _food = food;
+            _orders = orders;
         }
 
 
@@ -58,18 +62,31 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("The Customer Id Is Not Found");
             }
-            //var hotelId = _food.GetFoodTypeById(food);
-            //if (hotelId == null)
-            //{
-            //    return NotFound("The Hotel Id Is Not Found");
-            //}
-            //var foodId = _food.GetFoodTypeById(food.FoodId);
-            //if (foodId == null)
-            //{
-            //    return NotFound("The Food Id Is Not Found");
-            //}
+            OrderShipmentRequest ord = new OrderShipmentRequest();
+            
+            List<FoodDetaile> obj = new List<FoodDetaile>();
+            obj = food.Food;
+            foreach (FoodDetaile foodDetaile in obj)
+            {
+                var foods = _food.GetFoodTypeById(foodDetaile.FoodId);
+                if (foods == null)
+                {
+                    return NotFound("The Food Id Is Not Found");
+                }
+                var hotel = _hotel.GetHotelById(foodDetaile.HotelId);
+                if (hotel == null)
+                {
+                    return NotFound("The Hotel Id Is Not Found");
+                }
+                var quantity = foodDetaile.Quantity;
+                if(quantity==0)
+                {
+                    return BadRequest("Please Enter Minimum Quantity Of 1 !!");
+                }
+            }
+           
             var orderDetail = _orderDetail.InsertOrderDetail(food);
-            return Created("https://localhost:7187/Api/OrderDetail/" + food.OrderDetailId + "",orderDetail);
+            return Created("https://localhost:7187/Api/OrderDetail/" +food.OrderId + "",orderDetail);
         }
 
         [HttpPut("")]
@@ -83,13 +100,32 @@ namespace Food_Delivery.Controllers
             var id = _orderDetail.GetOrderDetail(detail.OrderDetailId);
             if (id == null)
             {
-                return NotFound(id);
+                return NotFound("The OrderDetail Id Is Not Found");
+            }
+            var customer = _customer.GetCustomerDetailById(detail.CustomerId.Value);
+            if (customer == null)
+            {
+                return NotFound("The CustomerId Is Not Found");
+            }
+            var orderId = _orders.GetOrder(detail.OrderId);
+            if (orderId == null)
+            {
+                return NotFound("The OrderId Is Not Found");
+            }
+            var hotelId = _hotel.GetHotelById(detail.HotelId.Value);
+            if(hotelId == null)
+            {
+                return NotFound("The HotelId Is Not Found");
+            }
+            var foodId = _food.GetFoodTypeById(detail.FoodId.Value);
+            if(foodId == null)
+            {
+                return NotFound("The FoodId Is Not Found");
             }
             var orderDetail = _orderDetail.UpdateOrderDetail(detail);
-       
             if(orderDetail.Success == false)
             {
-                messages.Message = "The Order is Out Of Delivery";
+                messages.Message = "The Order is Can't Update Because Out For Delivery";
                 return Conflict(messages.Message);
             }
             return Ok(orderDetail);
@@ -99,6 +135,7 @@ namespace Food_Delivery.Controllers
 
         public IActionResult DeleteOrderDetail(int id)
         {
+
             var orderid = _orderDetail.GetOrderDetail(id);
             if (orderid == null)
             {

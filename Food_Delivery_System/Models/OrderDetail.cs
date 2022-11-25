@@ -31,7 +31,7 @@ namespace Food_Delivery.Models
         [ForeignKey("HotelId")]
         [JsonIgnore]
         public Hotel? Hotel { get; set; }
-
+        [System.ComponentModel.DataAnnotations.Range(1, 2147483647)]
         public int Quantity { get; set; }
 
         public string? OrderStatus { get; set; }
