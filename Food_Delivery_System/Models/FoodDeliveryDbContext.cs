@@ -12,6 +12,7 @@ namespace Food_Delivery.Models
             modelBuilder.Entity<Customer>().HasIndex(s => s.ContactNumber).IsUnique();
             modelBuilder.Entity<Customer>().HasIndex(s => s.Email).IsUnique();
             modelBuilder.Entity<Hotel>().HasIndex(s => s.ContactNumber).IsUnique();
+            modelBuilder.Entity<Hotel>().HasIndex(s => s.Email).IsUnique();
             modelBuilder.Entity<DeliveryPerson>().HasIndex(s => s.ContactNumber).IsUnique();
        
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

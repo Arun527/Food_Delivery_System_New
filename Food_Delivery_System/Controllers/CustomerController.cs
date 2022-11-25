@@ -30,7 +30,7 @@ namespace Food_Delivery.Controllers
          
 
         [HttpGet("/api/Customer/{customerId}")]
-        public IActionResult GetCustomerDetail(int customerId)
+        public IActionResult GetCustomerDetailById(int customerId)
         {
             Messages messages = new Messages();
             messages.Message = "Customer Id Is Not Found";
@@ -42,6 +42,18 @@ namespace Food_Delivery.Controllers
             return Ok(obj);
         }
 
+        [HttpGet("ContactNumber/{contactNumber}")]
+        public IActionResult GetCustomerDetailByNumber(string contactNumber)
+        {
+            Messages messages = new Messages();
+            messages.Message = "Customer Id Is Not Found";
+            var obj = _customer.GetCustomerDetailByNumber(contactNumber);
+            if (obj == null)
+            {
+                return NotFound(messages.Message);
+            }
+            return Ok(obj);
+        }
 
         [HttpPost("/api/Customer")]
         public IActionResult InsertCustomerDetail(Customer customer)

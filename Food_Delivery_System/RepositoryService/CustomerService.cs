@@ -132,8 +132,8 @@ namespace Food_Delivery.RepositoryService
                     if (number != null)
                     {
                           var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == number.ContactNumber);
-                        var id = contactNumber.ContactNumber;
-                        if(id !=null && customer.ContactNumber !=id)
+                        var contact = contactNumber.ContactNumber;
+                        if(contact != null && customer.ContactNumber != contact)
                         {
 
                             msg.Success = false;
