@@ -126,9 +126,36 @@ namespace Food_Delivery.RepositoryService
                 msg.Success = false;
                 msg.Message = "This Customer id not registered";
                 var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
+                var number = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
                 if (updateCustomer != null)
                 {
-                   
+                    if (number != null)
+                    {
+                          var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == number.ContactNumber);
+                        var id = contactNumber.ContactNumber;
+                        if(id !=null && customer.ContactNumber !=id)
+                        {
+
+                            msg.Success = false;
+                            msg.Message = "This Contact Number Already taked";
+                            return msg;
+                        }
+                        else
+                        {
+                            updateCustomer.Name = customer.Name;
+                            updateCustomer.Email = customer.Email;
+                            updateCustomer.Gender = customer.Gender;
+                            updateCustomer.Address = customer.Address;
+                            updateCustomer.ContactNumber = customer.ContactNumber;
+                            db.Update(updateCustomer);
+                            db.SaveChanges();
+                            msg.Success = true;
+                            msg.Message = "Customer Updated Succesfully!!";
+                        }
+
+                    }
+                    else
+                    {
                         updateCustomer.Name = customer.Name;
                         updateCustomer.Email = customer.Email;
                         updateCustomer.Gender = customer.Gender;
@@ -137,7 +164,9 @@ namespace Food_Delivery.RepositoryService
                         db.Update(updateCustomer);
                         db.SaveChanges();
                         msg.Success = true;
-                        msg.Message = "Customer Updated Succesfully!!"; 
+                        msg.Message = "Customer Updated Succesfully!!";
+                    }
+
                 }
                 return msg;
             }

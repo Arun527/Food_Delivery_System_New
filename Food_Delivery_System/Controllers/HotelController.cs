@@ -102,9 +102,9 @@ namespace Food_Delivery.Controllers
         public  IActionResult GetHotelType(string hoteltype)
         {
             var type=_hotel.GetHotelType(hoteltype);
-            if(type == null)
+            if(type.Count() == 0)
             {
-                return NotFound("The Hotel Type Not Found");
+                return NotFound("The Food Type Not Found");
             }
             var hotel = _hotel.GetHotelType(hoteltype);
             return Ok(hotel);
