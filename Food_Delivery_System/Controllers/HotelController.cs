@@ -91,10 +91,15 @@ namespace Food_Delivery.Controllers
 
         public IActionResult DeleteHotelDetail(int hotelDetailId)
         {
+            Messages messages = new Messages();
             var id = _hotel.GetHotelById(hotelDetailId);
             if (id == null)
             {
                 return NotFound("The Hotel Id Not Found");
+            }
+            if (messages.Success == false)
+            {
+                return BadRequest("The Hotel Id Is  Not Deleted,Because This Hotel Management  Created  Available  Food List ");
             }
             var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
             return Ok(hotel);

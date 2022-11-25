@@ -28,6 +28,9 @@ namespace Food_Delivery.Models
         [JsonIgnore]
         public Hotel? Hotel { get; set; }
 
+        [System.ComponentModel.DataAnnotations.StringLength(32, MinimumLength = 2)]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please enter the Food Type Minimum length of 2 maximum length of 32")]
+
         public string? Type { get; set; }
 
         //[NotMapped]

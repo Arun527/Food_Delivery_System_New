@@ -10,6 +10,7 @@ namespace Food_Delivery.Models
     {
 
         [Key]
+        
         public int OrderDetailId { get; set; }
         public  int? CustomerId { get; set; }
         [ForeignKey("CustomerId")]

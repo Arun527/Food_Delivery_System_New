@@ -82,12 +82,16 @@ namespace Food_Delivery.Controllers
         [HttpDelete("{foodId}")]
         public IActionResult DeleteFoodType(int foodId)
         {
-
+            var food =_food.GetFoodTypeById(foodId);
+            if (food == null)
+            {
+                return NotFound("The Food Id Not Found");
+            }
             var hotel = _food.DeleteFoodType(foodId);
 
             if(hotel.Success == false)
             {
-                return NotFound("The Food Id Not Found");
+                return BadRequest("The Food Id Is Not Deleted Because Order The Customer");
             }
             return Ok(hotel);
         }
@@ -96,11 +100,12 @@ namespace Food_Delivery.Controllers
 
         public IActionResult GetHotelType(string foodtype)
         {
-            var foodType = _food.GetFoodType(foodtype);
-            if (foodtype == null)
+            var food=_food.GetFoodType(foodtype);
+            if (food.Count() == 0)
             {
                 return NotFound("The Food Type Is Not Found");
             }
+            var foodType = _food.GetFoodType(foodtype);
             return Ok(foodType);
         }
 

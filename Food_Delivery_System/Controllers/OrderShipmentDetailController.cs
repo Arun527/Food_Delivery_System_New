@@ -84,7 +84,7 @@ namespace Food_Delivery.Controllers
                     return BadRequest("The Order Detail Id Is Not Found");
                 }
             }
-            if (orderShipment.DeliveryPersonId==0)
+            if (orderShipment.DeliveryPersonId ==null)
             {
               return BadRequest("The DeliveryPersonId Field Is Required");
             }
@@ -102,7 +102,7 @@ namespace Food_Delivery.Controllers
         {
             Messages messages = new Messages();
             var ordershipmentId= _orderShipmentDetail.GetOrderShipmentDetailById(orderShipment.OrderShipmentDetailId);
-            var deliveryPerson = _orderShipmentDetail.GetDeliveryPersonById(orderShipment.DeliveryPersonId);
+            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
             var orderDetail = _orderDetail.GetOrderDetail(orderShipment.OrderDetailId);
             if (ordershipmentId == null)
             {

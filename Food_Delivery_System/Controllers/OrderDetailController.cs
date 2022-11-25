@@ -135,13 +135,19 @@ namespace Food_Delivery.Controllers
 
         public IActionResult DeleteOrderDetail(int id)
         {
-
+            Messages messages = new Messages();
             var orderid = _orderDetail.GetOrderDetail(id);
             if (orderid == null)
             {
-                return NotFound(orderid);
+                return NotFound("This Order Id Is Not Found");
             }
+
+           
             var orderDetail = _orderDetail.DeleteOrderDetail(id);
+            //if (messages.Success == false)
+            //{
+            //    return BadRequest("The Ordered Food was Delivered So This Order don't removable");
+            //}
             return Ok(orderDetail);
         }
     }

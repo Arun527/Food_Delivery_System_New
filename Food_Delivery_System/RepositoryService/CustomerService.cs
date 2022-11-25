@@ -127,17 +127,28 @@ namespace Food_Delivery.RepositoryService
                 msg.Message = "This Customer id not registered";
                 var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
                 var number = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
+                var Email = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
+
                 if (updateCustomer != null)
                 {
-                    if (number != null)
+                    if (number != null && Email!=null)
                     {
-                          var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == number.ContactNumber);
-                        var contact = contactNumber.ContactNumber;
-                        if(contact != null && customer.ContactNumber != contact)
+                        var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
+                        var contact = contactNumber.CustomerId;
+                        var EmailId = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
+                        var Id = EmailId.CustomerId;
+                        if (contact != null && customer.CustomerId != contact)
                         {
 
                             msg.Success = false;
                             msg.Message = "This Contact Number Already taked";
+                            return msg;
+                        }
+                        if (Id != null && customer.CustomerId != Id)
+                        {
+
+                            msg.Success = false;
+                            msg.Message = "This Email Id  Already taked";
                             return msg;
                         }
                         else
