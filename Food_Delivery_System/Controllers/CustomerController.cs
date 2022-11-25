@@ -94,13 +94,19 @@ namespace Food_Delivery.Controllers
                 return NotFound("The Customer Id Is Not Found");
             }
             var updateCustomer = _customer.UpdateCustomerDetail(customer);
-           
-            if(updateCustomer.Success== false)
+
+            if (updateCustomer.Message.Equals("This Contact Number Already taked"))
             {
                 messages.Message = "The Contact Number Already Taked";
-                return  Conflict(messages.Message);
+                return Conflict(messages.Message);
             }
-           
+
+            if (updateCustomer.Message.Equals("This Email Id  Already taked"))
+            {
+                messages.Message = "This Email Id  Already taked";
+                return Conflict(messages.Message);
+            }
+
             return Ok(updateCustomer);  
                 
         }
@@ -109,10 +115,15 @@ namespace Food_Delivery.Controllers
         [HttpDelete("/api/Customer/{customerId}")]
         public IActionResult DeleteCustomerDetail(int customerId)
         {
+            Messages messages =new Messages();
             var id = _customer.GetCustomerDetailById(customerId);
             if (id == null)
             {
                 return NotFound("The Customer Id Not Found");
+            }
+            if (messages.Success == false)
+            {
+                return BadRequest("The Customer Id Not Deleted,Because This Customer  Order The Product ");
             }
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
             return Ok(deleteCustomer);

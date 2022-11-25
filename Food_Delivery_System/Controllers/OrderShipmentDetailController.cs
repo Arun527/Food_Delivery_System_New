@@ -85,7 +85,7 @@ namespace Food_Delivery.Controllers
                     return BadRequest("The Order Detail Id Is Not Found");
                 }
             }
-            if (orderShipment.DeliveryPersonId==0)
+            if (orderShipment.DeliveryPersonId ==null)
             {
               return BadRequest("The DeliveryPersonId Field Is Required");
             }

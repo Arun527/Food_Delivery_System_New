@@ -97,15 +97,24 @@ namespace Food_Delivery.RepositoryService
         public Messages DeleteOrderDetail(int orderDetailId)
         {
             Messages msg = new Messages();
-            var deleteOrder = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetailId);
-            if (deleteOrder != null)
+            try
             {
-                db.Remove(deleteOrder);
-                db.SaveChanges();
-                msg.Success = true;
-                msg.Message = "Order Deleted Succesfully";
+                var deleteOrder = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetailId);
+                if (deleteOrder != null)
+                {
+                    db.Remove(deleteOrder);
+                    db.SaveChanges();
+                    msg.Success = true;
+                    msg.Message = "Order Deleted Succesfully";
+                }
+                return msg;
             }
-            return msg;
+            catch (Exception ex)
+            {
+                msg.Message = ex.Message;
+                return msg;
+            }
+
         }
 
     }

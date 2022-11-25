@@ -68,11 +68,11 @@ namespace Food_Delivery.Controllers
                 return NotFound("This Delivery Person Id Not Found");
             }
             var updateDeliveryPerson = _deliveryperson.UpdateDeliveryPerson(deliveryPerson);
-            if(messages.Success==false)
-            {
-                messages.Message = "The Contact Number Already Taked";
-                return Conflict(messages.Message);
-            }
+            //if (messages.Success == false)
+            //{
+            //    messages.Message = "The Contact Number Already Taked";
+            //    return Conflict(messages.Message);
+            //}
             return Ok(updateDeliveryPerson);
         }
 
