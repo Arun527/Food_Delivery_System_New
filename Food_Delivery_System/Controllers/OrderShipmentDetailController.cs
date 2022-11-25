@@ -45,14 +45,18 @@ namespace Food_Delivery.Controllers
         [HttpGet("GetDeliveryPerson/{Id}")]
         public IActionResult GetDeliveryPersonById(int Id)
         {
-            Messages messages = new Messages();
-            messages.Message = "DeliveryPerson Id Is NotFound";
-            var obj = _orderShipmentDetail.GetDeliveryPersonById(Id);
+            
+            var obj = _deliveryPerson.GetDeliveryPerson(Id);
             if(obj == null)
             {
-                return NotFound(messages.Message);
+                return NotFound("DeliveryPerson Id Is NotFound");
             }
+            
             var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
+            if (delivery.Count() == 0)
+            {
+                return NotFound("This Delivery Person Don't Delivery Any Order");
+            }
             return Ok(delivery);
         }
 

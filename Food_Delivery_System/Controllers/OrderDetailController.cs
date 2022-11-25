@@ -130,7 +130,7 @@ namespace Food_Delivery.Controllers
             }
             return Ok(orderDetail);
         }
-
+          
         [HttpDelete("{id}")]
 
         public IActionResult DeleteOrderDetail(int id)

@@ -170,6 +170,7 @@ namespace Food_Delivery.RepositoryService
                                 select new TrackingDetail
                                 {
                                     OrderId = orderdetail.OrderId,
+                                    OrderDetailId=orderdetail.OrderDetailId,
                                     OrderStatus = orderdetail.OrderStatus,
 
                                 }).ToList();
