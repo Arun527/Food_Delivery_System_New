@@ -177,7 +177,7 @@ namespace Food_Delivery.RepositoryService
                 return getId;
             }
 
-            catch (Exception)
+            catch (Exception)   
             {
                 throw;
             }

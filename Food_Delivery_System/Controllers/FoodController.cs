@@ -43,7 +43,7 @@ namespace Food_Delivery.Controllers
             var food = _food.GetFoodTypeById(Id);
             return Ok(food);
         }
-
+          
 
         [HttpGet("FoodByName/{name}")]
         public IActionResult GetByFoodName(String name)

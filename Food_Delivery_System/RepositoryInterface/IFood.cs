@@ -7,7 +7,7 @@ namespace Food_Delivery.RepositoryInterface
     {
         public IEnumerable<Food> GetAll();
 
-        public Food GetFoodTypeById(int foodTypeId);
+        public Food GetFoodTypeById(int foodTypeId);  
 
         public IEnumerable<Food> GetFoodByName(String FoodName);
         public Messages InsertFoodType(Food foodType);
