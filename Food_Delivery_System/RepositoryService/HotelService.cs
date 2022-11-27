@@ -77,6 +77,24 @@ namespace Food_Delivery.RepositoryService
 
         }
 
+        public Hotel GetHotelDetailByName(String hotelName)
+        {
+
+            try
+            {
+                Message message = new Message();
+                var getId = db.Hotel.FirstOrDefault(x => x.HotelName == hotelName);
+                return getId;
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+
+
+        }
+
 
         public Messages InsertHotelDetail(Hotel hotelDetail)
         {

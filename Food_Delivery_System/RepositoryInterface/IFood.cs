@@ -1,5 +1,5 @@
 ﻿using Food_Delivery.Models;
-
+using Food_Delivery_System.Models;
 
 namespace Food_Delivery.RepositoryInterface
 {
@@ -16,5 +16,7 @@ namespace Food_Delivery.RepositoryInterface
         public Messages DeleteFoodType(int foodTypeId);
 
         public IEnumerable<Food> GetFoodType(string foodtype);
+
+        public IEnumerable<FoodList> GetFoodByHotelId(int hotelId);
     }
 }

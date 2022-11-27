@@ -1,5 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Food_Delivery.RepositoryService
@@ -165,26 +166,27 @@ namespace Food_Delivery.RepositoryService
         //}
 
 
-
-
-
-        //public IEnumerable<FoodDto> GetFoodByHotelId(int hotelId)
-        //{
-
-        //    {
-        //        var employeeleave = (from food in db.Food
-        //                             join hotel in db.Hotel on food.HotelId equals hotel.HotelId
-        //                             where hotel.HotelId == hotelId
-        //                             select new FoodDto
-        //                             {
-        //                                 FoodName = food.FoodName,
-        //                                 HotelName = hotel.HotelName,
-        //                                 Price = food.Price,
-        //                                 Iamgepath = food.Iamgepath,
-        //                             }).ToList();
-        //        return employeeleave;
-        //    }
-        //}
+        public IEnumerable<FoodList> GetFoodByHotelId(int hotelId)
+        {
+            
+            {
+                
+                var foodlist = (from food in db.Food
+                                     join hotel in db.Hotel on food.HotelId equals hotel.HotelId
+                                     where hotel.HotelId == hotelId
+                                      
+                                     select new FoodList
+                                     {
+                                         HotelName= hotel.HotelName,
+                                         FoodId = food.FoodId,
+                                         FoodName = food.FoodName,
+                                         Price = food.Price,
+                                         Type = food.Type,
+                                        
+                                     }).ToList();
+                return foodlist;
+            }
+        }
 
 
 

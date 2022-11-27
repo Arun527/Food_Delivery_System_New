@@ -109,5 +109,17 @@ namespace Food_Delivery.Controllers
             return Ok(foodType);
         }
 
+        [HttpGet("HotelBy/{hotelId}")]
+        public IActionResult GetHotelType(int hotelId)
+        {
+            var food = _hotel.GetHotelById(hotelId);
+            if (food == null)
+            {
+                return NotFound("The Food Type Is Not Found");
+            }
+            var foodType = _food.GetFoodByHotelId(hotelId);
+            return Ok(foodType);
+        }
+
     }
 }

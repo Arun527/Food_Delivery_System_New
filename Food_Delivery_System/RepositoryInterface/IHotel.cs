@@ -8,7 +8,7 @@ namespace Food_Delivery.RepositoryInterface
         public Hotel GetHotelById(int hotelId);
 
         public Hotel GetHotelDetailByNumber(string Number);
-        public Hotel GetHotelDetailByEmail(String Email);
+        public Hotel GetHotelDetailByEmail(string Email);
 
         public Messages InsertHotelDetail(Hotel hotelDetail);
 
@@ -16,7 +16,7 @@ namespace Food_Delivery.RepositoryInterface
 
         public Messages DeleteHotelDetail(int hotelDetailId);
 
-
+        public Hotel GetHotelDetailByName(String hotelName);
         public IEnumerable<Hotel> GetHotelType(string hoteltype);
         //public IEnumerable<LFoodDetail> GetFoodDetail(int id);
 
