@@ -55,6 +55,21 @@ namespace Food_Delivery.Controllers
             return Ok(hotel);
         }
 
+
+        [HttpGet("HotelAgainstFood/{hotelName}")]
+        public IActionResult GetHotelByNameAgainsFood(string hotelName)
+        {
+            Messages msg = new Messages();
+            var hotel = _hotel.GetFoodByHotelName(hotelName);
+            if (hotel == null)
+            {
+                return NotFound("The Hotel Is Not Found");
+            }
+
+            return Ok(hotel);
+        }
+
+
         [HttpPost("")]
         public IActionResult AddHotelDetail(Hotel detaile)
         {

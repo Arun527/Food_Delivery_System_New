@@ -1,5 +1,7 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
+using Microsoft.EntityFrameworkCore;
 using ServiceStack.Messaging;
 using System.Transactions;
 
@@ -77,13 +79,13 @@ namespace Food_Delivery.RepositoryService
 
         }
 
-        public Hotel GetHotelDetailByName(String hotelName)
+        public IEnumerable<Hotel> GetHotelDetailByName(String hotelName)
         {
 
             try
             {
                 Message message = new Message();
-                var getId = db.Hotel.FirstOrDefault(x => x.HotelName == hotelName);
+                var getId = db.Hotel.Where(x => EF.Functions.Like(x.HotelName,$"%{hotelName}%")).ToList();
                 return getId;
             }
 
@@ -95,6 +97,28 @@ namespace Food_Delivery.RepositoryService
 
         }
 
+
+        public IEnumerable<FoodList> GetFoodByHotelName(string HotelName)
+        {
+
+            {
+
+                var foodlist = (from food in db.Food
+                                join hotel in db.Hotel on food.HotelId equals hotel.HotelId
+                                where hotel.HotelName == HotelName
+
+                                select new FoodList
+                                {
+                                    HotelName = hotel.HotelName,
+                                    FoodId = food.FoodId,
+                                    FoodName = food.FoodName,
+                                    Price = food.Price,
+                                    Type = food.Type,
+
+                                }).ToList();
+                return foodlist;
+            }
+        }
 
         public Messages InsertHotelDetail(Hotel hotelDetail)
         {
