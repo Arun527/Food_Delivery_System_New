@@ -44,6 +44,19 @@ namespace Food_Delivery.Controllers
             return Ok(food);
         }
 
+
+        [HttpGet("FoodByName/{name}")]
+        public IActionResult GetByFoodName(String name)
+        {
+            var hotel = _food.GetFoodByName(name);
+            if (hotel == null)
+            {
+                return NotFound("The Food Id Not Found");
+            }
+            var food = _food.GetFoodByName(name);
+            return Ok(food);
+        }
+
         [HttpPost("")]
         public IActionResult InsertFoodType(Food food)
         {

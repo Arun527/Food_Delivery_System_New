@@ -9,6 +9,7 @@ namespace Food_Delivery.RepositoryInterface
 
         public Food GetFoodTypeById(int foodTypeId);
 
+        public IEnumerable<Food> GetFoodByName(String FoodName);
         public Messages InsertFoodType(Food foodType);
 
         public Messages UpdateFood(Food foodType);
