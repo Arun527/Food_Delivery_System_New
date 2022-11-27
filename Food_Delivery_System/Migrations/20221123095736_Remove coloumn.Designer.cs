@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodDeliverySystem.Migrations
 {
     [DbContext(typeof(FoodDeliveryDbContext))]
-    [Migration("20221118114118_Initial")]
-    partial class Initial
+    [Migration("20221123095736_Remove coloumn")]
+    partial class Removecoloumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -187,10 +187,6 @@ namespace FoodDeliverySystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
@@ -204,7 +200,6 @@ namespace FoodDeliverySystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OrderStatus")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")

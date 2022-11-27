@@ -1,5 +1,8 @@
 using Food_Delivery.Models;
+using Food_Delivery.RepositoryInterface;
+using Food_Delivery.RepositoryService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FoodDeliveryDbContext>(OPtions =>
 {
     OPtions.UseSqlServer(builder.Configuration.GetConnectionString("ConStr"));
+    OPtions.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<ICustomer, CustomerService>();
+builder.Services.AddScoped<IHotel, HotelService>();
+builder.Services.AddScoped<IFood, FoodService>();
+builder.Services.AddScoped<IOrders, OrdersService>();
+builder.Services.AddScoped<IOrderDetail, OrderDetailService>();
+builder.Services.AddScoped<IDeliveryPerson, DeliveryPersonService>();
+builder.Services.AddScoped<IOrderShipmentDetail, OrderShipmentDetailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -24,6 +24,7 @@ namespace Food_Delivery.Models
 
         public bool IsActive { get; set; }=true;
 
+      
 
     }
 }
