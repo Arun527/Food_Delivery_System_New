@@ -65,7 +65,7 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("The Hotel Is Not Found");
             }
-
+            
             return Ok(hotel);
         }
 
