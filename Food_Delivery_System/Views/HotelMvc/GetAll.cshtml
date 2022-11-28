@@ -1,26 +1,15 @@
-﻿@using Food_Delivery.Models
+﻿@using Food_Delivery_System.Models
 
-
-
-   @* <div style="margin-bottom:30px;margin-left:89%">
-        <a class="btn btn-primary text-white" href="/CustomerMvc/Create">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </svg>  Add Product
-        </a>
-
-    </div>*@
+<h2>Hotel Detail</h2>
  <div class="row">
         <div class="col-sm-12">
             <table class="table table-bordered table-striped" id="tblHotel">
                 <thead style="background-color:khaki;text-align:center" >
                     <tr>
-                    <th scope="col">CustomerId</th>
-                        <th scope="col">Name</th>
-                    <th scope="col">ContactNumber</th>  
-                    <th scope="col">Email</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Address</th>
+                        <th scope="col">Hotel Name</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Is Active</th>
                         <th scope="col">Action</th>
                     </tr>
                
@@ -29,11 +18,9 @@
             </table>
         </div>
    
-</div>
-           
+ </div>
 
-
-
+ 
 
     @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -46,7 +33,7 @@
         function bindDatatable() {
               datatable = $('#tblHotel') 
                 .DataTable({
-                    "sAjaxSource": "/CustomerMvc/Getall",
+                    "sAjaxSource": "/HotelMvc/GetallDetail",
                     "bServerSide": true,
                     "bProcessing": true,
                     "bSearchable": true,
@@ -58,28 +45,7 @@
                     },
                     "columns": [
                         {
-                            "data": "customerId",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-
-                        {
-                            "data": "name",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-                        {
-                            "data": "contactNumber",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-                        {
-                            "data": "email",
-                            "autoWidth": true,
-                            "searchable": true
-                        },
-                          {
-                            "data": "gender",
+                            "data": "hotelName",
                             "autoWidth": true,
                             "searchable": true
                         },
@@ -89,27 +55,26 @@
                             "searchable": true
                         },
                         {
+                            "data": "type",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "isActive",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
                            
                             "searchable": false,
                             'render': function (data, type, row) {
-                                return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn btn-primary'> Edit </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn btn-primary'> Delete </a>"
-
+                                return "<a href=/FoodMvc/GetFoodByHotelId?hotelId=" +row.hotelId+ " class='btn btn-primary'> Food Details </a>"
                             }
                             
-
                         }, 
-                        //{
-
-                        //    "searchable": false,
-                        //    'render': function (data, type, row) {
-                               
-                        //    }
-
-                        //},
                     ]
                 });
         }
       
     </script>
 }
-

@@ -13,7 +13,7 @@ namespace Food_Delivery.Controllers_Mvc
     {
         private readonly ILogger<CustomerMvcController> _logger;
 
-        ICustomer _customer;
+        ICustomer _customer;   
         IHotel _hotel;
         IDeliveryPerson _deliveryPerson;
         public CustomerMvcController(ILogger<CustomerMvcController> logger, ICustomer obj, IHotel hotel,IDeliveryPerson person)

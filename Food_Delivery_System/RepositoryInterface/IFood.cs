@@ -16,6 +16,7 @@ namespace Food_Delivery.RepositoryInterface
         public Messages DeleteFoodType(int foodTypeId);
 
         public IEnumerable<Food> GetFoodType(string foodtype);
+        public IEnumerable<FoodDto> GetAllFood();
 
         public IEnumerable<FoodList> GetFoodByHotelId(int hotelId);
     }

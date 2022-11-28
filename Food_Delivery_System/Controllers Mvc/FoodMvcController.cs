@@ -40,30 +40,41 @@ namespace Food_Delivery.Controllers_Mvc
             return View();
         }
 
-        [Authorize]
+    
         public IActionResult Add()
         {
-            return View();
+            FoodDto types = new FoodDto();
+            var hotelList = _hotel.GetAll().ToList();
+            types.hotelname = new List<SelectListItem>();
+            types.hotelname.Add(new SelectListItem() { Value = "0", Text = "Select Hotel" });
+            types.hotelname.AddRange(
+         _hotel.GetAll().Select(a => new SelectListItem
+         {
+             Text = a.HotelName,
+             Value = a.HotelId.ToString(),
+
+         }));
+            return View(types);
         }
 
-        //public async Task<IActionResult> AddFood(Food foodType)
-        //{
-        //    var uploadDirecotroy = "Css/Image/";
+        public async Task<IActionResult> AddFood(Food foodType)
+        {
+            var uploadDirecotroy = "Css/Image/";
 
-        //    string location = "~wwwroot/Css/Image/";
-        //    var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, uploadDirecotroy);
+            string location = "~wwwroot/Css/Image/";
+            var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, uploadDirecotroy);
 
-        //    if (!Directory.Exists(uploadPath))
-        //        Directory.CreateDirectory(uploadPath);
+            if (!Directory.Exists(uploadPath))
+                Directory.CreateDirectory(uploadPath);
 
-        //    var fileName = Guid.NewGuid() + Path.GetExtension(foodType.CoverPhoto.FileName);
-        //    var Iamgepath = Path.Combine(uploadPath, fileName);
-        //    await foodType.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create)); ;
-        //    foodType.ImageId = fileName;
+            var fileName = Guid.NewGuid() + Path.GetExtension(foodType.CoverPhoto.FileName);
+            var Iamgepath = Path.Combine(uploadPath, fileName);
+            await foodType.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create)); 
+            foodType.ImageId = fileName;
 
-        //    _food.InsertFoodType(foodType);
-        //    return RedirectToAction("GetAllFood");
-        //}   
+            _food.InsertFoodType(foodType);
+            return RedirectToAction("GetAllFood");
+        }
 
         public IActionResult Food(Food foodType)
         {
@@ -73,13 +84,13 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult GetAllFood()
         {
-            var foodList = _food.GetAll();
+            var foodList = _food.GetAllFood();
             return View(foodList);
         }
 
         public IActionResult GetFoodByHotelId(int hotelId)
         {
-            var foodList = _food.GetFoodTypeById(hotelId);
+            var foodList = _food.GetFoodByHotelId(hotelId);
             return View(foodList);
         }
     }
