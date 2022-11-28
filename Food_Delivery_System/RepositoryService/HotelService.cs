@@ -85,7 +85,7 @@ namespace Food_Delivery.RepositoryService
             try
             {
                 Message message = new Message();
-                var getId = db.Hotel.Where(x => EF.Functions.Like(x.HotelName,$"%{hotelName}%")).ToList();
+                var getId = db.Hotel.Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
                 return getId;
             }
 
@@ -110,7 +110,7 @@ namespace Food_Delivery.RepositoryService
                                 select new FoodList
                                 {
                                     HotelName = hotel.HotelName,
-                                    FoodId = food.FoodId,
+                                   
                                     FoodName = food.FoodName,
                                     Price = food.Price,
                                     Type = food.Type,

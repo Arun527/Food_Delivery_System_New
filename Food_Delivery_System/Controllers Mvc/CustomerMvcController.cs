@@ -28,14 +28,14 @@ namespace Food_Delivery.Controllers_Mvc
             return View();
         }
 
-      
+
         public IActionResult CreateCustomer()
         {
 
             return View();
         }
 
-      
+
         public IActionResult Create(Customer customer)
         {
             var create = _customer.InsertCustomerDetail(customer);
@@ -44,6 +44,7 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult CustomerDetail()
         {
+            
             return View();
         }
 
@@ -55,8 +56,8 @@ namespace Food_Delivery.Controllers_Mvc
             {
                 customerdetail = customerdetail.Where(x => x.Name.Contains(param.sSearch.ToLower())
                                               || x.ContactNumber.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.Email.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.Address.ToString().Contains(param.sSearch.ToLower()));
+                                              || x.Email.ToLower().Contains(param.sSearch.ToLower()));
+                                              //|| x.Address.ToString().Contains(param.sSearch.ToLower()));
             }
 
 
@@ -77,7 +78,7 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult UpdateCustomer(int CustomerId)
         {
-            var update=_customer.GetCustomerDetailById(CustomerId);
+            var update = _customer.GetCustomerDetailById(CustomerId);
             return View(update);
         }
 
@@ -85,11 +86,16 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Update(Customer obj)
         {
-            int id=obj.CustomerId;
-            var update=_customer.UpdateCustomerDetail(obj);
-            return  Redirect("CustomerDetail?CustomerId="+id);
+            int id = obj.CustomerId;
+            var update = _customer.UpdateCustomerDetail(obj);
+            return Redirect("CustomerDetail?CustomerId=" + id);
         }
 
+        public IActionResult Delete(int customerId)
+        {
+            var delete=_customer.DeleteCustomerDetail(customerId);
+            return View("CustomerDetail");
+        }
 
 
     }
