@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using System.Security.Claims;
 using static System.Net.Mime.MediaTypeNames;
-
+using Food_Delivery_System.Models;
 
 namespace Food_Delivery.Controllers_Mvc
 {
@@ -113,6 +113,8 @@ namespace Food_Delivery.Controllers_Mvc
             var foodInsert = _food.InsertFoodType(foodType);
             return Json(foodInsert);
         }
+
+       
 
         public IActionResult GetAllFood()
         {
