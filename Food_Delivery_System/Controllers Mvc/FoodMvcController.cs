@@ -73,19 +73,18 @@ namespace Food_Delivery.Controllers_Mvc
                 aaData = displayResult
             });
         }
-        public IActionResult Add()
+        public IActionResult Add(int HotelId)
         {
+            var id = HotelId;
             FoodDto types = new FoodDto();
-            var hotelList = _hotel.GetAll().ToList();
+            var hotelList = _hotel.GetAll();
             types.hotelname = new List<SelectListItem>();
-            types.hotelname.Add(new SelectListItem() { Value = "0", Text = "Select Hotel" });
             types.hotelname.AddRange(
-         _hotel.GetAll().Select(a => new SelectListItem
-         {
-             Text = a.HotelName,
-             Value = a.HotelId.ToString(),
-
-         }));
+                _hotel.GetAll().Where(x =>x.HotelId == id).Select(a => new SelectListItem
+                {
+                    Text = a.HotelName,
+                    Value = a.HotelId.ToString(),
+                }));
             return View(types);
         }
 
@@ -105,7 +104,7 @@ namespace Food_Delivery.Controllers_Mvc
             foodType.ImageId = fileName;
 
             _food.InsertFoodType(foodType);
-            return RedirectToAction("GetAllFood");
+            return Redirect("GetFoodByHotelId?HotelId="+ foodType.HotelId);
         }
 
         public IActionResult Food(Food foodType)
@@ -120,6 +119,28 @@ namespace Food_Delivery.Controllers_Mvc
         {
             var foodList = _food.GetAllFood();
             return View(foodList);
+        }
+
+        public IActionResult UpdateFood(int FoodId)
+        {
+            var obj = _food.GetFoodTypeById(FoodId);
+            var coverPhoto= _food.GetCoverPhoto(obj.ImageId);
+            return View(obj);
+        }
+
+        public IActionResult Update(Food foodDetaile)
+        {
+          
+            var obj = _food.UpdateFood(foodDetaile);
+            return Redirect("GetFoodByHotelId?HotelId=" + foodDetaile.HotelId);
+        }
+
+
+        public IActionResult DeleteFood(int FoodId)
+        { 
+            
+            var obj = _food.DeleteFoodType(FoodId);
+            return Redirect("/HotelMvc/GetAll");
         }
 
         public IActionResult GetFoodByHotelId(int hotelId)

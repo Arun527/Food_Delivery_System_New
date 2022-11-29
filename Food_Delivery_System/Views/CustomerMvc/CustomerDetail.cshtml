@@ -12,8 +12,8 @@
     </div>
  <div class="row">
         <div class="col-sm-12">
-            <table class="table table-bordered table-striped" id="tblHotel">
-                <thead style="background-color:khaki;text-align:center" >
+        <table class="table table-bordered table-striped" id="tblHotel" style="text-align:center">
+                <thead style="background-color:khaki;" >
                     <tr>
                     <th scope="col">CustomerId</th>
                         <th scope="col">Name</th>
@@ -92,7 +92,7 @@
                            
                             "searchable": false,
                             'render': function (data, type, row) {
-                                return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn btn-primary'> Edit </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn btn-primary'> Delete </a>"
+                                return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn btn-primary'> Edit </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn btn-danger'> Delete </a>"
 
                             }
                             

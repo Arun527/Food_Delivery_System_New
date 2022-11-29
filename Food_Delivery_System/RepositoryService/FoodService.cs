@@ -31,7 +31,14 @@ namespace Food_Delivery.RepositoryService
             }
         }
 
-        public Food GetFoodTypeById(int foodTypeId)
+        public Food GetCoverPhoto(string imageId)
+        {
+            var coverPhoto = db.Food.FirstOrDefault(x => x.ImageId == imageId);
+            return coverPhoto;
+        }
+
+
+            public Food GetFoodTypeById(int foodTypeId)
         {
             try
             {
