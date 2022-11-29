@@ -148,5 +148,11 @@ namespace Food_Delivery.Controllers_Mvc
             var foodList = _food.GetFoodByHotelId(hotelId);
             return View(foodList);
         }
+
+        public IActionResult UserByHotelId(int hotelId)
+        {
+            var foodList = _food.GetFoodByHotelId(hotelId);
+            return View(foodList);
+        }
     }
 }
