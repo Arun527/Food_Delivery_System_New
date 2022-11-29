@@ -81,17 +81,23 @@ namespace Food_Delivery.Controllers_Mvc
         }
 
 
-        public IActionResult Edit(int HotelId)
+        public IActionResult UpdateHotel(int HotelId)
         {
             var obj = _hotel.GetHotelById(HotelId);
-            return View("AddFood", obj);
+            return View(obj);
         }
 
-
-        public IActionResult DeleteFood(int FoodId)
+        public IActionResult Update(Hotel hoteldetail)
         {
-            var obj = _food.DeleteFoodType(FoodId);
-            return Json(obj);
+            int id = hoteldetail.HotelId;
+            var obj = _hotel.UpdateHotelDetail(hoteldetail);
+            return Redirect("GetAll?hotelId=" + id);
+        }
+
+        public IActionResult DeleteHotel(int hotelId)
+        {
+            var obj = _hotel.DeleteHotelDetail(hotelId);
+            return View("GetAll");
         }
 
 

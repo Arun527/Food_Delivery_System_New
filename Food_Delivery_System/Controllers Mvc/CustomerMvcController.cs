@@ -83,7 +83,6 @@ namespace Food_Delivery.Controllers_Mvc
         }
 
 
-
         public IActionResult Update(Customer obj)
         {
             int id = obj.CustomerId;
