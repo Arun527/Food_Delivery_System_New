@@ -40,7 +40,39 @@ namespace Food_Delivery.Controllers_Mvc
             return View();
         }
 
-    
+        public IActionResult Explore()
+        {
+            return View();
+        }
+
+
+
+        public IActionResult GetallDetail(JqueryDatatableParam param)
+        {
+            var hoteldetail = _hotel.GetAll();
+
+
+            if (!string.IsNullOrEmpty(param.sSearch))
+            {
+                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToLower().Contains(param.sSearch.ToLower())
+                                               || x.Type.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower()));
+            }
+
+
+            var displayResult = hoteldetail.Skip(param.iDisplayStart)
+                .Take(param.iDisplayLength).ToList();
+            var totalRecords = hoteldetail.Count();
+
+            return Json(new
+            {
+                param.sEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = displayResult
+            });
+        }
         public IActionResult Add()
         {
             FoodDto types = new FoodDto();
