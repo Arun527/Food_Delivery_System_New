@@ -1,0 +1,79 @@
+﻿@model List<InvoiceDeliveryPerson>
+@{
+    ViewData["Title"] = "DeliveryPersonView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<body>
+
+
+
+    <table class="table" id="dataTable">
+        <thead style="text-align:center">
+            <tr style="text-align:center">
+                <th style="text-align:center"> DeliveryPersonId      </th>
+
+                <th style="text-align:center">InvoiceNo </th>
+
+
+                <th style="text-align:center"> OrderShipmentDetailId </th>
+
+               
+            </tr>
+        </thead>
+
+
+        <tbody style="text-align:center">
+            @foreach (var item in Model)
+            {
+                <tr style="text-align:center">
+                    <td>  @item.DeliveryPersonId  </td>
+                  @*  <td> <a class="nav-link" asp-area="" asp-controller="DeliveryMvc" asp-action="Add" asp-route-id=""> </a>   @item.DeliveryPersonName </td>*@
+                    <td>   @item.OrderDetailId  </td>
+                    <td>@item.OrderShipmentDetailId</td>
+                  
+
+
+                    <td style="text-align:center">
+
+                     @*   <a class="btn   text-white" href="/DeliveryMvc/GetDeliveryPersonByIdInvoice?Id=+ @item.DeliveryPersonId">
+                            <i style='font-size:24px;color:black' class='far'>&#xf022;</i>
+                        </a>
+
+                        <a class="btn  text-white" href="/DeliveryMvc/Edit?DeliveryPersonId=+ @item.DeliveryPersonId">
+                            <i style="font-size:24px;color:cornflowerblue;" class="fa">&#xf044;</i>
+                        </a>
+                        <a class="btn text-white" onclick="deleteCustomer(@item.DeliveryPersonId)">
+                            <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i>
+                        </a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+
+
+        <tfoot>
+            <tr>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+@section scripts{
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+    <script src="~/js/customer.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dataTable").DataTable();
+        })
+    </script>
+}
