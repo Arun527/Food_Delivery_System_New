@@ -1,4 +1,5 @@
-﻿@model Food_Delivery_System.Models.OrderDto
+﻿@using Food_Delivery.Models
+@model InvoiceDetail
 
 
 @{
@@ -6,48 +7,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card-body" id="ordercard">
-    <h3 class="col-md-6 offset-3 mt-3">     Registration form </h3>
-    <div id="errormsg"></div>
 
 
 
 
 
 
-    <div>
-        <div align="center" class="col-md-12">
+                 
+                    <p>@Model.FoodId</p>
+                
+                  
 
+         
 
-
-            <div class=" dropdown row m-5">
-                <div class=" col-md-3 offset-3">Customer Name </div>
-
-                <div class="form-group col-md-3">
-                    @Html.DropDownListFor(model=>model.CustomerId,Model.CustomerList ,new { @class="form-control", required = "required" , maxlength = "20"})
-                </div>
-
-            </div>
-          
-            <div class="row m-5">
-                <div class="col-md-6">Quanity <span id="mandatory"> * </span></div>
-                <div class="col-md-6">
-                  @*  @Html.TextBoxFor(model=>model )*@
-                </div>
-
-
-            </div>
-       
-
-            <div class=" col-md-4 offset-5 m-2">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Submit" /></div>
-        </div>
-    </div>
+    
 
 
 
 
-
-</div>
-
-
-        </div>
