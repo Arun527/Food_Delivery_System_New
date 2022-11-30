@@ -1,0 +1,128 @@
+﻿
+@model IEnumerable<Food_Delivery.Models.DeliveryPerson>
+@{
+    ViewData["Title"] = "DeliveryPersonView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<body>
+
+    <div class="btn btn-warning mb-3 " style="margin-left:93%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+        </svg>  @Html.ActionLink("Add", "Add")
+    </div>
+
+
+    <table class="table" id="dataTable">
+        <thead style="text-align:center">
+            <tr style="text-align:center">
+                <th style="text-align:center"> DeliveryPersonId      </th>
+
+                <th style="text-align:center">DeliveryPersonName </th>
+
+
+                <th style="text-align:center"> CustomerName </th>
+
+                <th style="text-align:center">Vechile No</th>
+                <th style="text-align:center">Gender</th>
+                <th data-orderable="false" id="deletebutton" style="text-align:center">  Action </th>
+            </tr>
+        </thead>
+
+
+        <tbody style="text-align:center">
+            @foreach (var item in Model)
+            {
+                <tr style="text-align:center">
+                    <td>  @item.DeliveryPersonId  </td>
+                    <td>  @item.DeliveryPersonName </td>
+                    <td>   @item.ContactNumber  </td>
+                    <td>@item.VechileNo</td>
+                    <td>@item.Gender</td>
+
+
+
+                    <td style="text-align:center">
+
+                        <a class="btn   text-white" href="/DeliveryMvc/GetDeliveryPersonByIdInvoice?Id=+ @item.DeliveryPersonId">
+                            <i style='font-size:24px;color:black' class='far'>&#xf022;</i>
+                        </a>
+
+                        <a class="btn  text-white" href="/DeliveryMvc/Edit?DeliveryPersonId=+ @item.DeliveryPersonId">
+                            <i style="font-size:24px;color:cornflowerblue;" class="fa">&#xf044;</i>
+                        </a>
+                        <a class="btn text-white" onclick="deleteCustomer(@item.DeliveryPersonId)">
+                            <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+
+
+        <tfoot>
+            <tr>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+@section scripts{
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+    <script src="~/js/customer.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dataTable").DataTable();
+        })
+    </script>
+}
+
+    @*    @section scripts{
+    <script src="~/js/customer.js"></script>
+}*@
+
+
+<style>
+    a{
+        text-decoration:none;
+    }
+</style>
+
+    <script>
+
+   
+function deleteCustomer(DeliveryPersonId) {
+    let result = confirm("Are you sure you want to delete?");
+    if (result) {
+        $.ajax({
+            type: "get",
+            url: '/DeliveryMvc/DeleteDeliveryPerson?id=' + DeliveryPersonId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response.success == true) {
+                    location.reload();
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+};
+
+    </script>

@@ -104,6 +104,7 @@ namespace Food_Delivery.RepositoryService
                     
                         updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
                         updateDeliveryPerson.Gender = deliveryPerson.Gender;
+                        updateDeliveryPerson.VechileNo = deliveryPerson.VechileNo;
                         db.Update(updateDeliveryPerson);
                         db.SaveChanges();
                         msg.Success = true;
