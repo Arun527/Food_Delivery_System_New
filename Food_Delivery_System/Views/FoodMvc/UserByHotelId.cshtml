@@ -15,7 +15,7 @@
 
                 <img style=" width: 280px;border-radius:6%; height: 280px;margin-left:10%;margin-top:5%;margin-bottom:5%" src="/css/Image/@item.ImageId" multiple />
 
-              @*  <p>HotelId:@item.HotelId</p>*@
+                @*  <p>HotelId:@item.HotelId</p>*@
                 <p>Food Name: @item.FoodName </p>
                 <div class="row ms-lg-3">
 
@@ -27,7 +27,7 @@
                             </svg>
                         </span>
                     </div>
-                  
+
                 </div>
 
                 <p>Price   ₹ @item.Price  </p>
@@ -37,13 +37,14 @@
 
         }
 
-       
-            <table id="productList" class="table" style="background-color:#ced4da">
-              <tr>
-                  <th>FoodId</th>
-              </tr>
 
-            </table>
+        <table id="productList" class="table">
+            <tr>
+                <th>FoodId</th>
+                <th>HotelId</th>
+                <th>Price</th>
+            </tr>
+        </table>
 
 
     </div>
@@ -63,9 +64,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script language="JavaScript" type="text/javascript">
 
-
-        function Add(HotelId, FoodId, Price)
-        {
+        function Add(HotelId,FoodId,Price) {
             debugger;
 
             const existing = localStorage.getItem('cart');
@@ -79,25 +78,20 @@
                 }
             }
             debugger;
-            const obj = { hotelId: HotelId, foodId: FoodId, price: Price }
+            const obj = { hotelId: 1, foodId: FoodId,price:Price }
             shoppingCart.push(obj);
             localStorage.setItem('cart', JSON.stringify(shoppingCart));
             var get = JSON.parse(localStorage.getItem('cart'));
 
             console.log(get);
-            $('#productList').append(get[HotelId], [FoodId], [Price]);
+
+            $('#productList').append('<tr><td>' + HotelId + '</td><td>' + FoodId + '</td><td>' + Price + '</td></tr>');
         }
 
-        //function replaceCart(shoppingCart) {
-        //  localStorage.setItem('cart', JSON.stringify(shoppingCart));
-        //}
 
-        
 
-        // document.getElementById("productList").value=get[0].name;
 
-            // append item foo with price 1000 to existing cart
-           // addToCart({ FoodId })
+               
 
     </script>
 
