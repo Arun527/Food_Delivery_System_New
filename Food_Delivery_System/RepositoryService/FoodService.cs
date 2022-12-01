@@ -186,6 +186,7 @@ namespace Food_Delivery.RepositoryService
                                      select new FoodList
                                      {
                                          HotelName= hotel.HotelName,
+                                         HotelId= hotel.HotelId,
                                          FoodId = food.FoodId,
                                          FoodName = food.FoodName,
                                          ImageId= food.ImageId,

@@ -13,12 +13,13 @@
     <table class="table" id="dataTable">
         <thead style="text-align:center">
             <tr style="text-align:center">
-                <th style="text-align:center"> DeliveryPersonId      </th>
-
-                <th style="text-align:center">InvoiceNo </th>
-
-
                 <th style="text-align:center"> OrderShipmentDetailId </th>
+                <th style="text-align:center"> OrderDate </th>
+                <th style="text-align:center"> ContactNumber      </th>
+                <th style="text-align:center">InvoiceNo </th>
+                <th style="text-align:center">Quantity </th>
+
+              
 
                
             </tr>
@@ -29,10 +30,13 @@
             @foreach (var item in Model)
             {
                 <tr style="text-align:center">
-                    <td>  @item.DeliveryPersonId  </td>
+                    <td>@item.OrderShipmentDetailId</td>
+                    <td>@item.OrderDate</td>
+                    <td>@item.Contactnumber</td>
                   @*  <td> <a class="nav-link" asp-area="" asp-controller="DeliveryMvc" asp-action="Add" asp-route-id=""> </a>   @item.DeliveryPersonName </td>*@
                     <td>   @item.OrderDetailId  </td>
-                    <td>@item.OrderShipmentDetailId</td>
+                    <td>   @item.Quantity  </td>
+                   
                   
 
 
