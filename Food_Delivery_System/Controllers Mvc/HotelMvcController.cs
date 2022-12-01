@@ -2,6 +2,7 @@
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualBasic;
 //using System.Web.Mvc;
 
 namespace Food_Delivery.Controllers_Mvc
@@ -30,7 +31,13 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Create(Hotel hotelDetail)
         {
+            Messages msg = new Messages();
             var create = _hotel.InsertHotelDetail(hotelDetail);
+            if(msg.Success==true)
+            {
+                TempData["AlertMessage"] = "Hotel Created Successfully.. !";
+            }
+            TempData["AlertMessage"] = "The Hotel Already Exist.. !";
             return RedirectToAction("GetAll");
         }
         public IActionResult GetAll()
@@ -91,12 +98,14 @@ namespace Food_Delivery.Controllers_Mvc
         {
             int id = hoteldetail.HotelId;
             var obj = _hotel.UpdateHotelDetail(hoteldetail);
+            TempData["AlertMessage"] = "Hotel Updated Successfully.. !";
             return Redirect("GetAll?hotelId=" + id);
         }
 
         public IActionResult DeleteHotel(int hotelId)
         {
             var obj = _hotel.DeleteHotelDetail(hotelId);
+            TempData["AlertMessage"] = "Hotel Deleted Successfully.. !";
             return View("GetAll");
         }
 

@@ -8,6 +8,12 @@
 
 
 <body>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="alret alert-success">
+            <strong>Success !</strong>  @TempData["AlertMessage"]
+        </div>
+    }
 
     <div class="btn btn-Primary mb-3 " style="margin-left:93%;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">

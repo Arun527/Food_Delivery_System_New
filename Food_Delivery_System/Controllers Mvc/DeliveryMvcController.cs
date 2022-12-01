@@ -34,7 +34,8 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult AddPerson(DeliveryPerson  deliveryPerson)
         {
             var delivery=_deliveryPerson.InsertDeliveryPerson(deliveryPerson);
-            return View("Add");
+            TempData["AlertMessage"] = "DeliverPerson Created Successfully.. !";
+            return RedirectToAction("DeliveryPersonView");
         }
 
         public IActionResult DeliveryPersonView()
@@ -53,6 +54,7 @@ namespace Food_Delivery_System.Controllers_Mvc
         {
             int id = deliveryPerson.DeliveryPersonId;
             var update=_deliveryPerson.UpdateDeliveryPerson(deliveryPerson);
+            TempData["AlertMessage"] = "DeliverPerson Updated Successfully.. !";
             return RedirectToAction("DeliveryPersonView");
         }
 
@@ -69,6 +71,7 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult  DeleteDeliveryPerson(int id)
         {
             var delivery=_deliveryPerson.DeleteDeliveryPerson(id);
+            TempData["AlertMessage"] = "DeliverPerson Deleted Successfully.. !";
             return Json(delivery);
         }
     }

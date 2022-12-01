@@ -31,15 +31,17 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult CreateCustomer()
         {
-
+         
             return View();
         }
 
 
         public IActionResult Create(Customer customer)
         {
+            int id = customer.CustomerId;
             var create = _customer.InsertCustomerDetail(customer);
-            return RedirectToAction("CreateCustomer");
+            TempData["AlertMessage"] = "Customer Created Successfully.. !";
+            return RedirectToAction("CustomerDetail");
         }
 
         public IActionResult CustomerDetail()
@@ -87,12 +89,14 @@ namespace Food_Delivery.Controllers_Mvc
         {
             int id = obj.CustomerId;
             var update = _customer.UpdateCustomerDetail(obj);
+            TempData["AlertMessage"] = "Customer Updated Successfully.. !";
             return Redirect("CustomerDetail?CustomerId=" + id);
         }
 
         public IActionResult Delete(int customerId)
         {
             var delete=_customer.DeleteCustomerDetail(customerId);
+            TempData["AlertMessage"] = "Customer Deleted Successfully.. !";
             return View("CustomerDetail");
         }
 
