@@ -1,4 +1,4 @@
-﻿@model Food_Delivery_System.Models.FoodList
+﻿@model Food_Delivery.Models.OrderDetail
 
 
 
@@ -26,25 +26,62 @@
    
 
 </table>
-       
 
-<div>
-
- <a href="/Home/Edit?Emp_Id=" class="btn btn-primary">
-                             Edit
-                        </a>
-
-</div>
+<div class=" col-md-4 offset-5 m-2">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Submit" /></div>
 
 
 @section Scripts{
 
     <script>
+        var obj;
+        var foodDetails = [];
         var data = localStorage.getItem("cart");
         console.log("data", data);
 
         $.each(JSON.parse(data), function (key, value) {
             $('#productList').append('<tr><td>' + value.hotelId + '</td><td>' + value.foodId + '</td><td>' + value.price + '</td><td>'+ value.quantity +'</td></tr>');
+
+            obj={"hotelId":value.hotelId}
+            foodDetails.push(obj);
+
+          
+
+        });
+      
+        $(document).ready(function () {
+            $('#btnsubmit').click(function (e) {
+                e.preventDefault();
+                var customerId = 1;
+                var OrderShipmentRequest = {
+                    "CustomerId": customerId,
+                    "Foods": foodDetails
+
+                };
+                
+            });
+        });
+        $.ajax({
+
+            url: "/OrderDetailMvc/AddOrder",
+            type: "POST",
+            dataType: 'json',
+            data: JSON.stringify(OrderShipmentRequest),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+
+                alert(response.message);
+                if (response.role == true) {
+                    setTimeout(function () { window.location = '/OrderDetailMvc/Invoice'; }, 1000);
+                }
+                else {
+                    setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
+                }
+
+
+            },
+            error: function () {
+                alert("error");
+            }
 
         });
     </script>

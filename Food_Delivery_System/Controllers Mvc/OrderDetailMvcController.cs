@@ -31,6 +31,7 @@ namespace Food_Delivery_System.Controllers_Mvc
             return View();
         }
 
+
         public IActionResult Add()
         {
             //OrderDto types = new OrderDto();
@@ -45,9 +46,8 @@ namespace Food_Delivery_System.Controllers_Mvc
             //return View(types);
             return View();
         }
-        public IActionResult AddOrder()
+        public IActionResult AddOrder([FromBody] OrderShipmentRequest request)
         {
-
             return View();
         }
 
