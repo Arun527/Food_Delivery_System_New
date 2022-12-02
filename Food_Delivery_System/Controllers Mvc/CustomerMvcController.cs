@@ -38,7 +38,23 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Create(Customer customer)
         {
-            int id = customer.CustomerId;
+            //int id = customer.CustomerId;
+
+            Messages messages = new Messages();
+            var number = _customer.GetCustomerDetailByNumber(customer.ContactNumber);
+            var email = _customer.GetCustomerDetailByEmail(customer.Email);
+
+            if (number != null)
+            {
+                TempData["AlertMessage"] ="The  Contact Number  Already Exist.. !";
+                //TempData["AlertMessage"]= messages.Success = false;
+                return RedirectToAction("CustomerDetail");
+            }
+            if (email != null)
+            {
+                TempData["AlertMessage"] ="The Email Id  Already Exist.. !";
+                return RedirectToAction("CustomerDetail");
+            }
             var create = _customer.InsertCustomerDetail(customer);
             TempData["AlertMessage"] = "Customer Created Successfully.. !";
             return RedirectToAction("CustomerDetail");
