@@ -13,7 +13,7 @@ namespace Food_Delivery.Controllers_Mvc
     {
         private readonly ILogger<CustomerMvcController> _logger;
 
-        ICustomer _customer;
+        ICustomer _customer;   
         IHotel _hotel;
         IDeliveryPerson _deliveryPerson;
         public CustomerMvcController(ILogger<CustomerMvcController> logger, ICustomer obj, IHotel hotel,IDeliveryPerson person)
@@ -28,22 +28,41 @@ namespace Food_Delivery.Controllers_Mvc
             return View();
         }
 
-      
+
         public IActionResult CreateCustomer()
         {
-
+         
             return View();
         }
 
-      
+
         public IActionResult Create(Customer customer)
         {
+            //int id = customer.CustomerId;
+
+            Messages messages = new Messages();
+            var number = _customer.GetCustomerDetailByNumber(customer.ContactNumber);
+            var email = _customer.GetCustomerDetailByEmail(customer.Email);
+
+            if (number != null)
+            {
+                TempData["AlertMessage"] ="The  Contact Number  Already Exist.. !";
+                //TempData["AlertMessage"]= messages.Success = false;
+                return RedirectToAction("CustomerDetail");
+            }
+            if (email != null)
+            {
+                TempData["AlertMessage"] ="The Email Id  Already Exist.. !";
+                return RedirectToAction("CustomerDetail");
+            }
             var create = _customer.InsertCustomerDetail(customer);
-            return RedirectToAction("CreateCustomer");
+            TempData["AlertMessage"] = "Customer Created Successfully.. !";
+            return RedirectToAction("CustomerDetail");
         }
 
         public IActionResult CustomerDetail()
         {
+            
             return View();
         }
 
@@ -55,8 +74,8 @@ namespace Food_Delivery.Controllers_Mvc
             {
                 customerdetail = customerdetail.Where(x => x.Name.Contains(param.sSearch.ToLower())
                                               || x.ContactNumber.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.Email.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.Address.ToString().Contains(param.sSearch.ToLower()));
+                                              || x.Email.ToLower().Contains(param.sSearch.ToLower()));
+                                              //|| x.Address.ToString().Contains(param.sSearch.ToLower()));
             }
 
 
@@ -77,19 +96,25 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult UpdateCustomer(int CustomerId)
         {
-            var update=_customer.GetCustomerDetailById(CustomerId);
+            var update = _customer.GetCustomerDetailById(CustomerId);
             return View(update);
         }
 
 
-
         public IActionResult Update(Customer obj)
         {
-            int id=obj.CustomerId;
-            var update=_customer.UpdateCustomerDetail(obj);
-            return  Redirect("CustomerDetail?CustomerId="+id);
+            int id = obj.CustomerId;
+            var update = _customer.UpdateCustomerDetail(obj);
+            TempData["AlertMessage"] = "Customer Updated Successfully.. !";
+            return Redirect("CustomerDetail?CustomerId=" + id);
         }
 
+        public IActionResult Delete(int customerId)
+        {
+            var delete=_customer.DeleteCustomerDetail(customerId);
+            TempData["AlertMessage"] = "Customer Deleted Successfully.. !";
+            return View("CustomerDetail");
+        }
 
 
     }

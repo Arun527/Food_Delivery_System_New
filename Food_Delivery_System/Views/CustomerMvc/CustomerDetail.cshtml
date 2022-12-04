@@ -1,0 +1,125 @@
+﻿@using Food_Delivery.Models
+
+ <h2 style="height:60px">Customer Detail</h2>
+@if (TempData["AlertMessage"]!=null)
+{
+ <div class="alret alert-success " style="text-align:center;margin-left:30%;margin-right:30%;background-color:skyblue">
+
+        @if (TempData["AlertMessage"] =="The  Contact Number  Already Exist.. !")
+        {
+            <strong>Warning !</strong>  @TempData["AlertMessage"]
+        }
+        <strong>  @TempData["AlertMessage"] </strong>
+ </div>
+}
+    <div  style="margin-left:93%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
+        </svg>  @Html.ActionLink("Add", "CreateCustomer")
+    </div>
+
+ <div class="row">
+        <div class="col-sm-12">
+        <table class="table table-bordered table-striped" id="tblHotel" style="text-align:center">
+                <thead style="background-color:khaki;" >
+                    <tr>
+                    <th scope="col" data-visible="false">CustomerId</th>
+                        <th scope="col">Name</th>
+                    <th scope="col">ContactNumber</th>  
+                    <th scope="col">Email</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Address</th>
+                        <th scope="col">Action</th>
+                    </tr>
+               
+                </thead>
+               
+            </table>
+        </div>
+   
+</div>
+           
+
+
+
+
+    @section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            bindDatatable();
+        });
+
+        function bindDatatable() {
+              datatable = $('#tblHotel') 
+                .DataTable({
+                    "sAjaxSource": "/CustomerMvc/Getall",
+                    "bServerSide": true,
+                    "bProcessing": true,
+                    "bSearchable": true,
+                    "order": [[1, 'asc']],
+                    "language": {
+                        "emptyTable": "No record found.",
+                        "processing":
+                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;margin-left:50%;margin-top:10%;color:blue"></i><span class="sr-only">Loading...</span> '
+                    },
+                    "columns": [
+                        {
+                            "data": "customerId",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+
+                        {
+                            "data": "name",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "contactNumber",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "email",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                          {
+                            "data": "gender",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "address",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                           
+                            "searchable": false,
+                            'render': function (data, type, row) {
+                                return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn '> <i style='font-size:24px;color:cornflowerblue' class='fas'>&#xf044;</i> </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn '> <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i> </a>"
+
+                            }
+                            
+
+                        }, 
+                     
+                    ]
+                });
+        }
+      
+    </script>
+}
+
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+
+                                <style>
+                                    a{
+                                        text-decoration:none;
+                                    }
+                                </style>

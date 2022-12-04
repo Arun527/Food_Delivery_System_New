@@ -31,7 +31,14 @@ namespace Food_Delivery.RepositoryService
             }
         }
 
-        public Food GetFoodTypeById(int foodTypeId)
+        public Food GetCoverPhoto(string imageId)
+        {
+            var coverPhoto = db.Food.FirstOrDefault(x => x.ImageId == imageId);
+            return coverPhoto;
+        }
+
+
+            public Food GetFoodTypeById(int foodTypeId)
         {
             try
             {
@@ -144,26 +151,27 @@ namespace Food_Delivery.RepositoryService
 
         }
 
-        //public IEnumerable<FoodDto> GetAllFood()
-        //{
+        public IEnumerable<FoodDto> GetAllFood()
+        {
 
-        //    {
-        //        var employeeleave = (from food in db.Food
-        //                             join hotel in db.Hotel on food.HotelId equals hotel.HotelId
-        //                               select new FoodDto
-        //                             {
-        //                                 FoodId = food.FoodId,
-        //                                 FoodName=food.FoodName,
-        //                                 HotelId = hotel.HotelId,
-        //                                 HotelName=hotel.HotelName,
-        //                                 Price=food.Price,
-        //                                 Iamgepath=food.Iamgepath,
-        //                                 Location=hotel.Location,
+            {
+                var employeeleave = (from food in db.Food
+                                     join hotel in db.Hotel on food.HotelId equals hotel.HotelId
+                                     select new FoodDto
+                                     {
+                                         FoodId = food.FoodId,
+                                         FoodName = food.FoodName,
+                                         HotelId = hotel.HotelId,
+                                         HotelName = hotel.HotelName,
+                                         Price = food.Price,
+                                         ImageId = food.ImageId,
+                                         Location = hotel.Address,
+                                         Type=hotel.Type
 
-        //                             }).ToList();
-        //        return employeeleave;
-        //    }
-        //}
+                                     }).ToList();
+                return employeeleave;
+            }
+        }
 
 
 
@@ -197,8 +205,10 @@ namespace Food_Delivery.RepositoryService
                                      select new FoodList
                                      {
                                          HotelName= hotel.HotelName,
+                                         HotelId= hotel.HotelId,
                                          FoodId = food.FoodId,
                                          FoodName = food.FoodName,
+                                         ImageId= food.ImageId,
                                          Price = food.Price,
                                          Type = food.Type,
                                         

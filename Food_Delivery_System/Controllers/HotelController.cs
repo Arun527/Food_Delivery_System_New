@@ -47,7 +47,7 @@ namespace Food_Delivery.Controllers
         {
             Messages msg = new Messages();
             var hotel = _hotel.GetHotelDetailByName(hotelName);
-            if (hotel == null)
+            if (hotel.Count() == 0)
             {
                 return NotFound("The Hotel Is Not Found");
             }
@@ -61,11 +61,11 @@ namespace Food_Delivery.Controllers
         {
             Messages msg = new Messages();
             var hotel = _hotel.GetFoodByHotelName(hotelName);
-            if (hotel == null)
+            if (hotel.Count() == 0)
             {
-                return NotFound("The Hotel Is Not Found");
+                return NotFound("The Food Is Not Found");
             }
-
+            
             return Ok(hotel);
         }
 

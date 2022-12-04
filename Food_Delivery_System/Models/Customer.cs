@@ -5,6 +5,7 @@ using ForeignKeyAttribute = System.ComponentModel.DataAnnotations.Schema.Foreign
 using ServiceStack.DataAnnotations;
 
 using System;
+using Food_Delivery_System.Models;
 
 namespace Food_Delivery.Models
 {

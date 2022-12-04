@@ -111,6 +111,10 @@ namespace Food_Delivery.RepositoryService
                                 {
                                  DeliveryPersonId = ordershipment.DeliveryPersonId,
                                  OrderDetailId = ordershipment.OrderDetailId,   
+                                 Quantity=OrderDetail.Quantity,
+                                 Contactnumber=deliveryPerson.ContactNumber,
+                                 OrderDate=deliveryPerson.CreatedOn,
+
                                  OrderShipmentDetailId = ordershipment.OrderShipmentDetailId,
                                    
                                 }).ToList();

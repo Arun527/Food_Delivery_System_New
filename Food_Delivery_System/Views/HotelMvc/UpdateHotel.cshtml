@@ -1,0 +1,108 @@
+﻿@using Food_Delivery.Models
+@model Hotel
+<section class="h-100 ">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6">
+                            @using (Html.BeginForm("Update", "HotelMvc", FormMethod.Post))
+                            {
+                                <div align="center" class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 "> Registration Form </h3>
+
+
+                                    <div>
+                                        <div align="center" class="col-md-12">
+                                            <div class=" row ">
+
+                                                <div class="col-md-6">
+                                                    @Html.HiddenFor(model=>model.HotelId , new { @class="form-control", required = "required" , maxlength = "20"} )
+                                                </div>
+
+                                            </div>
+
+                                            <div class=" row">
+                                                <div class="col-md-6">Hotel Name<span style="color:red;font-size:20px" id="mandatory"> * </span></div>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(model=>model.HotelName , new { @class="form-control", required = "required" , maxlength = "20"} )
+                                                </div>
+
+                                            </div>
+
+                                            <div class=" row m-5">
+                                                <div class="col-md-6">Hotel Type </div>
+                                                <div class="col-md-6">
+                                                    <label for="type">Veg</label>
+                                                    @Html.RadioButtonFor(m=>m.Type ,"Veg")
+                                                    <label for="type">Non-Veg</label>
+                                                    @Html.RadioButtonFor(m=>m.Type ,"Non-Veg")
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class=" row m-5">
+                                                <div class="col-md-6">Email<span style="color:red;font-size:20px" id="mandatory"> * </span></div>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(model=>model.Email , new { @class="form-control", required = "required" , maxlength = "20"} )
+                                                </div>
+
+                                            </div>
+
+                                            <div class=" row m-5">
+                                                <div class="col-md-6">Contact Number<span style="color:red;font-size:20px" id="mandatory"> * </span></div>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(model=>model.ContactNumber , new { @class="form-control", required = "required" , maxlength = "20"} )
+                                                </div>
+
+                                            </div>
+
+                                            <div class=" row m-5">
+                                                <div class="col-md-6">Location<span style="color:red;font-size:20px" id="mandatory"> * </span></div>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(model=>model.Address, new { @class="form-control", required = "required" , maxlength = "20"} )
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                            <div class=" justify-content-center mt-5 col-md-6 offset-3">  <input type="submit" class="btn btn-danger" value="Register" /></div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img src="~/css/CreateHotel-image.png"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+</style>

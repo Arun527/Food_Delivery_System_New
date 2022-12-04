@@ -1,0 +1,88 @@
+﻿@using Food_Delivery_System.Models
+
+
+<h2>Hotel Detail</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-bordered table-striped" id="tblHotel" style="text-align:center">
+            <thead style="background-color:khaki;text-align:center">
+                <tr>
+                    <th scope="col">Hotel Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Food List</th>
+                </tr>
+
+            </thead>
+
+        </table>
+    </div>
+
+</div>
+
+
+
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            bindDatatable();
+        });
+
+        function bindDatatable() {
+            datatable = $('#tblHotel')
+                .DataTable({
+                    "sAjaxSource": "/HotelMvc/GetallDetail",
+                    "bServerSide": true,
+                    "bProcessing": true,
+                    "bSearchable": true,
+                    "order": [[1, 'asc']],
+                    "language": {
+                        "emptyTable": "No record found.",
+                        "processing":
+                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;margin-left:50%;margin-top:10%;color:blue"></i><span class="sr-only">Loading...</span> '
+                    },
+                    "columns": [
+                        {
+                            "data": "hotelName",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "address",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "contactNumber",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "email",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+                            "data": "type",
+                            "autoWidth": true,
+                            "searchable": true
+                        },
+                        {
+
+                            "searchable": false,
+                            'render': function (data, type, row) {
+                                return "<a href=/FoodMvc/UserByHotelId?hotelId=" + row.hotelId + " class='btn'> <i style='font-size:24px;color:blue' class='far'>&#xf022;</i>  </a>"
+                            }
+
+                        },
+                    ]
+                });
+        }
+
+    </script>
+}
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
