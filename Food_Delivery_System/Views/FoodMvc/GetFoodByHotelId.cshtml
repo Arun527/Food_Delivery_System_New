@@ -28,28 +28,28 @@
                    
                     <div class="col-md-8">Food Name: @item.FoodName </div>
 
-                    <div class="col-md-4 offset-0 btn" style="background-color:#4682B4 ">
-                        <a style="color:white" href="/FoodMvc/UpdateFood?FoodId=@item.FoodId">
-                            Edit
-                            </a>
+                    <div class="col-md-4 offset-0 btn">
+                        <a href="/FoodMvc/UpdateFood?FoodId=@item.FoodId">
+                            <span class=tooltiptext>Edit</span> <i style='font-size:24px ;color:cornflowerblue' class='fas'>&#xf044;</i>
+                        </a>
                         
                     </div>
 
                 </div>
-                <p>  Food Type: @item.Type </p>
+               
                 <div class="row ms-lg-3">
 
                     <div class="col-md-8">Price   ₹ @item.Price</div>
 
-                    <div class="col-md-4 mb-3 btn " style="background-color:#F08080">
-                        <a style="color:white" href="/FoodMvc/DeleteFood?FoodId=@item.FoodId">
-                            Delete
+                    <div class="col-md-4 mb-3 btn " >
+                        <a  href="/FoodMvc/DeleteFood?FoodId=@item.FoodId">
+                            <span class=tooltiptext>Delete</span> <i style='font-size:24px; color:red' class='fas'>&#xf2ed;</i>
                         </a>
                     </div>
-                 
+                   
                 </div>
-              
 
+                <p>  Food Type: @item.Type </p>
              
             </div>
             
@@ -58,6 +58,8 @@
     </div>
 
 </div>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
 <style>
     p{
         margin-left :30px;

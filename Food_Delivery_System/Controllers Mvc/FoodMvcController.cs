@@ -121,12 +121,12 @@ namespace Food_Delivery.Controllers_Mvc
             return View(foodList);
         }
 
-        //public IActionResult UpdateFood(int FoodId)
-        //{
-        //    var obj = _food.GetFoodTypeById(FoodId);
-        //    var coverPhoto= _food.GetCoverPhoto(obj.ImageId);
-        //    return View(obj);
-        //}
+        public IActionResult UpdateFood(int FoodId)
+        {
+            var obj = _food.GetFoodTypeById(FoodId);
+            var coverPhoto = _food.GetCoverPhoto(obj.ImageId);
+            return View(obj);
+        }
 
         public IActionResult Update(Food foodDetaile)
         {

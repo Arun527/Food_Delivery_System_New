@@ -34,16 +34,16 @@
  <div class="row">
         <div class="col-sm-12">
         <table class="table table-bordered table-striped" id="tblHotel" style="text-align:center" class="display" cellspacing="0" width="100%">
-                <thead style="background-color:khaki;" >
-                    <tr>
-                        <th scope="col">Hotel Id</th>
-                        <th scope="col">Hotel Name</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Contact Number</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Action</th>
-                
+            <thead style="background-color:khaki;">
+                <tr >
+                    <th id="center" scope="col">Hotel Id</th>
+                    <th id="center" scope="col">Hotel Name</th>
+                    <th id="center" scope="col">Location</th>
+                    <th id="center" scope="col">Contact Number</th>
+                    <th id="center" scope="col">Email</th>
+                    <th id="center" scope="col">Type</th>
+                    <th id="center" data-orderable="false" scope="col">Action</th>
+                         
                     </tr>
                
                 </thead>
@@ -54,6 +54,8 @@
  </div>
 
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
 
     @section scripts{
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -75,7 +77,7 @@
                     "language": {
                         "emptyTable": "No record found.",
                         "processing":
-                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:blue;margin-left:50%;margin-top:10%;"></i><span class="sr-only">Loading...</span> '
+                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:blue;margin-left:50%;margin-top:80%;"></i><span class="sr-only">Loading...</span> '
                     },
                     "columns": [
                         {
@@ -127,52 +129,4 @@
        
     </script>
 }
-<style>
-    a{
-      text-decoration: none;
-    }
-
-
-        .btn {
-            position: relative;
-            display: inline-block;
-            text-decoration: none;
-           
-        }
-
-            .btn .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-                text-decoration: none;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-                .btn .tooltiptext::after {
-                content: "";
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                margin-left: -5px;
-                    text-decoration: none;
-                border-width: 5px;
-                border-style: solid;
-                border-color: #555 transparent transparent transparent;
-            }
-
-            .btn:hover .tooltiptext {
-            visibility: visible;
-                text-decoration: none;
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
