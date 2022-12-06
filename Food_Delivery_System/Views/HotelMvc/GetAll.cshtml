@@ -26,8 +26,7 @@
             <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
         </svg>  @Html.ActionLink("Add", "AddHotel")
     </div>
-
-
+   
 
 </div>
 
@@ -85,9 +84,12 @@
                             "searchable": true
                         },
                         {
-                            "data": "hotelName   <a class=nav-link asp-area="" asp-controller=Home asp-action= href = /FoodMvc/GetFoodByHotelId ? hotelId = " + row.hotelId " >hotelName < /a>",
+                            "data": "hotelName",
                             "autoWidth": true,
-                            "searchable": true
+                            "searchable": true,
+                            'render': function (data, type, row) {
+                                return "<a href=/FoodMvc/GetFoodByHotelId?hotelId=" + row.hotelId + " class='nav-link '>  " + row.hotelName + " </a>"
+                            }
                         },
                         {
                             "data": "address",
@@ -115,7 +117,7 @@
                             "searchable": false,
                             'render': function (data, type, row) 
                             {
-                                return "<a href=/FoodMvc/GetFoodByHotelId?hotelId=" + row.hotelId + " class='btn'> <i style='font-size:24px' class='far'>&#xf022;</i> </a> <a href=/HotelMvc/UpdateHotel?hotelId=" + row.hotelId + " class='btn'> <i style='font-size:24px ;color:cornflowerblue' class='fas'>&#xf044;</i> </a>  <a href=/HotelMvc/DeleteHotel?hotelId=" + row.hotelId + " class='btn '>  <i style='font-size:24px; color:red' class='fas'>&#xf2ed;</i> </a>"
+                                return " <a href=/HotelMvc/UpdateHotel?hotelId=" + row.hotelId + " class='btn'> <span class=tooltiptext>Edit</span> <i style='font-size:24px ;color:cornflowerblue' class='fas'>&#xf044;</i> </a>  <a href=/HotelMvc/DeleteHotel?hotelId=" + row.hotelId + " class='btn '> <span class=tooltiptext>Delete</span> <i style='font-size:24px; color:red' class='fas'>&#xf2ed;</i> </a>"
                             }
                             
                         }, 
@@ -129,4 +131,48 @@
     a{
       text-decoration: none;
     }
-</style>
+
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+           
+        }
+
+            .btn .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+                text-decoration: none;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+                .btn .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                    text-decoration: none;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+            .btn:hover .tooltiptext {
+            visibility: visible;
+                text-decoration: none;
+            opacity: 1;
+        }
+    </style>
