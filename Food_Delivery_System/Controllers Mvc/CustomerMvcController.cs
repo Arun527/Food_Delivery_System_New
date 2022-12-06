@@ -15,13 +15,15 @@ namespace Food_Delivery.Controllers_Mvc
 
         ICustomer _customer;   
         IHotel _hotel;
-        IDeliveryPerson _deliveryPerson;
-        public CustomerMvcController(ILogger<CustomerMvcController> logger, ICustomer obj, IHotel hotel,IDeliveryPerson person)
+        IDeliveryPerson _deliveryPerson; 
+        IOrderShipmentDetail _deliveryShipmentDetail;
+        public CustomerMvcController(ILogger<CustomerMvcController> logger, ICustomer obj, IHotel hotel,IDeliveryPerson person ,IOrderShipmentDetail deliveryShipmentDetail)
         {
             _logger = logger;
             _customer = obj;
             _hotel = hotel;
             _deliveryPerson=person;
+            _deliveryShipmentDetail = deliveryShipmentDetail;
         }
         public IActionResult Index()
         {
@@ -123,6 +125,11 @@ namespace Food_Delivery.Controllers_Mvc
             return View("CustomerDetail");
         }
 
-
+        public IActionResult OrderDetail(int customerId)
+        {
+            var delete = _customer.GetCustomerDetailById(customerId);
+            var order = _deliveryShipmentDetail.GetCustomerOrderDetailsById(customerId);
+            return View(order);
+        }
     }
 }

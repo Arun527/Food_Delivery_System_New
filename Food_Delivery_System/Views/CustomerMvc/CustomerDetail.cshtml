@@ -25,12 +25,12 @@
                 <thead style="background-color:khaki;" >
                     <tr>
                     <th scope="col" data-visible="false">CustomerId</th>
-                        <th scope="col">Name</th>
-                    <th scope="col">ContactNumber</th>  
-                    <th scope="col">Email</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Address</th>
-                        <th scope="col">Action</th>
+                    <th id="center" scope="col">Name</th>
+                    <th id="center" scope="col">ContactNumber</th>
+                    <th id="center" scope="col">Email</th>
+                    <th id="center" scope="col">Gender</th>
+                    <th id="center" scope="col">Address</th>
+                    <th id="center" data-orderable="false" scope="col">Action</th>
                     </tr>
                
                 </thead>
@@ -42,6 +42,7 @@
            
 
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
 
 
     @section scripts{
@@ -66,7 +67,7 @@
                     "language": {
                         "emptyTable": "No record found.",
                         "processing":
-                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;margin-left:50%;margin-top:10%;color:blue"></i><span class="sr-only">Loading...</span> '
+                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;margin-left:50%;margin-top:80%;color:blue"></i><span class="sr-only">Loading...</span> '
                     },
                     "columns": [
                         {
@@ -78,7 +79,10 @@
                         {
                             "data": "name",
                             "autoWidth": true,
-                            "searchable": true
+                            "searchable": true,
+                            'render': function (data, type, row) {
+                                return "<a href=/CustomerMvc/OrderDetail?customerId=" + row.customerId + " class='nav-link '>  " + row.name + " </a>"
+                            }
                         },
                         {
                             "data": "contactNumber",
@@ -104,7 +108,7 @@
                            
                             "searchable": false,
                             'render': function (data, type, row) {
-                                return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn '> <i style='font-size:24px;color:cornflowerblue' class='fas'>&#xf044;</i> </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn '> <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i> </a>"
+                                return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn '> <span class=tooltiptext>Edit</span> <i style='font-size:24px;color:cornflowerblue' class='fas'>&#xf044;</i> </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn '>  <span class=tooltiptext>Delete</span> <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i> </a>"
 
                             }
                             
@@ -119,10 +123,4 @@
 }
 
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
-
-                                <style>
-                                    a{
-                                        text-decoration:none;
-                                    }
-                                </style>
+    <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />

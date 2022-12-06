@@ -126,7 +126,8 @@ namespace Food_Delivery.RepositoryService
 
             var orderDetails = (from orderDetail in db.OrderDetail
                                 join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
-                                join food in db.Food on orderDetail.FoodId equals food.FoodId
+                                join Hotel in db.Hotel on orderDetail.HotelId equals Hotel.HotelId
+                                join food in db.Food on orderDetail.FoodId equals food.FoodId 
                                 join order in db.orders on orderDetail.OrderId equals order.OrderId
                                 where orderDetail.CustomerId == CustomerId
                                 select new InvoiceDetail
@@ -134,8 +135,9 @@ namespace Food_Delivery.RepositoryService
                                     InvoiceNumber = orderDetail.OrderDetailId,
                                     OrderId = orderDetail.OrderId,
                                     CustomerName = customer.Name,
+                                    HotelName= orderDetail.Hotel.HotelName,
                                     FoodName = food.FoodName,
-                                    //Orderdate = order.Orderdate,
+                                    Orderdate = order.OrderdateTime,
                                     Price = food.Price,
                                     Quantity = orderDetail.Quantity,
                                     TotalPrice = food.Price * orderDetail.Quantity
@@ -147,8 +149,9 @@ namespace Food_Delivery.RepositoryService
         {
         
             var orderDetails = (from orderDetail in db.OrderDetail
-                                join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
-                                join food in db.Food on orderDetail.FoodId equals food.FoodId
+                                join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId 
+                                join Hotel in db.Hotel on orderDetail.HotelId equals Hotel.HotelId
+                                join food in db.Food on orderDetail.FoodId equals food.FoodId 
                                 join order in db.orders on orderDetail.OrderId equals order.OrderId
                                 select new InvoiceDetail
                                 {

@@ -9,8 +9,9 @@ namespace Food_Delivery.Models
         public int OrderId { get; set; }
         public DateTime Orderdate { get; set; }
         public string CustomerName { get; set; }
-        public int FoodId { get; set; }
+      //  public int FoodId { get; set; }
         public string FoodName{ get; set; }
+        public string HotelName { get; set; }
         public int Quantity { get; set; }
         public int Price { get; set; }
         public int TotalPrice { get; set; }
