@@ -57,7 +57,14 @@ namespace Food_Delivery.Controllers_Mvc
             }
             var create = _customer.InsertCustomerDetail(customer);
             TempData["AlertMessage"] = "Customer Created Successfully.. !";
-            return RedirectToAction("CustomerDetail");
+            if (messages.Success == true)
+            {
+                return RedirectToAction("CustomerDetail");
+            }
+            else
+            {
+                return RedirectToAction("CreateCustomer");
+            }
         }
 
         public IActionResult CustomerDetail()

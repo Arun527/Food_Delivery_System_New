@@ -1,5 +1,6 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualBasic;
@@ -11,13 +12,16 @@ namespace Food_Delivery.Controllers_Mvc
     {
         private readonly ILogger<HotelMvcController> _logger;
 
+        private readonly IWebHostEnvironment webHostEnvironment;
+
         IHotel _hotel;
         IFood _food;
-        public HotelMvcController(ILogger<HotelMvcController> logger, IHotel obj, IFood food)
+        public HotelMvcController(ILogger<HotelMvcController> logger, IHotel obj, IFood food, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _hotel = obj;
             _food = food;
+            this.webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -29,20 +33,39 @@ namespace Food_Delivery.Controllers_Mvc
             return View();
         }
 
-        public IActionResult Create(Hotel hotelDetail)
+        public async Task<IActionResult> CreateAsync(Hotel hotelDetail)
         {
             Messages msg = new Messages();
+
+            var uploadDirecotroy = "Css/Image/";
+
+            string location = "~wwwroot/Css/Image/";
+            var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, uploadDirecotroy);
+
+            if (!Directory.Exists(uploadPath))
+                Directory.CreateDirectory(uploadPath);
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(hotelDetail.CoverPhoto.FileName);
+            var Iamgepath = Path.Combine(uploadPath, fileName);
+            await hotelDetail.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create));
+            hotelDetail.ImageId = fileName;
+
+
             var create = _hotel.InsertHotelDetail(hotelDetail);
-            if(msg.Success==true)
-            {
-                TempData["AlertMessage"] = "Hotel Created Successfully.. !";
-            }
-            TempData["AlertMessage"] = "The Hotel Already Exist.. !";
+
             return RedirectToAction("GetAll");
+
+            //if(msg.Success==true)
+            //{
+            //    TempData["AlertMessage"] = "Hotel Created Successfully.. !";
+            //}
+            //TempData["AlertMessage"] = "The Hotel Already Exist.. !";
+
         }
         public IActionResult GetAll()
         {
-            return View();
+            var hotel = _hotel.GetAll();
+            return View(hotel);
         }
 
       
