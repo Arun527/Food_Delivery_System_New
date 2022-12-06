@@ -46,8 +46,8 @@ namespace Food_Delivery_System.Controllers_Mvc
                 Value = a.CustomerId.ToString(),
             }));
             return View(types);
-        //    return View();
-            
+            //    return View();
+
         }
         public IActionResult AddOrder([FromBody] OrderRequest food)
         {
@@ -56,12 +56,12 @@ namespace Food_Delivery_System.Controllers_Mvc
 
             var orderDetail = _orderDetail.InsertOrderDetail(food);
             return Json(orderDetail);
-            
+
         }
 
 
-       
-       
+
+
         //public IActionResult AddCart(int id)
         //{
         //    var query = _food.GetFoodByHotelId(id);

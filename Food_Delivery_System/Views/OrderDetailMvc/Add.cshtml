@@ -1,126 +1,177 @@
 ﻿@model Food_Delivery.Models.OrderRequest
 
 
+
+
 <div class="row m-5">
-                                  
-                              <div class="row m-5">
-                                    <div class="col-md-6">Customer Name <span id="mandatory"> * </span> </div>
-                                    <div class="col-md-6"> @Html.DropDownListFor(m=>m.CustomerId,Model.CustomerList,"Select Name", new {@class="form-control",id="customerid"})</div>
-                                </div>
 
-
-@{
-    ViewData["Title"] = "AddProduct";
- 
-
-
-
-}
-<table id="productList" class="table">
-    <tr>
-        <th>FoodId</th>
-        <th>HotelId</th>
-       
-        <th>Price</th>
-        <th>Quantity</th>
-
-
-    </tr>
-
-    
-
-
-   
-
-</table>
-
-<div class=" col-md-4 offset-5 m-2">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Submit" /></div>
-
-
-@section Scripts{
-
-    <script>
-        var obj;
-        var foodDetails = [];
-        var data = localStorage.getItem("cart");
-        console.log("data", data);
-    
-        $.each(JSON.parse(data), function (key, value) {
-            $('#productList').append('<tr><td>' + value.hotelId + '</td><td>' + value.foodId + '</td><td>' + value.price + '</td><td>'+ value.quantity +    '</td><td><button class="btn btn-danger delete">Delete </button></td></tr>');
-
-            
-           
-
-
-            obj={"FoodId":value.hotelId,"HotelId":value.foodId,"Quantity":value.quantity}
-
-             
-
-
-            foodDetails.push(obj);
-
-       
+    <div class="row m-5">
+        <div class="col-md-6">Customer Name <span id="mandatory"> * </span> </div>
+        <div class="col-md-6"> @Html.DropDownListFor(m=>m.CustomerId,Model.CustomerList,"Select Name", new {@class="form-control",id="customerid"})</div>
+    </div>
 
 
 
 
-        });
-      
-
-          $(document).on('click', '.delete', function () {
-        let index = $(this).closest('tr').index()- 1;
-        $(this).closest('tr').remove();
-        console.log(index);
-        foodDetails.splice(index, 1);
-        //console.log(productDetails);
-        //if (productDetails.length == 0) {
-        //    $('#productList').hide();
-        //}
-    });
-
-        $(document).ready(function () {
-            $('#btnsubmit').click(function (e) {
-                e.preventDefault();
-               var id=$('#customerid').val();
-                           
-                var Request = {
-                    "CustomerId": id,
-                    "Food":foodDetails
-
-                };
+    @{
+        ViewData["Title"] = "AddProduct";
 
 
 
-           $.ajax({
-
-            url: "/OrderDetailMvc/AddOrder",
-            type: "POST",
-            dataType: 'json',
-            data: JSON.stringify(Request),
-            contentType: 'application/json; charset=utf-8',
-            success: function (response) {
-
-            
-                if (response.success == true) {
-                    localStorage.clear();
-                    setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
-                }
-                else {
-                    setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
-                }
 
 
-            },
-            error: function () {
-                alert("error");
-            }
+    }
+    <table id="productList" class="table">
+        <tr>
+            <th>FoodId</th>
+            <th>HotelId</th>
 
-        });
-                
+            <th>Price</th>
+            <th>Quantity</th>
+
+
+
+
+        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+    </table>
+
+
+
+    <div class=" col-md-4 offset-5 m-2">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Submit" /></div>
+
+
+
+
+    @section Scripts{
+
+
+
+        <script>
+            var obj;
+            var foodDetails = [];
+            var data = localStorage.getItem("cart");
+            console.log("data", data);
+
+            $.each(JSON.parse(data), function (key, value) {
+                $('#productList').append('<tr><td>' + value.hotelId + '</td><td>' + value.foodId + '</td><td>' + value.price + '</td><td>' + value.quantity + '</td><td><button class="btn btn-danger delete">Delete </button></td></tr>');
+
+
+
+
+
+
+
+
+
+                obj = { "FoodId": value.hotelId, "HotelId": value.foodId, "Quantity": value.quantity }
+
+
+
+
+
+
+
+
+                foodDetails.push(obj);
+
+
+
+
+
+
+
+
+
+
             });
-        });
 
-     
-    </script>
 
-}
+
+
+            $(document).on('click', '.delete', function () {
+                let index = $(this).closest('tr').index() - 1;
+                $(this).closest('tr').remove();
+                console.log(index);
+                foodDetails.splice(index, 1);
+                //console.log(productDetails);
+                //if (productDetails.length == 0) {
+                //    $('#productList').hide();
+                //}
+            });
+
+
+
+            $(document).ready(function () {
+                $('#btnsubmit').click(function (e) {
+                    e.preventDefault();
+                    var id = $('#customerid').val();
+
+                    var Request = {
+                        "CustomerId": id,
+                        "Food": foodDetails
+
+
+
+                    };
+
+
+
+
+
+                    $.ajax({
+
+
+
+                        url: "/OrderDetailMvc/AddOrder",
+                        type: "POST",
+                        dataType: 'json',
+                        data: JSON.stringify(Request),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+
+
+
+
+                            if (response.success == true) {
+                                localStorage.clear();
+                                setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
+                            }
+                            else {
+                                setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
+                            }
+
+
+
+
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+
+
+
+                    });
+
+                });
+            });
+
+
+
+
+        </script>
+
+
+
+    }

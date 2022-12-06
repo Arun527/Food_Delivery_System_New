@@ -26,6 +26,7 @@ namespace Food_Delivery.Controllers_Mvc
         IFood _food;
 
         IHotel _hotel;
+        int hotelId;
         public FoodMvcController(ILogger<FoodMvcController> logger, IFood obj,IHotel hottel, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
@@ -42,7 +43,8 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Explore()
         {
-            return View();
+            var hoteldetail = _hotel.GetAll();
+            return View(hoteldetail);
         }
 
 
@@ -137,7 +139,7 @@ namespace Food_Delivery.Controllers_Mvc
 
 
         public IActionResult DeleteFood(int FoodId)
-        { 
+        {
             
             var obj = _food.DeleteFoodType(FoodId);
             return Redirect("/HotelMvc/GetAll");
@@ -145,12 +147,14 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult GetFoodByHotelId(int hotelId)
         {
+            ViewBag.hotelId = hotelId;
             var foodList = _food.GetFoodByHotelId(hotelId);
             return View(foodList);
         }
 
         public IActionResult UserByHotelId(int hotelId)
         {
+            
             var foodList = _food.GetFoodByHotelId(hotelId);
             return View(foodList);
         }
