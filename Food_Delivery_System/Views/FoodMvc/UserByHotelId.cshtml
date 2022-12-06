@@ -27,7 +27,7 @@
 
                     <input type="text" id="Quantity" name="fname" style="width:50px; margin-left:15px">
 
-                    <div class="col-md-4 offset-0  btn " style="background-color:#FFA500" onclick="Add(@item.FoodId,@item.HotelId,@item.Price)">
+                    <div class="col-md-4 offset-0  btn " style="background-color:#FFA500" onclick="Add(this, @item.FoodId,@item.HotelId,@item.Price)">
                         Add <span class="bskt-icon mt-5" style="margin-left:15px;padding-top:1%">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
                                 <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
@@ -67,11 +67,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script language="JavaScript" type="text/javascript">
        
-        function Add(HotelId,FoodId,Price,FoodNmae) {
+        function Add(ele, HotelId,FoodId,Price,FoodNmae) {
             debugger;
               const shoppingCart = [];
                 
-                var qty=$('#Quantity').val();
+                var qty=$(ele).parent("div").find("#Quantity").val();
                
                 //console.log($(stuff).map(function() {
                 //return $('#name').val();
@@ -82,28 +82,29 @@
                 var photo=$('#img').val();
                 console.log(photo);
                console.log(Name);
-               const obj = { hotelId: HotelId, foodId: FoodId, price: Price, quantity: qty }
-               shoppingCart.push(obj);
-            
+               const obj = { hotelId: HotelId, foodId: FoodId, price: Price, quantity: qty }        
             console.log(qty);
             console.log(obj);
+            const existing = localStorage.getItem('cart')||[];
 
+           
+               const list = JSON.parse(existing);
+                var index = list.findIndex(x => x.foodId === FoodId && x.hotelId === HotelId);
 
-             
-
-            const existing = localStorage.getItem('cart');
-                        if (existing) {
-                try {
-                    shoppingCart.push(...JSON.parse(existing))
+                if(index==-1){
+                   list.push(obj)
                 }
-                catch (err) {
-                    console.error('ERROR deserializing cart', err);
+                else{
+                list[index].quantity=qty;
+
                 }
-            }
-
-
-               localStorage.setItem('cart', JSON.stringify(shoppingCart));
+               localStorage.setItem('cart', JSON.stringify(list));
             alert("food is added succesfully");
+
+
+
+
+
 
             //debugger;
 
