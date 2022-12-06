@@ -99,17 +99,17 @@
 
         function Add(ele, HotelId, FoodId, Price, FoodNmae) {
             debugger;
-            const shoppingCart = [];
-
-            var qty = $(ele).parent("div").find("#Quantity").val();
-
-
-            var Name = $('#name').val();
-            console.log(Name);
-            var photo = $('#img').val();
-            console.log(photo);
-            console.log(Name);
-            const obj = { hotelId: HotelId, foodId: FoodId, price: Price, quantity: qty }
+              const shoppingCart = [];
+                
+                var qty=$(ele).parent("div").find("#Quantity").val();
+               
+               
+                var Name=$('#name').val();
+                console.log(Name);
+                var photo=$('#img').val();
+                console.log(photo);
+               console.log(Name);
+               const obj = { hotelId: HotelId, foodId: FoodId, price: Price, quantity: qty }        
             console.log(qty);
             console.log(obj);
             const existing = localStorage.getItem('cart') || [];
@@ -136,19 +136,12 @@
 
 
 
-
-
-
-
-
-
         }
 
 
 
-
-
-
+           
+        }
 
 
 
