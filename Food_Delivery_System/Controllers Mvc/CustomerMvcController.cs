@@ -114,7 +114,7 @@ namespace Food_Delivery.Controllers_Mvc
         {
             int id = obj.CustomerId;
             var update = _customer.UpdateCustomerDetail(obj);
-            TempData["AlertMessage"] = "Customer Updated Successfully.. !";
+        //   TempData["AlertMessage"] = "Customer Updated Successfully.. !";
             return Redirect("CustomerDetail?CustomerId=" + id);
         }
 
@@ -131,5 +131,12 @@ namespace Food_Delivery.Controllers_Mvc
             var order = _deliveryShipmentDetail.GetCustomerOrderDetailsById(customerId);
             return View(order);
         }
+        public IActionResult OrderStatus(int customerId)
+        {
+            var delete = _customer.GetCustomerDetailById(customerId);
+            var order = _deliveryShipmentDetail.GetCustomerOrderDetailsById(customerId);
+            return View(order);
+        }
+
     }
 }

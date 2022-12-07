@@ -118,10 +118,9 @@ namespace Food_Delivery.Controllers_Mvc
         }
 
         public IActionResult Update(Hotel hoteldetail)
-        {
+        { 
             int id = hoteldetail.HotelId;
             var obj = _hotel.UpdateHotelDetail(hoteldetail);
-            TempData["AlertMessage"] = "Hotel Updated Successfully.. !";
             return Redirect("GetAll?hotelId=" + id);
         }
 

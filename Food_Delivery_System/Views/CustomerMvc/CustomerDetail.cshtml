@@ -4,12 +4,7 @@
 @if (TempData["AlertMessage"]!=null)
 {
  <div class="alret alert-success " style="text-align:center;margin-left:30%;margin-right:30%;background-color:skyblue">
-
-        @if (TempData["AlertMessage"] =="The  Contact Number  Already Exist.. !")
-        {
             <strong>Warning !</strong>  @TempData["AlertMessage"]
-        }
-        <strong>  @TempData["AlertMessage"] </strong>
  </div>
 }
     <div  style="margin-left:93%;">
@@ -46,7 +41,7 @@
 
 
     @section scripts{
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
+  
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
    @* <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>

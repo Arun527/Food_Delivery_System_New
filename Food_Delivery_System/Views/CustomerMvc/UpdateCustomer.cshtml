@@ -2,6 +2,15 @@
 @{
     ViewData["Title"] = "AddCustomer";
     
+}  
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alret alert-success " style="text-align:center;margin-left:30%;margin-right:30%;background-color:skyblue">
+
+
+        <strong>Warning !</strong>  @TempData["AlertMessage"]
+
+    </div>
 }
 <section class="h-100 ">
     <div class="container py-5 h-100">
