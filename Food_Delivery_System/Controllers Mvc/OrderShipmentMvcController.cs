@@ -1,6 +1,8 @@
-﻿using Food_Delivery.RepositoryInterface;
+﻿using Food_Delivery.Models;
+using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Food_Delivery_System.Controllers_Mvc
 {
@@ -25,15 +27,26 @@ namespace Food_Delivery_System.Controllers_Mvc
         }
         public IActionResult AddShipment()
         {
-            return View();
+
+           
+            OrderShipmentRequest shipment = new OrderShipmentRequest();
+           // var delivery = _deliveryPerson.GetAllDeliveryPersons();
+            shipment.DeliveryList = new List<SelectListItem>();
+            shipment.DeliveryList.Add(new SelectListItem() { Value = "0", Text = "Select Customer" });
+            shipment.DeliveryList.AddRange(_deliveryPerson.GetAllDeliveryPersons().Select(a => new SelectListItem
+            {
+                Text = a.DeliveryPersonName,
+                Value = a.DeliveryPersonId.ToString(),
+            }));
+            return View(shipment);
         }
 
-        public IActionResult AddView()
+        public IActionResult Add(OrderShipmentRequest order)
         {
-            OrderShipmentRequest shipment = new OrderShipmentRequest();
-            var delivery=_deliveryPerson.GetAllDeliveryPersons();
 
-            return View();
+            var orderdetail = _orderShipmentDetail.InsertOrderShipmentDetail(order);
+
+            return View("AddShipment");
         }
     }
 }
