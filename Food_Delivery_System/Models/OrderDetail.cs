@@ -20,7 +20,6 @@ namespace Food_Delivery.Models
         [ForeignKey("OrderId")]
         [JsonIgnore]
         public Orders? Orders { get; set; }
-
         public  int? FoodId { get; set; }
 
         [ForeignKey("FoodId")]

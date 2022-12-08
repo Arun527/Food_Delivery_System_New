@@ -24,6 +24,7 @@ namespace Food_Delivery.Models
         public string ContactNumber { get; set; }
         public string? Gender { get; set; }
 
+
         //[System.ComponentModel.DataAnnotations.StringLength(13, MinimumLength = 10)]
         //[System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please enter the Email Minimum length of 2 maximum length of 32")]
         public string Email { get; set; }

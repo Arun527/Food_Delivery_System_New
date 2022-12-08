@@ -16,7 +16,6 @@ namespace Food_Delivery.Models
 
         [StringLength(30, MinimumLength = 2)]
         [Required(ErrorMessage = "Please enter the Hotel name")]
-   
         public string HotelName { get; set; }
 
         [Required]
