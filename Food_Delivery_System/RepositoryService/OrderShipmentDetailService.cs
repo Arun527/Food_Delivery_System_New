@@ -140,7 +140,9 @@ namespace Food_Delivery.RepositoryService
                                     Orderdate = order.OrderdateTime,
                                     Price = food.Price,
                                     Quantity = orderDetail.Quantity,
-                                    TotalPrice = food.Price * orderDetail.Quantity
+                                    TotalPrice = food.Price * orderDetail.Quantity,
+                                    OrderStatus= orderDetail.OrderStatus
+                                    
                                 }).ToList();
             return orderDetails;
         }
@@ -158,8 +160,9 @@ namespace Food_Delivery.RepositoryService
                                     InvoiceNumber = orderDetail.OrderDetailId,
                                     OrderId = orderDetail.OrderId,
                                     CustomerName = customer.Name,
+                                    HotelName = Hotel.HotelName,
                                     FoodName = food.FoodName,
-                                    //  Orderdate = order.Orderdate,
+                                    Orderdate = order.OrderdateTime,
                                     Price = food.Price,
                                     Quantity = orderDetail.Quantity,
                                     TotalPrice = food.Price * orderDetail.Quantity

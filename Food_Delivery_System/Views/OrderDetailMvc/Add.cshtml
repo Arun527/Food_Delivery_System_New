@@ -8,13 +8,14 @@
     <div class="row m-5">
         <div class="col-md-3" style="margin-left:-70px;">Customer Name <span id="mandatory"> * </span> </div>
         <div class="col-md-3"> @Html.DropDownListFor(m=>m.CustomerId,Model.CustomerList, new {@class="form-control",id="customerid"})</div>
-        <div class=" col-md-2 offset-4 ">  <input type="submit" id="btnsubmit"  style="color:white;" class="btn btn-primary" value="Check Out" ></div>
+        <div class=" col-md-2 offset-2 btn btn-primary">  <a href="/FoodMvc/Explore" style="color:white;">Continue Shopping</a></div>
+
+        <div class=" col-md-2 offset-0 ">  <input type="submit" id="btnsubmit"  style="color:white;" class="btn btn-primary" value="Check Out" ></div>
 
 
     </div>
 
-
-
+   
 
     @{
         ViewData["Title"] = "AddProduct";
@@ -115,7 +116,7 @@
             });
 
 
-
+            var id;
             $(document).ready(function () {
                 $('#btnsubmit').click(function (e) {
                     e.preventDefault();
@@ -154,7 +155,7 @@
 
                             if (response.success == true) {
                                 localStorage.clear();
-                                setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
+                                setTimeout(function () { window.location = '/OrderShipmentMvc/GetShipmentByUser?CustomerId=' + id; }, 1000);
                             }
                             else {
                                 setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
@@ -198,5 +199,8 @@
             }
             .word{
                 margin-top:50%;
+            } 
+            a{
+                text-decoration:none
             }
     </style>
