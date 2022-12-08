@@ -13,7 +13,6 @@ namespace Food_Delivery.Models
 
         public List<SelectListItem>? CustomerList { get; set; }
         public List<FoodDetaile> Food { get; set; }
-
     }
     public class FoodDetaile
     {
