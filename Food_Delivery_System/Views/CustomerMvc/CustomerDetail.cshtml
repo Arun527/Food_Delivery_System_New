@@ -86,7 +86,7 @@
                             "autoWidth": true,
                             "searchable": true,
                             'render': function (data, type, row) {
-                                return "<a href=/CustomerMvc/OrderDetail?customerId=" + row.customerId + " class='nav-link '> <span class=tooltiptext> View Order Detail </span> " + row.name + " </a>"
+                                return "<a href=/OrderShipmentMvc/GetShipmentByUser?customerId=" + row.customerId + " class='nav-link '> <span class=tooltiptext> View Order Detail </span> " + row.name + " </a>"
                             }
                         },
                         {

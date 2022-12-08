@@ -20,7 +20,7 @@ namespace Food_Delivery.Models
         public OrderDetail? OrderDetail { get; set; }
 
         public string? TrackingStatus { get; set; } = "Out For Delivery";
-
+        public DateTime OrderShipmentdateTime { get; set; } = DateTime.Now;
         public string? TrackingStatusDescription { get; set; } = "ThankYou For Your Valuable Order..";
 
 

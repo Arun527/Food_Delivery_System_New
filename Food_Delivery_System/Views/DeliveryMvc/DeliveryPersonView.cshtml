@@ -31,7 +31,7 @@
                 <th style="text-align:center">DeliveryPersonName </th>
 
 
-                <th style="text-align:center"> CustomerName </th>
+                <th style="text-align:center"> Contact Number </th>
 
                 <th style="text-align:center">Vechile No</th>
                 <th style="text-align:center">Gender</th>
@@ -45,7 +45,7 @@
             {
                 <tr style="text-align:center">
                     <td>  @item.DeliveryPersonId  </td>
-                    <td>  @item.DeliveryPersonName </td>
+                    <td> <a class="nav-link" asp-area="" asp-controller="DeliveryMvc" asp-action="GetDeliveryPersonByIdInvoice" asp-route-id="@item.DeliveryPersonId"> <span class=tooltiptext>Delivery Status</span>  @item.DeliveryPersonName</a>  </td>
                     <td>   @item.ContactNumber  </td>
                     <td>@item.VechileNo</td>
                     <td>@item.Gender</td>
@@ -80,7 +80,7 @@
 </body>
 
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
+<link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
 @section scripts{
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
@@ -93,10 +93,6 @@
         })
     </script>
 }
-
-    @*    @section scripts{
-    <script src="~/js/customer.js"></script>
-}*@
 
 
 <style>

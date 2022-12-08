@@ -45,7 +45,7 @@ namespace Food_Delivery.RepositoryService
                     DeliveryPersonId = orderShipment.DeliveryPersonId,
                     OrderDetailId = request.OrderDetailId
                 };
-
+                
                 db.Add(shipment);
             }
 
@@ -103,18 +103,23 @@ namespace Food_Delivery.RepositoryService
         public IEnumerable<InvoiceDeliveryPerson> GetdeliveryPersonById(int deliveryPersonId)
         {
 
-            var orderDetails = (from ordershipment in db.OrderShipmentDetail
+            var orderDetails = (from ordershipment in db.OrderShipmentDetail 
                                 join deliveryPerson in db.DeliveryPerson on ordershipment.DeliveryPersonId equals deliveryPerson.DeliveryPersonId
-                                join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId
+                                join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId 
+                                join Customer in db.Customer on OrderDetail.CustomerId equals Customer.CustomerId
                                 where ordershipment.DeliveryPersonId == deliveryPersonId
                                 select new InvoiceDeliveryPerson
                                 {
-                                 DeliveryPersonId = ordershipment.DeliveryPersonId,
-                                 OrderDetailId = ordershipment.OrderDetailId,       
-                                 Quantity=OrderDetail.Quantity,
-                                 Contactnumber=deliveryPerson.ContactNumber,
-                                 OrderDate=deliveryPerson.CreatedOn,
 
+                                 DeliveryPersonId = ordershipment.DeliveryPersonId,
+                                 DeliveryPersonName= deliveryPerson.DeliveryPersonName,
+                                 CustomerName = Customer.Name,
+                                 Address=Customer.Address,
+                                  OrderDetailId = ordershipment.OrderDetailId,
+                                 OrderId= OrderDetail.OrderId,
+                                 OrderShipmentdateTime=ordershipment.OrderShipmentdateTime,
+                                 Quantity =OrderDetail.Quantity,
+                                 Contactnumber=deliveryPerson.ContactNumber,
                                  OrderShipmentDetailId = ordershipment.OrderShipmentDetailId,
                                    
                                 }).ToList();
