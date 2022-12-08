@@ -110,7 +110,7 @@ namespace Food_Delivery.RepositoryService
                                 select new InvoiceDeliveryPerson
                                 {
                                  DeliveryPersonId = ordershipment.DeliveryPersonId,
-                                 OrderDetailId = ordershipment.OrderDetailId,   
+                                 OrderDetailId = ordershipment.OrderDetailId,       
                                  Quantity=OrderDetail.Quantity,
                                  Contactnumber=deliveryPerson.ContactNumber,
                                  OrderDate=deliveryPerson.CreatedOn,
