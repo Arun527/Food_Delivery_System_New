@@ -25,7 +25,7 @@ namespace Food_Delivery.Models
         public string? TrackingStatusDescription { get; set; } = "ThankYou For Your Valuable Order..";
 
 
-        public List<SelectListItem>? DeliveryList { get; set; }
+      //  public List<SelectListItem>? DeliveryList { get; set; }
 
     }
 }

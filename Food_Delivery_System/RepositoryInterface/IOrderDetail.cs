@@ -9,6 +9,10 @@ namespace Food_Delivery.RepositoryInterface
         public Messages InsertOrderDetail(OrderRequest orderDetail);
         public Messages UpdateOrderDetail(OrderDetail orderDetail);
         public Messages DeleteOrderDetail(int orderDetailId);
-    
+
+        public IEnumerable<OrderDetail> GetAllDto();
+
+
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using Food_Delivery.Models
-@model OrderShipmentDetail
+@model OrderShipmentDto
 <section class="h-100 ">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -13,25 +13,28 @@
                                     <div>
                                         <div align="center" class="col-md-12">
 
+                                       
+
+
                                             <div class=" row m-5">
-                                                <div class="col-md-6">DeliveryPerson Name</div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-5">DeliveryPerson Name</div>
+                                                <div class="col-md-5">
                                                 @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
                                                 </div>
-
+                                              
                                             </div>
-
-
-                                           
 
 
                                             <div class=" row m-5">
-                                                <div class="col-md-6">OrderDetailId<span style="color:red;font-size:20px" id="mandatory"> * </span></div>
-                                                <div class="col-md-6">
-                                                    @Html.TextBoxFor(model=>model.OrderDetailId, new { @class="form-control", required = "required" , maxlength = "20",id="order"} )
+                                                <div class="col-md-5">OrderId</div>
+                                                <div class="col-md-5">
+                                                    @Html.DropDownListFor(model=>model.OrderDetailId,Model.ShipmentList, new {@class="form-control",id="OrderId"})
                                                 </div>
-
+                                            <div class="col-md-2 btn" id="addid"> <span class=tooltiptext>Add More Orders</span><i style='font-size:14px' class='fas'>&#xf067;</i> </div>
                                             </div>
+
+
+                                       
 
 
 
@@ -87,30 +90,37 @@
            var Request;
 
             $(document).ready(function () {
-                $('#btnsubmit').click(function (e) {
-                    e.preventDefault();
+
+            $('#addid').click(function (e) {
+                debugger;
+                e.preventDefault();
                 var id = $('#DeliveryPersonId').val();
-                var orderId = $('#order').val();
+                var orderId = $('#OrderId').val();
                 if (DeliveryPersonId == null || DeliveryPersonId == 0) {
-                        $('#errormsg').html("Delivery Person  is required");
-                        return;
-                    }
+                    $('#errormsg').html("Delivery Person  is required");
+                    return;
+                }
 
 
                 obj = { "OrderDetailId": orderId }
                 orderDetail.push(obj);
-              
 
-                     Request = {
+
+                Request = {
                     "DeliveryPersonId": id,
                     "ShipmentRequest": orderDetail
 
 
 
-                    };
+                };
 
 
+            });
+            //});
 
+                $('#btnsubmit').click(function (e) {
+                   
+               
 
 
                     $.ajax({
@@ -156,3 +166,38 @@
         </script>
 
 }
+
+
+    <style>
+        .control-fluid, .container-fluid {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .control-section .control-wrapper {
+            width: 80%;
+            margin: 0 auto;
+            min-width: 185px;
+        }
+
+        .e-bigger .control-section .control-wrapper {
+            width: 100%;
+        }
+
+        .property-section .right-side {
+            padding-left: 10px;
+        }
+
+        .property-section .left-side {
+            padding: 5px;
+            width: 25%
+        }
+
+        .control-styles {
+            padding-top: 30px
+        }
+    </style>
+    <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
+
+
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>

@@ -142,7 +142,8 @@
             $("#btn").click(function () {
                  searchvalue= $("#search1").val();
                 alert(searchvalue);
-                makeAPICall();
+                window.location.href = '/api/HotelMvc/'+searchvalue
+               // makeAPICall();
             });
            // var valdata = $("#search1").serialize();
            function makeAPICall() {

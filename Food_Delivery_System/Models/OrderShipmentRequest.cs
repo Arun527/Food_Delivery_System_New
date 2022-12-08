@@ -11,7 +11,6 @@ namespace Food_Delivery_System.Models
         public int DeliveryPersonId { get; set; }
         public List<OrderShipmentList>? ShipmentRequest { get; set; }
 
-        public List<SelectListItem>? DeliveryList { get; set; }
     }
 
     public class OrderShipmentList

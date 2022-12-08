@@ -28,25 +28,32 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult AddShipment()
         {
 
-           
-            OrderShipmentRequest shipment = new OrderShipmentRequest();
+
+            OrderShipmentDto shipment = new OrderShipmentDto();
            // var delivery = _deliveryPerson.GetAllDeliveryPersons();
             shipment.DeliveryList = new List<SelectListItem>();
-            shipment.DeliveryList.Add(new SelectListItem() { Value = "0", Text = "Select Customer" });
+            shipment.DeliveryList.Add(new SelectListItem() { Value = "0", Text = "Select Delivery Person" });
             shipment.DeliveryList.AddRange(_deliveryPerson.GetAllDeliveryPersons().Select(a => new SelectListItem
             {
                 Text = a.DeliveryPersonName,
                 Value = a.DeliveryPersonId.ToString(),
             }));
+            shipment.ShipmentList = new List<SelectListItem>();
+            shipment.ShipmentList.Add(new SelectListItem() { Value = "0", Text = "Select Order Id" });
+            shipment.ShipmentList.AddRange(_orderDetail.GetAllDto().Select(a => new SelectListItem
+            {
+                Text = a.OrderDetailId.ToString(),
+                Value = a.OrderDetailId.ToString(),
+            }));
             return View(shipment);
         }
 
-        public IActionResult Add(OrderShipmentRequest order)
+        public IActionResult Add([FromBody] OrderShipmentRequest order)
         {
 
             var orderdetail = _orderShipmentDetail.InsertOrderShipmentDetail(order);
 
-            return View("AddShipment");
+            return Json("AddShipment");
         }
 
 
