@@ -1,6 +1,8 @@
-﻿using Food_Delivery.RepositoryInterface;
+﻿using Food_Delivery.Models;
+using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Food_Delivery_System.Controllers_Mvc
 {
@@ -25,15 +27,33 @@ namespace Food_Delivery_System.Controllers_Mvc
         }
         public IActionResult AddShipment()
         {
-            return View();
+
+
+            OrderShipmentDto shipment = new OrderShipmentDto();
+           // var delivery = _deliveryPerson.GetAllDeliveryPersons();
+            shipment.DeliveryList = new List<SelectListItem>();
+            shipment.DeliveryList.Add(new SelectListItem() { Value = "0", Text = "Select Delivery Person" });
+            shipment.DeliveryList.AddRange(_deliveryPerson.GetAllDeliveryPersons().Select(a => new SelectListItem
+            {
+                Text = a.DeliveryPersonName,
+                Value = a.DeliveryPersonId.ToString(),
+            }));
+            shipment.ShipmentList = new List<SelectListItem>();
+            shipment.ShipmentList.Add(new SelectListItem() { Value = "0", Text = "Select Order Id" });
+            shipment.ShipmentList.AddRange(_orderDetail.GetAllDto().Select(a => new SelectListItem
+            {
+                Text = a.OrderDetailId.ToString(),
+                Value = a.OrderDetailId.ToString(),
+            }));
+            return View(shipment);
         }
 
-        public IActionResult AddView()
+        public IActionResult Add([FromBody] OrderShipmentRequest order)
         {
-            OrderShipmentRequest shipment = new OrderShipmentRequest();
-            var delivery=_deliveryPerson.GetAllDeliveryPersons();
 
-            return View();
+            var orderdetail = _orderShipmentDetail.InsertOrderShipmentDetail(order);
+
+            return Json("AddShipment");
         }
 
 

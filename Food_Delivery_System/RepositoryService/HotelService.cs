@@ -85,7 +85,8 @@ namespace Food_Delivery.RepositoryService
             try
             {
                 Message message = new Message();
-                var getId = db.Hotel.Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
+                var getId = db.Hotel .Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
+             
                 return getId;
             }
 
@@ -105,7 +106,7 @@ namespace Food_Delivery.RepositoryService
 
                 var foodlist = (from food in db.Food
                                 join hotel in db.Hotel on food.HotelId equals hotel.HotelId
-                                where hotel.HotelName == HotelName
+                                where hotel.HotelName == HotelName 
 
                                 select new FoodList
                                 {

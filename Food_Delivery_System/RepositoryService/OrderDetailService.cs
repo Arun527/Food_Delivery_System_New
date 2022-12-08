@@ -18,6 +18,26 @@ namespace Food_Delivery.RepositoryService
             return db.OrderDetail.ToList();
         }
 
+
+        public IEnumerable<OrderDetail> GetAllDto()
+        {
+            var orderDetails = (from ordershipment in db.OrderShipmentDetail
+                               
+                                join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId
+                                where OrderDetail.OrderStatus == "Order Placed"
+                                select new OrderDetail
+                                {
+                                    
+                                    OrderDetailId = ordershipment.OrderDetailId,
+                                 
+                                
+
+                                    
+
+                                }).Distinct().ToList();
+            return orderDetails;
+          
+        }
         public OrderDetail GetOrderDetail(int orderDetailId)
         {
             var getId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetailId);

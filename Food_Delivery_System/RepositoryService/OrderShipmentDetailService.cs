@@ -35,22 +35,28 @@ namespace Food_Delivery.RepositoryService
         {
             Messages msg = new Messages();
 
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.OrderStatus = "Your Order Is Out For Delivery!!";
 
 
             foreach (var request in orderShipment.ShipmentRequest)
             {
+                var ord = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == request.OrderDetailId);
+
+                ord.OrderStatus = "Your Order Is Out For Delivery!!";
+                db.OrderDetail.Update(ord);
+                db.SaveChanges();
 
                 var shipment = new OrderShipmentDetail()
                 {
                     DeliveryPersonId = orderShipment.DeliveryPersonId,
-                    OrderDetailId = request.OrderDetailId
+                    OrderDetailId = request.OrderDetailId 
                 };
                 
                 db.Add(shipment);
             }
 
-
-
+           
             db.SaveChanges();
             msg.Success = true;
             msg.Message = " Your Order Is Out For Delivery!!";

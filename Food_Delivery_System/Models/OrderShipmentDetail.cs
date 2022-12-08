@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -23,6 +24,8 @@ namespace Food_Delivery.Models
         public DateTime OrderShipmentdateTime { get; set; } = DateTime.Now;
         public string? TrackingStatusDescription { get; set; } = "ThankYou For Your Valuable Order..";
 
+
+      //  public List<SelectListItem>? DeliveryList { get; set; }
 
     }
 }
