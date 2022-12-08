@@ -13,7 +13,7 @@
     .btn .tooltiptext {
         visibility: hidden;
         width: 120px;
-        background-color: #555;
+        background-color:steelblue;
         color: #fff;
         text-align: center;
         border-radius: 6px;
@@ -43,7 +43,7 @@
     .btn:hover .tooltiptext {
         visibility: visible;
         text-decoration: none;
-        opacity: 1;
+        opacity: 0.9;
     }
 
 #center {
