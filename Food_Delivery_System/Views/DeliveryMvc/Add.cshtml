@@ -10,6 +10,15 @@
                             @using (Html.BeginForm("AddPerson", "DeliveryMvc", FormMethod.Post))
                             {
                                 <div align="center" class="card-body p-md-5 text-black">
+                                    @if (TempData["AlertMessage"] != null)
+                                    {
+
+                                        <div class="alret alert-danger">
+                                            <strong>Warning !</strong>  @TempData["AlertMessage"]
+                                        </div>
+
+
+                                    }
                                     <h3 class="mb-5 ">Registration form</h3>
                                     <div>
                                         <div align="center" class="col-md-12">

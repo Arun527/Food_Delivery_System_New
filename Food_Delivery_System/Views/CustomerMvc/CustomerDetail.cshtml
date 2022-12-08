@@ -1,11 +1,21 @@
 ﻿@using Food_Delivery.Models
 
  <h2 style="height:60px">Customer Detail</h2>
-@if (TempData["AlertMessage"]!=null)
+@if (TempData["AlertMessage"] != null)
 {
- <div class="alret alert-success " style="text-align:center;margin-left:30%;margin-right:30%;background-color:skyblue">
-            <strong>Warning !</strong>  @TempData["AlertMessage"]
- </div>
+    @if (TempData["AlertMessage"].Equals("This Customer Ordered Food..!"))
+    {
+        <div class="alret alert-warning">
+            <strong>Warning ! </strong>  @TempData["AlertMessage"]
+        </div>
+    }
+    else
+    {
+        <div class="alret alert-success">
+            <strong>Success !</strong>  @TempData["AlertMessage"]
+        </div>
+    }
+
 }
     <div  style="margin-left:93%;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
@@ -76,7 +86,7 @@
                             "autoWidth": true,
                             "searchable": true,
                             'render': function (data, type, row) {
-                                return "<a href=/CustomerMvc/OrderDetail?customerId=" + row.customerId + " class='nav-link '>  " + row.name + " </a>"
+                                return "<a href=/CustomerMvc/OrderDetail?customerId=" + row.customerId + " class='nav-link '> <span class=tooltiptext> View Order Detail </span> " + row.name + " </a>"
                             }
                         },
                         {

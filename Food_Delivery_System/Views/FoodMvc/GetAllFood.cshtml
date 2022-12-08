@@ -3,10 +3,11 @@
 @{
     ViewData["Title"] = "GetAllFood";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+} 
+
 <div class="container-fluid p-5"> 
 <div class="row p-5 row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-3">
-
+   
         @foreach (FoodDto item in Model)
             {
 

@@ -40,31 +40,22 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Create(Customer customer)
         {
-            //int id = customer.CustomerId;
-
-            Messages messages = new Messages();
-            var number = _customer.GetCustomerDetailByNumber(customer.ContactNumber);
-            var email = _customer.GetCustomerDetailByEmail(customer.Email);
-
-            if (number != null)
-            {
-                TempData["AlertMessage"] ="The  Contact Number  Already Exist.. !";
-                //TempData["AlertMessage"]= messages.Success = false;
-                return RedirectToAction("CustomerDetail");
-            }
-            if (email != null)
-            {
-                TempData["AlertMessage"] ="The Email Id  Already Exist.. !";
-                return RedirectToAction("CustomerDetail");
-            }
+         
             var create = _customer.InsertCustomerDetail(customer);
-            TempData["AlertMessage"] = "Customer Created Successfully.. !";
-            if (messages.Success == true)
+           
+            if (create.Message== "This  Customer Added Succesfully")
             {
+                TempData["AlertMessage"] = " Customer Added Succesfully..!";
                 return RedirectToAction("CustomerDetail");
+            }
+            else if(create.Message== "This Contact Number Already Exists")
+            {
+                TempData["AlertMessage"] = "Contact Number Already Exists..!";
+                return RedirectToAction("CreateCustomer");
             }
             else
             {
+                TempData["AlertMessage"] = "This Email Id Already Exists..!";
                 return RedirectToAction("CreateCustomer");
             }
         }
@@ -82,9 +73,10 @@ namespace Food_Delivery.Controllers_Mvc
             if (!string.IsNullOrEmpty(param.sSearch))
             {
                 customerdetail = customerdetail.Where(x => x.Name.Contains(param.sSearch.ToLower())
-                                              || x.ContactNumber.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.Email.ToLower().Contains(param.sSearch.ToLower()));
-                                              //|| x.Address.ToString().Contains(param.sSearch.ToLower()));
+                                              || x.ContactNumber.ToString().Contains(param.sSearch.ToString())
+                                              || x.Email.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Gender.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToLower().Contains(param.sSearch.ToLower()));
             }
 
 
@@ -114,15 +106,37 @@ namespace Food_Delivery.Controllers_Mvc
         {
             int id = obj.CustomerId;
             var update = _customer.UpdateCustomerDetail(obj);
-        //   TempData["AlertMessage"] = "Customer Updated Successfully.. !";
-            return Redirect("CustomerDetail?CustomerId=" + id);
+            if(update.Message == "Customer Updated Succesfully!!")
+            {
+                TempData["AlertMessage"] = "Customer Updated Successfully.. !";
+                return RedirectToAction("CustomerDetail");
+            } 
+            else if(update.Message == "This Contact Number Already taked")
+            {
+                TempData["AlertMessage"] = "Contact Number Already Exists..!";
+                return Redirect("UpdateCustomer?customerId="+id);
+            }
+            else
+            {
+                TempData["AlertMessage"] = "Email Id Already Exists..!";
+                return Redirect("UpdateCustomer?customerId=" + id);
+            }
+           
         }
 
         public IActionResult Delete(int customerId)
         {
             var delete=_customer.DeleteCustomerDetail(customerId);
-            TempData["AlertMessage"] = "Customer Deleted Successfully.. !";
-            return View("CustomerDetail");
+            if (delete.Message == "Customer Deleted Succesfully")
+            {
+                TempData["AlertMessage"] = "Customer Deleted Successfully.. !";
+                return View("CustomerDetail");
+            }
+            else
+            {
+                TempData["AlertMessage"] = "This Customer Ordered Food..!";
+                return View("CustomerDetail");
+            }
         }
 
         public IActionResult OrderDetail(int customerId)

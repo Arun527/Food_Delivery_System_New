@@ -38,19 +38,14 @@ namespace Food_Delivery.RepositoryService
         }
 
 
-            public Food GetFoodTypeById(int foodTypeId)
+        public Food GetFoodTypeById(int foodTypeId)
         {
             try
             {
-
                 var food = db.Food.FirstOrDefault(x => x.FoodId == foodTypeId);
                 if (food != null)
                 {
                     return food;
-                }
-                else
-                {
-
                 }
                 return food;
             }

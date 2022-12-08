@@ -213,12 +213,18 @@ namespace Food_Delivery.RepositoryService
         {
             Messages msg = new Messages();
             var deleteCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
-            if (deleteCustomer != null)
+            var order = db.OrderDetail.FirstOrDefault(x => x.CustomerId == customerId);
+            if (deleteCustomer != null && order==null)
             {
                 db.Remove(deleteCustomer);
                 db.SaveChanges();
                 msg.Success = true;
                 msg.Message = "Customer Deleted Succesfully";
+            }
+            else if(order!=null)
+            {
+                msg.Success = false;
+                msg.Message = "This Customer Ordered Food..!";
             }
             else
             {
@@ -227,27 +233,6 @@ namespace Food_Delivery.RepositoryService
             }
             return msg;
         }
-
-        //public LoginDto loginbyid(string contactNumber, string password)
-        //{
-        //    var result = (from Role in db.Role
-        //                  join Customer in db.Customer on Role.RoleId equals Customer.RoleId
-
-
-        //                  where Customer.ContactNumber == contactNumber && Customer.Password == password
-
-        //                    select new LoginDto()
-        //                    {
-        //                     Password = Customer.Password,
-        //                     ContactNumber=Customer.ContactNumber,
-        //                     RoleId=Role.RoleId,
-        //                     CustomerId=Customer.CustomerId,
-        //                     Gender=Customer.Gender,
-        //                     RoleNmae=Role.RoleName
-        //                    }).FirstOrDefault();
-        //    return result;
-        //    }
-
 
         public Customer  GetNumber(string Number)
         {

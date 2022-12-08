@@ -59,7 +59,8 @@ namespace Food_Delivery.Controllers_Mvc
                 hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(param.sSearch.ToLower())
                                               || x.Address.ToLower().Contains(param.sSearch.ToLower())
                                                || x.Type.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower()));
+                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower())
+                                               || x.ContactNumber.ToString().Contains(param.sSearch.ToString()));
             }
 
 
@@ -105,8 +106,13 @@ namespace Food_Delivery.Controllers_Mvc
             await foodType.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create)); 
             foodType.ImageId = fileName;
 
-            _food.InsertFoodType(foodType);
-            return Redirect("GetFoodByHotelId?HotelId="+ foodType.HotelId);
+              var food= _food.InsertFoodType(foodType);
+            if (food.Message == "The Food Type Inserted Succesfully")
+            {
+                TempData["AlertMessage"] = "The Food Added Succesfully";
+               
+            }
+            return Redirect("GetFoodByHotelId?HotelId=" + foodType.HotelId);
         }
 
         public IActionResult Food(Food foodType)
@@ -134,15 +140,18 @@ namespace Food_Delivery.Controllers_Mvc
         {
           
             var obj = _food.UpdateFood(foodDetaile);
+            TempData["AlertMessage"] = "The Food Updated Succesfully";
             return Redirect("GetFoodByHotelId?HotelId=" + foodDetaile.HotelId);
         }
 
 
-        public IActionResult DeleteFood(int FoodId)
+        public IActionResult DeleteFood(int foodId)
         {
-            
-            var obj = _food.DeleteFoodType(FoodId);
-            return Redirect("/HotelMvc/GetAll");
+            var food = _food.GetFoodTypeById(foodId);
+            var id = food.HotelId;  
+            var obj = _food.DeleteFoodType(foodId);
+            TempData["AlertMessage"] = "The Food Deleted Succesfully";
+           return Redirect("GetFoodByHotelId?HotelId=" + id);
         }
 
         public IActionResult GetFoodByHotelId(int hotelId)

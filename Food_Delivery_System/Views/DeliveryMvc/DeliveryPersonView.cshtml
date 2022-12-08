@@ -54,14 +54,14 @@
 
                     <td style="text-align:center">
 
-                        <a class="btn   text-white" href="/DeliveryMvc/GetDeliveryPersonByIdInvoice?Id=+ @item.DeliveryPersonId">
+                        <a class="btn   text-white"  href="/DeliveryMvc/GetDeliveryPersonByIdInvoice?Id=+ @item.DeliveryPersonId">
                             <i style='font-size:24px;color:black' class='far'>&#xf022;</i>
                         </a>
 
                         <a class="btn  text-white" href="/DeliveryMvc/Edit?DeliveryPersonId=+ @item.DeliveryPersonId">
                             <i style="font-size:24px;color:cornflowerblue;" class="fa">&#xf044;</i>
                         </a>
-                        <a class="btn text-white" onclick="deleteCustomer(@item.DeliveryPersonId)">
+                        <a class="btn text-white" href="/DeliveryMvc/DeleteDeliveryPerson?DeliveryPersonId=+ @item.DeliveryPersonId" >
                             <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i>
                         </a>
                     </td>
@@ -104,31 +104,3 @@
         text-decoration:none;
     }
 </style>
-
-    <script>
-
-   
-function deleteCustomer(DeliveryPersonId) {
-    let result = confirm("Are you sure you want to delete?");
-    if (result) {
-        $.ajax({
-            type: "get",
-            url: '/DeliveryMvc/DeleteDeliveryPerson?id=' + DeliveryPersonId,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if (response.success == true) {
-                    location.reload();
-                }
-                else {
-                    alert(response.message);
-                }
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    }
-};
-
-    </script>

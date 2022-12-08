@@ -52,14 +52,19 @@ namespace Food_Delivery.Controllers_Mvc
 
 
             var create = _hotel.InsertHotelDetail(hotelDetail);
-
-            return RedirectToAction("GetAll");
-
-            //if(msg.Success==true)
-            //{
-            //    TempData["AlertMessage"] = "Hotel Created Successfully.. !";
-            //}
-            //TempData["AlertMessage"] = "The Hotel Already Exist.. !";
+            
+            if (create.Message == "The Hotel Added Succesfully")
+            {
+                TempData["AlertMessage"] = "The Hotel Added Succesfully";
+                return RedirectToAction("GetAll");
+              
+            }
+            else
+            {
+                TempData["AlertMessage"] = "The Hotel Contact Number Already Exist";
+                return RedirectToAction("AddHotel");
+             
+            }
 
         }
         public IActionResult GetAll()
@@ -80,11 +85,13 @@ namespace Food_Delivery.Controllers_Mvc
                 hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(param.sSearch.ToLower())
                                               || x.Address.ToLower().Contains(param.sSearch.ToLower())
                                                || x.Type.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower()));
+                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower())
+                                              || x.ContactNumber.ToString().Contains(param.sSearch.ToString()));
             }
 
+            
 
-            var displayResult = hoteldetail.Skip(param.iDisplayStart)
+                var displayResult = hoteldetail.Skip(param.iDisplayStart)
                 .Take(param.iDisplayLength).ToList();
             var totalRecords = hoteldetail.Count();
 
@@ -121,14 +128,36 @@ namespace Food_Delivery.Controllers_Mvc
         { 
             int id = hoteldetail.HotelId;
             var obj = _hotel.UpdateHotelDetail(hoteldetail);
-            return Redirect("GetAll?hotelId=" + id);
+            if (obj.Message == "The hotel updated succesfully")
+            {
+                TempData["AlertMessage"] = "The hotel updated succesfully";
+                return Redirect("GetAll?hotelId=" + id);
+            }
+            else if (obj.Message == "This Email Id Already taked")
+            {
+                TempData["AlertMessage"] = "This Email Id Already Exist";
+                return Redirect("UpdateHotel?hotelId="+id);
+            }
+            else
+            {
+                TempData["AlertMessage"] = "This Contact Number  Already Exist";
+                return Redirect("UpdateHotel?hotelId=" + id);
+            }
         }
 
         public IActionResult DeleteHotel(int hotelId)
         {
             var obj = _hotel.DeleteHotelDetail(hotelId);
-            TempData["AlertMessage"] = "Hotel Deleted Successfully.. !";
-            return View("GetAll");
+            if (obj.Message == "The hotel Id deleted Succesfully")
+            {
+                TempData["AlertMessage"] = "The hotel Id deleted Succesfully";
+                return View("GetAll");
+            }
+            else
+            {
+                TempData["AlertMessage"] = "The hotel Food Is Available For Users";
+                return View("GetAll");
+            }
         }
 
 

@@ -230,13 +230,20 @@ namespace Food_Delivery.RepositoryService
             try
             {
                 var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail);
-                if(hotel != null)
+                var food = db.Food.FirstOrDefault(x => x.HotelId == hotelDetail);
+                if(hotel != null && food==null)
                 {
                     db.Remove(hotel);
                     db.SaveChanges();
                     msg.Message = "The hotel Id deleted Succesfully";
                     msg.Success=true;
                 }
+                else if(food != null)
+                {
+                    msg.Message = "The hotel Food Is Available For Users";
+                    msg.Success = false;
+                }
+
                 else
                 {
                     msg.Message = "The hotel Id Is Invalid";

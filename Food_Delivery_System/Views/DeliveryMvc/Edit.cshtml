@@ -10,6 +10,12 @@
                             @using (Html.BeginForm("EditDetail", "DeliveryMvc", FormMethod.Post))
                             {
                                 <div align="center" class="card-body p-md-5 text-black">
+                                    @if (TempData["AlertMessage"] != null)
+                                    {
+                                        <div class="alret alert-danger">
+                                            <strong>Warning !</strong>  @TempData["AlertMessage"]
+                                        </div>
+                                    }
                                     <h3 class="mb-5 ">Registration form</h3>
                                     <div>
                                         <div align="center" class="col-md-12">
@@ -78,7 +84,7 @@
                             }
                         </div>
                         <div class="col-xl-6 d-none d-xl-block">
-                            <img src="~/css/CreateCustomer-image.png"
+                            <img src="~/css/delivery.jpg"
                                  alt="Sample photo" class="img-fluid"
                                  style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
                         </div>

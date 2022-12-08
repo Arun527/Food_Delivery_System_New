@@ -99,7 +99,7 @@ namespace Food_Delivery.RepositoryService
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
                 var number = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
 
-                if (updateDeliveryPerson != null )
+                if (updateDeliveryPerson != null && number==null )
                 {
                     
                         updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
@@ -109,10 +109,16 @@ namespace Food_Delivery.RepositoryService
                         db.SaveChanges();
                         msg.Success = true;
                         msg.Message = "DeliveryPerson Updated Succesfully!!";
-                  
+                        return msg;
 
                 }
-              
+               else if(number != null)
+                {
+                    msg.Success = false;
+                    msg.Message = "Contact Number Already Exist!!";
+                    return msg;
+                }
+
                        return msg;
                 
             }

@@ -34,8 +34,17 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult AddPerson(DeliveryPerson  deliveryPerson)
         {
             var delivery=_deliveryPerson.InsertDeliveryPerson(deliveryPerson);
-            TempData["AlertMessage"] = "DeliverPerson Created Successfully.. !";
-            return RedirectToAction("DeliveryPersonView");
+            if(delivery.Message== "DeliveryPerson Added Succesfully")
+            {
+                TempData["AlertMessage"] = "DeliverPerson Created Successfully.. !";
+                return RedirectToAction("DeliveryPersonView");
+            }
+            else
+            {
+                TempData["AlertMessage"] = "The Contact Number Already Exist";
+                return RedirectToAction("Add");
+            }
+         
         }
 
         public IActionResult DeliveryPersonView()
@@ -54,8 +63,16 @@ namespace Food_Delivery_System.Controllers_Mvc
         {
             int id = deliveryPerson.DeliveryPersonId;
             var update=_deliveryPerson.UpdateDeliveryPerson(deliveryPerson);
-            TempData["AlertMessage"] = "DeliverPerson Updated Successfully.. !";
-            return RedirectToAction("DeliveryPersonView");
+            if(update.Message== "DeliveryPerson Updated Succesfully!!")
+            {
+                TempData["AlertMessage"] = "DeliverPerson Updated Successfully.. !";
+                return RedirectToAction("DeliveryPersonView");
+            } 
+            else
+            {
+                TempData["AlertMessage"] = "Contact Number Already Exist!!";
+                return Redirect("Edit?deliveryPersonId=" + id);
+            }
         }
 
         public IActionResult GetDeliveryPersonByIdInvoice(int Id)
@@ -68,11 +85,11 @@ namespace Food_Delivery_System.Controllers_Mvc
             return View(delivery);
         }
 
-        public IActionResult  DeleteDeliveryPerson(int id)
+        public IActionResult  DeleteDeliveryPerson(int DeliveryPersonId)
         {
-            var delivery=_deliveryPerson.DeleteDeliveryPerson(id);
+            var delivery=_deliveryPerson.DeleteDeliveryPerson(DeliveryPersonId); 
             TempData["AlertMessage"] = "DeliverPerson Deleted Successfully.. !";
-            return Json(delivery);
+            return RedirectToAction("DeliveryPersonView");
         }
     }
 }
