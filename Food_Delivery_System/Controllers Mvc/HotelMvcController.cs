@@ -8,8 +8,8 @@ using Microsoft.VisualBasic;
 
 namespace Food_Delivery.Controllers_Mvc
 {
-     [Route("api/[controller]")]
-    [ApiController]
+//     [Route("api/[controller]")]
+//    [ApiController]
     public class HotelMvcController : Controller
     {
         private readonly ILogger<HotelMvcController> _logger;
