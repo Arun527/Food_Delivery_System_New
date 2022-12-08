@@ -33,9 +33,9 @@
                 <img  style=" width: 280px;border-radius:6%; height: 280px;margin-left:10%;margin-top:5%;margin-bottom:5%" src="/css/Image/@item.ImageId" multiple />
                 <div class="row ms-lg-3">
                    
-                    <div class="col-md-8">Food Name: @item.FoodName </div>
+                    <div class="col-md-7 offset-1">Food Name: @item.FoodName </div>
 
-                    <div class="col-md-4 offset-0 btn">
+                    <div class="col-md-3 offset-0 btn">
                         <a href="/FoodMvc/UpdateFood?FoodId=@item.FoodId">
                             <span class=tooltiptext>Edit</span> <i style='font-size:24px ;color:cornflowerblue' class='fas'>&#xf044;</i>
                         </a>
@@ -46,9 +46,9 @@
                
                 <div class="row ms-lg-3">
 
-                    <div class="col-md-8">Price   ₹ @item.Price</div>
+                    <div class="col-md-7 offset-1">Price   ₹ @item.Price</div>
 
-                    <div class="col-md-4 mb-3 btn " >
+                    <div class="col-md-3  btn " >
                         <a  href="/FoodMvc/DeleteFood?FoodId=@item.FoodId">
                             <span class=tooltiptext>Delete</span> <i style='font-size:24px; color:red' class='fas'>&#xf2ed;</i>
                         </a>
@@ -56,7 +56,7 @@
                    
                 </div>
 
-                <p>  Food Type: @item.Type </p>
+                <p class="col-md-8 offset-2">  Food Type: @item.Type </p>
              
             </div>
             

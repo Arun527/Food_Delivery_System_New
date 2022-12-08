@@ -4,10 +4,13 @@
 
 
 <div class="row m-5">
-
+    <div id="errormsg" style="text-align:center;color:red;font-size:20px;"></div>
     <div class="row m-5">
-        <div class="col-md-6">Customer Name <span id="mandatory"> * </span> </div>
-        <div class="col-md-6"> @Html.DropDownListFor(m=>m.CustomerId,Model.CustomerList,"Select Name", new {@class="form-control",id="customerid"})</div>
+        <div class="col-md-3" style="margin-left:-70px;">Customer Name <span id="mandatory"> * </span> </div>
+        <div class="col-md-3"> @Html.DropDownListFor(m=>m.CustomerId,Model.CustomerList, new {@class="form-control",id="customerid"})</div>
+        <div class=" col-md-2 offset-4 ">  <input type="submit" id="btnsubmit"  style="color:white;" class="btn btn-primary" value="Check Out" ></div>
+
+
     </div>
 
 
@@ -23,12 +26,14 @@
     }
     <table id="productList" class="table">
         <tr>
-            <th>FoodId</th>
-            <th>HotelId</th>
-
-            <th>Price</th>
-            <th>Quantity</th>
-
+            <th id="col">HotelName</th>
+            
+            <th id="col">Food Name</th>
+            <th id="col">Image</th>
+            <th id="col">Price</th>
+            <th id="col">Quantity</th>
+            <th id="col">Total</th>
+            <th id="col">Action</th>
 
 
 
@@ -49,9 +54,7 @@
 
 
 
-    <div class=" col-md-4 offset-5 m-2">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Submit" /></div>
-
-
+   
 
 
     @section Scripts{
@@ -65,7 +68,7 @@
             console.log("data", data);
 
             $.each(JSON.parse(data), function (key, value) {
-                $('#productList').append('<tr><td>' + value.hotelId + '</td><td>' + value.foodId + '</td><td>' + value.foodname + '</td><td>' + value.price + '</td><td>' + value.quantity + '</td><td><button class="btn btn-danger delete">Delete </button></td></tr>');
+                $('#productList').append('<tr><td class="word">' + value.hotelname + '</td><td>' + value.foodname + '</td><td>' + ' <img class="foodimg" src="/css/Image/' + value.imageid + '" />' + '</td><td>' + value.price + '</td><td>' + value.quantity + '</td><td>' + value.quantity*value.price + '</td><td><button class="btn btn-danger delete ">Delete </button></td></tr>');
 
 
 
@@ -117,6 +120,11 @@
                 $('#btnsubmit').click(function (e) {
                     e.preventDefault();
                     var id = $('#customerid').val();
+
+                    if (id == null || id == 0) {
+                        $('#errormsg').html("Customer is required");
+                        return;
+                    }
 
                     var Request = {
                         "CustomerId": id,
@@ -175,3 +183,20 @@
 
 
     }
+    <style>
+        .foodimg{
+            width:150px;
+            height:130px;
+            border-radius:50%;
+        }
+        .table{
+            text-align:center;
+        }
+
+            #col{
+                background-color:khaki;
+            }
+            .word{
+                margin-top:50%;
+            }
+    </style>
