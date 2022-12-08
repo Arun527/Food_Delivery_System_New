@@ -40,7 +40,7 @@ namespace Food_Delivery_System.Controllers_Mvc
             }));
             shipment.ShipmentList = new List<SelectListItem>();
             shipment.ShipmentList.Add(new SelectListItem() { Value = "0", Text = "Select Order Id" });
-            shipment.ShipmentList.AddRange(_orderDetail.GetAllDto().Select(a => new SelectListItem
+            shipment.ShipmentList.AddRange(_orderDetail.GetAll().Select(a => new SelectListItem
             {
                 Text = a.OrderDetailId.ToString(),
                 Value = a.OrderDetailId.ToString(),

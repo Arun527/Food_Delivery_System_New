@@ -15,7 +15,8 @@ namespace Food_Delivery.RepositoryService
 
         public IEnumerable<OrderDetail> GetAll()
         {
-            return db.OrderDetail.ToList();
+            var order = db.OrderDetail.Where(x => x.OrderStatus == "Order Placed");
+            return order;
         }
 
 
