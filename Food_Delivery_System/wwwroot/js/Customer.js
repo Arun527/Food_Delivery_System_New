@@ -1,69 +1,24 @@
-﻿@using Food_Delivery.Models
+﻿
 
- <h2 style="height:60px">Customer Detail</h2>
-@if (TempData["AlertMessage"] != null)
-{
-    @if (TempData["AlertMessage"].Equals("This Customer Ordered Food..!"))
-    {
-        <div class="alret alert-warning">
-            <strong>Warning ! </strong>  @TempData["AlertMessage"]
-        </div>
-    }
-    else
-    {
-        <div class="alret alert-success">
-            <strong>Success !</strong>  @TempData["AlertMessage"]
-        </div>
-    }
 
-}
-    <div  style="margin-left:93%;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
-            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-            <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
-        </svg>  @Html.ActionLink("Add", "CreateCustomer")
-    </div>
-
- <div class="row">
-        <div class="col-sm-12">
-        <table class="table table-bordered table-striped" id="tblHotel" style="text-align:center">
-                <thead style="background-color:khaki;" >
-                    <tr>
-                    <th scope="col" data-visible="false">CustomerId</th>
-                    <th id="center" scope="col">Name</th>
-                    <th id="center" scope="col">ContactNumber</th>
-                    <th id="center" scope="col">Email</th>
-                    <th id="center" scope="col">Gender</th>
-                    <th id="center" scope="col">Address</th>
-                    <th id="center" data-orderable="false" scope="col">Action</th>
-                    </tr>
-               
-                </thead>
-               
-            </table>
-        </div>
-   
-</div>
-           
 
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
 
 
-    @section scripts{
-
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
 
 
-    <script>
+
+     src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"
+     src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"
+     src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"
+   
         $(document).ready(function () {
             bindDatatable();
         });
 
         function bindDatatable() {
-              datatable = $('#tblHotel') 
+            datatable = $('#tblHotel')
                 .DataTable({
                     "sAjaxSource": "/CustomerMvc/Getall",
                     "bServerSide": true,
@@ -100,7 +55,7 @@
                             "autoWidth": true,
                             "searchable": true
                         },
-                          {
+                        {
                             "data": "gender",
                             "autoWidth": true,
                             "searchable": true
@@ -111,21 +66,21 @@
                             "searchable": true
                         },
                         {
-                           
+
                             "searchable": false,
                             'render': function (data, type, row) {
                                 return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn '> <span class=tooltiptext>Edit</span> <i style='font-size:24px;color:cornflowerblue' class='fas'>&#xf044;</i> </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn '>  <span class=tooltiptext>Delete</span> <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i> </a>"
 
                             }
-                            
 
-                        }, 
-                     
+
+                        },
+
                     ]
                 });
         }
-      
-    </script>
-}
 
+
+     src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script
     <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
+
