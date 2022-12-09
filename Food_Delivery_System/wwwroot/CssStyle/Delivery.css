@@ -12,7 +12,12 @@
     top: 13px;
 }
 
-#imagedelivery {
+span {
+    color: red;
+    font-size: 20px
+}
+
+#createimg {
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
 }
