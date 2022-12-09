@@ -7,7 +7,7 @@
 
 <div class="col-md-6 offset-3">
 <div class="input-group " >
-        <input style="font-weight:700" type="search" id="search1" class="form-control rounded" placeholder="Search for restaurents and food" aria-label="Search" aria-describedby="search-addon" />
+        <input style="font-weight:700" type="search" id="search1" class="form-control rounded" placeholder="Search for restaurents" aria-label="Search" aria-describedby="search-addon" />
     <button type="button" class="btn btn-outline-primary" id="btn">search</button>
 </div>
 </div>
@@ -137,11 +137,11 @@
     <script language="JavaScript" type="text/javascript">
 
         $(document).ready(function () {
-            debugger;
+       
             var searchvalue
             $("#btn").click(function () {
                  searchvalue= $("#search1").val();
-                alert(searchvalue);
+               
                 window.location.href = '/api/HotelMvc/'+searchvalue
                // makeAPICall();
             });

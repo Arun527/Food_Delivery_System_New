@@ -6,7 +6,7 @@
             <div class="col">
                 <div class="card card-registration my-4">
                     <div class="row g-0">
-                        <div class="col-xl-6">
+                        <div class="col-xl-5">
                            
                                 <div align="center" class="card-body p-md-5 text-black">
                                     <h3 class="mb-5 ">Registration form</h3>
@@ -53,7 +53,18 @@
                                 </div>
                             }
                         </div>
-                        <div class="col-xl-6 d-none d-xl-block">
+                        <div class="col-xl-2 d-none d-xl-block" style="margin-top:100px;">
+                            <table id="idList" class="table">
+                                <tr>
+                                    <th id="col">Id</th>
+
+                                    <th id="col">Action</th>
+                               
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-xl-5 d-none d-xl-block">
                             <img src="~/css/delivery.jpg"
                                  alt="Sample photo" class="img-fluid"
                                  style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
@@ -92,7 +103,7 @@
             $(document).ready(function () {
 
             $('#addid').click(function (e) {
-                debugger;
+      
                 e.preventDefault();
                 var id = $('#DeliveryPersonId').val();
                 var orderId = $('#OrderId').val();
@@ -103,8 +114,21 @@
 
 
                 obj = { "OrderDetailId": orderId }
-                orderDetail.push(obj);
 
+                $('#idList').append('<tr><td>' + orderId + '</td><td><button class="btn btn-danger delete">Delete </button></td></tr>');
+
+                 orderDetail.push(obj);
+                
+                $(document).on('click', '.delete', function () {
+                    let index = $(this).closest('tr').index() - 1;
+                    $(this).closest('tr').remove();
+                    console.log(index);
+                    productDetails.splice(index, 1);
+                    console.log(productDetails);
+                    if (orderDetail.length == 0) {
+                        $('#idList').hide();
+                    }
+                });
 
                 Request = {
                     "DeliveryPersonId": id,
@@ -116,7 +140,7 @@
 
 
             });
-            //});
+       
 
                 $('#btnsubmit').click(function (e) {
                    
@@ -126,27 +150,17 @@
                     $.ajax({
 
 
-
                         url: "/OrderShipmentMvc/Add",
                         type: "POST",
                         dataType: 'json',
                         data: JSON.stringify(Request),
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
-
-
-
-
-                            //if (response.success == true) {
-                            //    localStorage.clear();
-                            //    setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
-                            //}
-                            //else {
-                            //    setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
-                            //}
-
-
-
+                           
+                                alert("Order is Succesfully Shipped");
+                                window.location.href= "/OrderShipmentMvc/GetAllShipment";
+                          
+                    
 
                         },
                         error: function () {
