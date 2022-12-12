@@ -73,6 +73,7 @@ namespace Food_Delivery.Controllers
         [HttpPost("")]
         public IActionResult AddHotelDetail(Hotel detaile)
         {
+               var hoteldetail = _hotel.InsertHotelDetail(detaile);
             var number = _hotel.GetHotelDetailByNumber(detaile.ContactNumber);
             if (number != null)
             {
@@ -84,7 +85,7 @@ namespace Food_Delivery.Controllers
                 return Conflict("Email Id Already Taked");
             }
 
-            var hoteldetail = _hotel.InsertHotelDetail(detaile);
+         
             return Created("https://localhost:7187/Api/Hotel/" + detaile.HotelId + "", hoteldetail);
         }
 
@@ -93,21 +94,22 @@ namespace Food_Delivery.Controllers
 
         public IActionResult UpdateHotelDetail(Hotel hotel)
         {
+            Messages msg = new Messages();    
             var id = _hotel.GetHotelById(hotel.HotelId);
+             if (hotel.HotelId == 0)
+            {
+                return BadRequest("The Hotel Field Is Required");
+            }
             if(id == null)
             {
                 return NotFound("Hotel Id Not Found");
             }
-            if (hotel.HotelId == 0)
-            {
-                return BadRequest("The Hotel Field Is Required");
-            }
             var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
-            if (hotelUpdate.Message.Equals( "This Email Id Already taked"))
+            if (hotelUpdate.Message== "This Email Id Already taked")
             {
                 return Conflict("The Email Already Taked");
             }
-            if (hotelUpdate.Message.Equals("This Contact Number  Already taked"))
+            if (hotelUpdate.Message=="This Contact Number  Already taked")
             {
                 return Conflict("This Contact Number  Already taked");
             }
@@ -121,15 +123,16 @@ namespace Food_Delivery.Controllers
         {
             Messages messages = new Messages();
             var id = _hotel.GetHotelById(hotelDetailId);
+           
             if (id == null)
             {
                 return NotFound("The Hotel Id Not Found");
             }
+            var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
             if (messages.Success == false)
             {
                 return BadRequest("The Hotel Id Is  Not Deleted,Because This Hotel Management  Created  Available  Food List ");
             }
-            var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
             return Ok(hotel);
         }
 

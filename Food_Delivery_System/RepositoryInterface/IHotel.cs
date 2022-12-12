@@ -20,9 +20,6 @@ namespace Food_Delivery.RepositoryInterface
 
         public IEnumerable<Hotel> GetHotelDetailByName(String hotelName);
         public IEnumerable<Hotel> GetHotelType(string hoteltype);
-        //public IEnumerable<LFoodDetail> GetFoodDetail(int id);
-
-        //public LoginDto loginbyid(string contactNumber, string password);
-
+       
     }
 }
