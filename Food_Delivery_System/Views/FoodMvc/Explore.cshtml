@@ -49,55 +49,21 @@
 
 
 
+
+
+
 @section Scripts{
 
 
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script language="JavaScript" type="text/javascript">
 
-        $(document).ready(function () {
+
        
-            var searchvalue
-            $("#btn").click(function () {
-                 searchvalue= $("#search1").val();
-               
-                window.location.href = '/api/HotelMvc/'+searchvalue
-               // makeAPICall();
-            });
-           // var valdata = $("#search1").serialize();
-           function makeAPICall() {
-                $.ajax({
 
-                    url: '/api/HotelMvc/' + searchvalue,
-                    type: "Get",
-                    dataType: 'json',
-                    //data: new FormData(Customerform),
-                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-
-                    success: function (response) {
-
-                        //if (response.success == true) {
-                        //    window.location.href = '/hotelMvc/GetHotelByName/Name/' + searchvalue;
-                        //}
-                        //else {
-                        //    alert(response.message);
-                        //    location.reload();
-                        //}
-
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-
-                });
-
-           }
-            
-        });
-
-    </script>
+   
    
     <link href="~/css/css style/explore.css" rel="stylesheet" />
+   
+
 }
