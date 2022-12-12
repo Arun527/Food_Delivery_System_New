@@ -141,65 +141,113 @@ namespace Food_Delivery.RepositoryService
             Messages msg = new Messages();
             try
             {
-                msg.Success = false;
-                msg.Message = "This Customer id not registered";
-                var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
-                var number = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
-                var Email = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
 
-                if (updateCustomer != null)
+                Messages messages = new Messages();
+                messages.Success = false;
+                var userExist = GetCustomerDetailById(customer.CustomerId);
+                var phoneExist = GetCustomerDetailByNumber(customer.ContactNumber);
+                var emailIdExist = GetCustomerDetailByEmail(customer.Email);
+                if (userExist == null)
                 {
-                    if (number != null && Email!=null)
-                    {
-                        var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
-                        var contact = contactNumber.CustomerId;
-                        var EmailId = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
-                        var Id = EmailId.CustomerId;
-
-                        if (contact != null && customer.CustomerId != contact)
-                        {
-
-                            msg.Success = false;
-                            msg.Message = "This Contact Number Already taked";
-                            return msg;
-                        }
-                        if (Id != null && customer.CustomerId != Id)
-                        {
-
-                            msg.Success = false;
-                            msg.Message = "This Email Id  Already taked";
-                            return msg;
-                        }
-                        else
-                        {
-                            updateCustomer.Name = customer.Name;
-                            updateCustomer.Email = customer.Email;
-                            updateCustomer.Gender = customer.Gender;
-                            updateCustomer.Address = customer.Address;
-                            updateCustomer.ContactNumber = customer.ContactNumber;
-                            updateCustomer.IsActive = customer.IsActive;
-                            db.Update(updateCustomer);
-                            db.SaveChanges();
-                            msg.Success = true;
-                            msg.Message = "Customer Updated Succesfully!!";
-                        }
-
-                    }
-                    else
-                    {
-                        updateCustomer.Name = customer.Name;
-                        updateCustomer.Email = customer.Email;
-                        updateCustomer.Gender = customer.Gender;
-                        updateCustomer.Address = customer.Address;
-                        updateCustomer.ContactNumber = customer.ContactNumber;
-                        updateCustomer.IsActive = customer.IsActive;
-                        db.Update(updateCustomer);
-                        db.SaveChanges();
-                        msg.Success = true;
-                        msg.Message = "Customer Updated Succesfully!!";
-                    }
-
+                    messages.Message = "User Id is not found";
+                    return messages;
                 }
+                else if (phoneExist != null && phoneExist.CustomerId != userExist.CustomerId)
+                {
+                    messages.Message = "The (" + customer.ContactNumber + "), PhoneNumber is already Registered.";
+                    return messages;
+                }
+                else if (emailIdExist != null && emailIdExist.CustomerId != userExist.CustomerId)
+                {
+                    messages.Message = "The (" + customer.Email + "), EmailId is already Registered.";
+                    return messages;
+                }
+                else
+                {
+                    userExist.Name = customer.Name;
+                    userExist.Email = customer.Email;
+                    userExist.Gender = customer.Gender;
+                    userExist.Address = customer.Address;
+                    userExist.ContactNumber = customer.ContactNumber;
+                    userExist.IsActive = customer.IsActive;
+                    db.Update(userExist);
+                    db.SaveChanges();
+                    msg.Success = true;
+                    msg.Message = "Customer Updated Succesfully!!";
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //msg.Success = false;
+                //msg.Message = "This Customer id not registered";
+                //var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
+                //var number = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
+                //var Email = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
+
+                //if (updateCustomer != null)
+                //{
+                //    if (number != null && Email!=null)
+                //    {
+                //        var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
+                //        var contact = contactNumber.CustomerId;
+                //        var EmailId = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
+                //        var Id = EmailId.CustomerId;
+
+                //        if (contact != null && customer.CustomerId != contact)
+                //        {
+
+                //            msg.Success = false;
+                //            msg.Message = "This Contact Number Already taked";
+                //            return msg;
+                //        }
+                //        if (Id != null && customer.CustomerId != Id)
+                //        {
+
+                //            msg.Success = false;
+                //            msg.Message = "This Email Id  Already taked";
+                //            return msg;
+                //        }
+                //        else
+                //        {
+                //            updateCustomer.Name = customer.Name;
+                //            updateCustomer.Email = customer.Email;
+                //            updateCustomer.Gender = customer.Gender;
+                //            updateCustomer.Address = customer.Address;
+                //            updateCustomer.ContactNumber = customer.ContactNumber;
+                //            updateCustomer.IsActive = customer.IsActive;
+                //            db.Update(updateCustomer);
+                //            db.SaveChanges();
+                //            msg.Success = true;
+                //            msg.Message = "Customer Updated Succesfully!!";
+                //        }
+
+                //    }
+                //    else
+                //    {
+                //        updateCustomer.Name = customer.Name;
+                //        updateCustomer.Email = customer.Email;
+                //        updateCustomer.Gender = customer.Gender;
+                //        updateCustomer.Address = customer.Address;
+                //        updateCustomer.ContactNumber = customer.ContactNumber;
+                //        updateCustomer.IsActive = customer.IsActive;
+                //        db.Update(updateCustomer);
+                //        db.SaveChanges();
+                //        msg.Success = true;
+                //        msg.Message = "Customer Updated Succesfully!!";
+                //    }
+
+                //}
                 return msg;
             }
 
