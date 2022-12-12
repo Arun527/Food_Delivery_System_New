@@ -112,17 +112,13 @@ namespace Food_Delivery.Controllers
             }
             var updateCustomer = _customer.UpdateCustomerDetail(customer);
 
-            if (updateCustomer.Message.Equals("This Contact Number Already taked"))
+            if (updateCustomer.Success==false)
             {
-                messages.Message = "The Contact Number Already Taked";
-                return Conflict(messages.Message);
+               
+                return Conflict(updateCustomer.Message);
             }
 
-            if (updateCustomer.Message.Equals("This Email Id  Already taked"))
-            {
-                messages.Message = "This Email Id  Already taked";
-                return Conflict(messages.Message);
-            }
+          
 
             return Ok(updateCustomer);  
                 
@@ -138,11 +134,12 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("The Customer Id Not Found");
             }
-            if (messages.Success == false)
+            
+            var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
+            if (deleteCustomer.Success == false)
             {
                 return BadRequest("The Customer Id Not Deleted,Because This Customer  Order The Product ");
             }
-            var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
             return Ok(deleteCustomer);
         }
 
