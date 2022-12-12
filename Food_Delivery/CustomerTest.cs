@@ -303,13 +303,33 @@ namespace Food_Delivery
             var output= controller.UpdateCustomerDetail(TestData);
 
             var result=output as ConflictResult;
-//            Assert.StrictEqual(409, result.StatusCode);
+       //     Assert.StrictEqual(409, result.StatusCode);
             Assert.IsType<ConflictObjectResult>(output);
 
 
         }
 
+        [Fact]
+        public void Update_Email_Conflict()
+        {
 
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "The Email Already Taked";
+            var mockservice = new Mock<ICustomer>();
+            mockservice.Setup(x => x.GetCustomerDetailById(It.IsAny<int>())).Returns(TestData);
+            mockservice.Setup(x => x.UpdateCustomerDetail(It.IsAny<Customer>())).Returns(messages);
+
+            var controller = new CustomerController(mockservice.Object);
+
+            var output = controller.UpdateCustomerDetail(TestData);
+
+            var result = output as ConflictResult;
+       //     Assert.StrictEqual(409, result.StatusCode);
+            Assert.IsType<ConflictObjectResult>(output);
+
+
+        }
 
 
 

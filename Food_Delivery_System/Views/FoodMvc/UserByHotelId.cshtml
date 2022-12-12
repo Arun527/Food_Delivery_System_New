@@ -117,60 +117,7 @@
 
 @section Scripts{
 
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script language="JavaScript" type="text/javascript">
-
-        function Add(ele, HotelId, FoodId, Price,FoodName,HotelName,ImageId) {
-         
-           
-                var qty=$(ele).parent("div").find("#Quantity").val();
-
-            if (qty == null || qty == 0) {
-                $('#errormsg').html("Please add Minimum Quantity of 1 ");
-                return;
-            }
-                const obj = { hotelId: HotelId, foodId: FoodId,price: Price, quantity: qty,foodname:FoodName,hotelname:HotelName,imageid:ImageId }     
-               
-                console.log(qty);
-                console.log(obj);
-                const existing = localStorage.getItem('cart') ;
-
-
-
-
-                const list = JSON.parse(existing) || [];
-                var index = list.findIndex(x => x.foodId === FoodId && x.hotelId === HotelId);
-
-
-
-            if (index == -1) {
-                list.push(obj);
-                var qty = $(ele).parent("div").find("#Quantity").val('0');
-            }
-            else {
-                list[index].quantity = qty;
-                var qty = $(ele).parent("div").find("#Quantity").val('0');
-
-
-            }
-            localStorage.setItem('cart', JSON.stringify(list));
-            alert("food is added succesfully");
-
-
-
-        
-
-
-
-           
-        }
-
-
-
-    </script>
-
+    <script src="~/js/usebyhotelid.js"></script>
 
 
 }
