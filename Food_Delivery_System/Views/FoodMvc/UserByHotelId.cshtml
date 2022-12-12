@@ -2,33 +2,17 @@
 @model List<FoodList>
 @{
     ViewData["Title"] = "GetAllFood";
-
-
-
 }
-
-
-
-<div id="errormsg" style="text-align:center;color:red;font-size:20px;"></div>
-<div class="container-fluid " style="margin-left:5%;" >
+<div id="errormsg"   ></div>
+<div class="container-fluid " id="container1" style="" >
     <div class="row row-cols-4 row-cols-sm-4 row-cols-md-4 row-cols-lg-4">
-
-       
 
         @foreach (FoodList item in Model)
         {
 
-
-
-
-
             <div class="card me-4 mt-4  basket"  id="card">
 
-
-
                 <img id="img" style=" width: 280px;border-radius:6%; height: 180px;margin-left:10%;margin-top:5%;margin-bottom:5%" src="/css/Image/@item.ImageId" multiple />
-
-
 
                 @*  <p>HotelId:@item.HotelId</p>*@
                 <div class="row col-md-12" style="font-weight: bold;">
@@ -36,20 +20,16 @@
                     <div class="col-md-4">   ₹ @item.Price  </div>
                 </div>
 
-              
                 <div class="row ms-lg-3">
-
-
-
                    
                     <div>
 
-                    <input type="text" id="Quantity" placeholder="Qty" name="fname" style="width:50px;text-align:center;">
+                    <input type="text" id="Quantity" placeholder="Qty" name="fname">
 
 
 
-                    <div class="col-md-4 offset-4  btn " style="background-color:#FFA500;margin-bottom:10px;" onclick="Add(this, @item.FoodId,@item.HotelId,@item.Price,'@item.FoodName','@item.HotelName','@item.ImageId')">
-                        Add <span class="bskt-icon mt-5" style="margin-left:15px; padding-top:1%">
+                    <div class="col-md-4 offset-4  btn " id="addborder" onclick="Add(this, @item.FoodId,@item.HotelId,@item.Price,'@item.FoodName','@item.HotelName','@item.ImageId')">
+                        Add <span class="bskt-icon mt-5" id="add1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
                                 <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
                             </svg>
@@ -57,73 +37,27 @@
 
                     </div>
 
-                        <div style="text-align:center"><span> </span><span style="color:chocolate;text-align:center;margin-top:10px;margin-bottom:50px; border-top: 1px solid #e9e9eb;">50% off | Use WELCOME50</span></div>
+                        <div style="text-align:center"><span> </span><span id="offer">50% off | Use WELCOME50</span></div>
 
                     </div>
 
                 </div>
 
-
-
-               
-
             </div>
-
-
 
         }
 
-
-
-
-
-
-
-
-
     </div>
 
-
-
 </div>
-<style>
-    p {
-        margin-left: 30px;
-    }
-
-
-    #card {
-        border-radius: 4px;
-        background: #fff;
-        box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-        padding: 8px 60px 11px 26px;
-        cursor: pointer;
-        width: 30%;
-        border-radius: 5%
-    }
-
-    #card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 00px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-    }
-
-</style>
-
-
-
-
-
 
 @section Scripts{
-
-
+    <link href="~/css/css style/userbyhotelid.css" rel="stylesheet" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script language="JavaScript" type="text/javascript">
 
         function Add(ele, HotelId, FoodId, Price,FoodName,HotelName,ImageId) {
-         
            
                 var qty=$(ele).parent("div").find("#Quantity").val();
 
@@ -137,12 +71,8 @@
                 console.log(obj);
                 const existing = localStorage.getItem('cart') ;
 
-
-
-
                 const list = JSON.parse(existing) || [];
                 var index = list.findIndex(x => x.foodId === FoodId && x.hotelId === HotelId);
-
 
 
             if (index == -1) {
@@ -157,20 +87,7 @@
             }
             localStorage.setItem('cart', JSON.stringify(list));
             alert("food is added succesfully");
-
-
-
-        
-
-
-
            
         }
-
-
-
     </script>
-
-
-
 }

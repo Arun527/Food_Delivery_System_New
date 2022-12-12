@@ -14,19 +14,12 @@ using System.Threading.Tasks;
 using Blazorise;
 using Blazorise.Extensions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Moq;
-using Food_Delivery.Controllers;
-using Food_Delivery.RepositoryInterface;
 using Food_Delivery.RepositoryService;
-using Food_Delivery.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 namespace Food_Delivery
 {
