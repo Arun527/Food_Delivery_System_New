@@ -2,7 +2,7 @@
 @model List<InvoiceDetail>
 
 
-<h2 style="height:60px">All Invoice Detail</h2>
+<h2>All Invoice Detail</h2>
 
 <body>
     @if (TempData["AlertMessage"] != null)
@@ -12,7 +12,7 @@
         </div>
     }
 
-    <div class="btn btn-Primary mb-3 " style="margin-left:93%;">
+    <div class="btn btn-Primary mb-3 " id="but">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
             <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
@@ -21,27 +21,25 @@
 
 
     <table class="table mt-5" id="dataTable">
-        <thead style="text-align:center ;background-color:khaki;">
+        <thead>
             <tr>
-                <th style="text-align:center;"> Invoice No </th>
-             @*   <th style="text-align:center">OrderId </th>*@
-                <th style="text-align:center"> Customer Name </th>
-                <th style="text-align:center">Order date </th>
-                <th style="text-align:center">Hotel Name</th>
-                <th style="text-align:center">  Food Name </th>
-                <th style="text-align:center">  Quantity </th>
-                <th style="text-align:center">  Price </th>
-                <th style="text-align:center">  Total Price </th>
+                <th id="tablehead"> Invoice No </th>
+                <th id="tablehead"> Customer Name </th>
+                <th id="tablehead">Order date </th>
+                <th id="tablehead">Hotel Name</th>
+                <th id="tablehead">  Food Name </th>
+                <th id="tablehead">  Quantity </th>
+                <th id="tablehead">  Price </th>
+                <th id="tablehead">  Total Price </th>
             </tr>
         </thead>
 
 
-        <tbody style="text-align:center">
+        <tbody id="row">
             @foreach (var item in Model)
             {
                 <tr style="text-align:center">
                     <td>@item.InvoiceNumber </td>
-                 @*   <td>@item.OrderId </td>*@
                     <td>@item.CustomerName </td>
                     <td>@item.Orderdate  </td>
                     <td>@item.HotelName</td>
@@ -77,14 +75,9 @@
             $("#dataTable").DataTable();
         })
     </script>
+    <link href="~/css/css style/foodstyle/getallshipment.css" rel="stylesheet" />
     <script src="~/js/customer.js"></script>
 }
 
        
 
-
-    <style>
-        a {
-            text-decoration: none;
-        }
-    </style>

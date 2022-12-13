@@ -1,0 +1,41 @@
+﻿@import url('orderdetailaddcss.css');
+.foodimg {
+    width: 150px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.table {
+    text-align: center;
+}
+
+#col {
+    background-color: khaki;
+}
+
+.word {
+    margin-top: 50%;
+}
+
+a {
+    text-decoration: none
+}
+
+.errortag {
+    text-align: center;
+    font-size: 20px;
+    color: red;
+}
+
+#mandatory {
+    color: red;
+}
+
+#name {
+    margin-left: -70px;
+}
+
+
+#white {
+    color: white;
+}

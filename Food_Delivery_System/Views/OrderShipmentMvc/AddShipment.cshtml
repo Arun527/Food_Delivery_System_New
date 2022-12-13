@@ -13,15 +13,12 @@
                                     <div>
                                         <div align="center" class="col-md-12">
 
-                                       
-
-
+                                      
                                             <div class=" row m-5">
                                                 <div class="col-md-5">DeliveryPerson Name</div>
                                                 <div class="col-md-5">
                                                 @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
                                                 </div>
-                                              
                                             </div>
 
 
@@ -30,30 +27,19 @@
                                                 <div class="col-md-5">
                                                     @Html.DropDownListFor(model=>model.OrderDetailId,Model.ShipmentList, new {@class="form-control",id="OrderId"})
                                                 </div>
-                                            <div class="col-md-2 btn" id="addid"> <span class=tooltiptext>Add More Orders</span><i style='font-size:14px' class='fas'>&#xf067;</i> </div>
+                                                <div class="col-md-2 btn" id="addid"> <span class=tooltiptext>Add More Orders</span><i style='font-size:14px' class='fas'>&#xf067;</i> </div>
                                             </div>
 
 
-                                       
-
-
-
                                             <div class=" justify-content-center mt-5 col-md-6 offset-3">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Register" /></div>
-
-
-
-
-
-
-
 
                                         </div>
                                     </div>
                      
                                 </div>
-                            }
+                            
                         </div>
-                        <div class="col-xl-2 d-none d-xl-block" style="margin-top:100px;">
+                        <div class="col-xl-2 d-none d-xl-block" id="temp"  >
                             <table id="idList" class="table">
                                 <tr>
                                     <th id="col">Id</th>
@@ -67,7 +53,7 @@
                         <div class="col-xl-5 d-none d-xl-block">
                             <img src="~/css/delivery.jpg"
                                  alt="Sample photo" class="img-fluid"
-                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                                 id="img" />
                         </div>
                     </div>
                 </div>
@@ -75,58 +61,17 @@
 </section>
 
 
-<style>
-    .card-registration .select-input.form-control[readonly]:not([disabled]) {
-        font-size: 1rem;
-        line-height: 2.15;
-        padding-left: .75em;
-        padding-right: .75em;
-    }
-
-    .card-registration .select-arrow {
-        top: 13px;
-    }
-</style>
 
 
 
+@section Scripts{
+    <link href="~/css/css style/foodstyle/addshipment.css" rel="stylesheet" />
 
-    @section Scripts{
     <script src="~/js/addshipment.js"></script>
 
     }
 
  
-
-    <style>
-        .control-fluid, .container-fluid {
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-
-        .control-section .control-wrapper {
-            width: 80%;
-            margin: 0 auto;
-            min-width: 185px;
-        }
-
-        .e-bigger .control-section .control-wrapper {
-            width: 100%;
-        }
-
-        .property-section .right-side {
-            padding-left: 10px;
-        }
-
-        .property-section .left-side {
-            padding: 5px;
-            width: 25%
-        }
-
-        .control-styles {
-            padding-top: 30px
-        }
-    </style>
     <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
 
 
