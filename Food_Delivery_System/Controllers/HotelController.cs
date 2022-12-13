@@ -73,7 +73,7 @@ namespace Food_Delivery.Controllers
         [HttpPost("")]
         public IActionResult AddHotelDetail(Hotel detaile)
         {
-               var hoteldetail = _hotel.InsertHotelDetail(detaile);
+              
             var number = _hotel.GetHotelDetailByNumber(detaile.ContactNumber);
             if (number != null)
             {
@@ -84,8 +84,8 @@ namespace Food_Delivery.Controllers
             {
                 return Conflict("Email Id Already Taked");
             }
+            var hoteldetail = _hotel.InsertHotelDetail(detaile);
 
-         
             return Created("https://localhost:7187/Api/Hotel/" + detaile.HotelId + "", hoteldetail);
         }
 
@@ -96,7 +96,8 @@ namespace Food_Delivery.Controllers
         {
             Messages msg = new Messages();    
             var id = _hotel.GetHotelById(hotel.HotelId);
-             if (hotel.HotelId == 0)
+           
+            if (hotel.HotelId == 0)
             {
                 return BadRequest("The Hotel Field Is Required");
             }
@@ -104,7 +105,7 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("Hotel Id Not Found");
             }
-            var hotelUpdate=_hotel.UpdateHotelDetail(hotel);
+           var hotelUpdate = _hotel.UpdateHotelDetail(hotel);
             if (hotelUpdate.Message== "This Email Id Already taked")
             {
                 return Conflict("The Email Already Taked");
@@ -129,7 +130,7 @@ namespace Food_Delivery.Controllers
                 return NotFound("The Hotel Id Not Found");
             }
             var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
-            if (messages.Success == false)
+            if (hotel.Message == "The hotel Food Is Available For Users")
             {
                 return BadRequest("The Hotel Id Is  Not Deleted,Because This Hotel Management  Created  Available  Food List ");
             }
