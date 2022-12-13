@@ -6,51 +6,55 @@
 }
 
 
-<body style=" color:black">
+<body id="body" style=" ">
 
     <div align="center">
-        <h2 style="height:70px;">Hotel Detail</h2>
-        <div style="height:50px; width: 30% ;" class="mx-auto row row-cols-2 ">
-            <div style="color:mediumblue">Hotel Id : </div>
+        <h2 id="heading">Hotel Detail</h2>
+        <div class="mx-auto row row-cols-2 ">
+            <div id="text" >Hotel Id : </div>
             <div>
                 @Html.DisplayFor(m => m.HotelId ,new { @class="form-control", required = "required" , maxlength = "50"})
             </div>
         </div>
 
-        <div style="height:50px; width: 30% ;" class="mx-auto row row-cols-2 ">
-            <div style="color:mediumblue">Hotel Name : </div>
+        <div id="box"  class="mx-auto row row-cols-2 ">
+            <div id="text" >Hotel Name : </div>
 
             <div>
                 @Html.DisplayFor(m => m.HotelName ,new { @class="form-control", required = "required" , maxlength = "50"})
             </div>
         </div>
 
-        <div style="height:50px; width: 30% ;" class="row row-cols-2 ">
-            <div style="color:mediumblue">Location : </div>
+        <div id="box" class="row row-cols-2 ">
+            <div id="text">Location : </div>
             <div>
                 @Html.DisplayFor(m => m.Address ,new { @class="form-control", required = "required", maxlength = "50"})
             </div>
         </div>
 
-        <div style="height:60px; width: 30% ;" class="mx-auto row row-cols-2 ">
-            <div style="color:mediumblue">Is Active : </div>
+        <div id="box" class="mx-auto row row-cols-2 ">
+            <div id="text">Is Active : </div>
             <div>
                 @Html.DisplayFor(m => m.Type ,new { @class="form-control", required = "required" , maxlength = "50"})
             </div>
         </div>
 
 
-        <div style="height:60px; width: 30% ;" class="mx-auto row row-cols-2 ">
-            <div style="color:mediumblue">Is Active : </div>
+        <div id="box" class="mx-auto row row-cols-2 ">
+            <div id="text">Is Active : </div>
             <div>
                 @Html.DisplayFor(m => m.IsActive ,new { @class="form-control", required = "required" , maxlength = "50"})
             </div>
         </div>
 
     <div>
-            <a style="margin-left:30px" class=" btn btn-primary">Edit</a>
-            <a href="/HotelMvc/FoodDetail?HotelId=@Model.HotelId" style="margin-left:30px" class=" btn btn-warning">Food Detail</a>
+            <a  id="button" class=" btn btn-primary">Edit</a>
+            <a href="/HotelMvc/FoodDetail?HotelId=@Model.HotelId" class=" btn btn-warning">Food Detail</a>
     </div> 
 
 </body>
  
+
+@section Scripts{
+    <link href="~/css/css style/hoteldetail.css" rel="stylesheet" />
+}

@@ -4,106 +4,32 @@
     ViewData["Title"] = "Admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div class="container-fluid " style="margin-left:5%;">
+<div class="container-fluid " id="container" >
     <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-3">
-
         @foreach (Hotel item in Model)
         {
-
-            <div class="card me-4 mt-4 " style="width:30%;border-radius:5%;" id="card">
-                <a style="text-decoration:none;color:black" href="/FoodMvc/UserByHotelId?hotelId=@item.HotelId">
+            <div class="card me-4 mt-4 " id="card">
+                <a id="card2" href="/FoodMvc/UserByHotelId?hotelId=@item.HotelId">
                     <img style=" width: 280px;border-radius:6%; height: 280px;margin-left:9%;margin-top:5%;margin-bottom:5%" src="/css/Image/@item.ImageId" multiple />
                     <div class="row ms-lg-3">
 
                         <div class="col-md-8 offset-1"><strong>@item.HotelName</strong>  </div>
-
-
-
                     </div>
-
                     <div class="row ms-lg-3">
-
                         <div class="col-md-8 offset-1">   @item.Address</div>
-
-
                     </div>
 
                 </a>
 
             </div>
-
         }
-
     </div>
-
 </div>
 
-<style>
-    p {
-        margin-left: 30px;
-    }
-
-    #card {
-        border-radius: 4px;
-        background: #fff;
-        box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-        padding: 8px 60px 11px 26px;
-        cursor: pointer;
-        width: 30%;
-        border-radius: 5%
-    }
-
-        #card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 00px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-        }
-
-    .topnav {
-        overflow: hidden;
-        background-color: #e9e9e9;
-    }
-
-        /* Style the links inside the navigation bar */
-        .topnav a {
-            float: left;
-            display: block;
-            color: black;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-            /* Change the color of links on hover */
-            .topnav a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-
-            /* Style the "active" element to highlight the current page */
-            .topnav a.active {
-                background-color: #2196F3;
-                color: white;
-            }
-
-        /* Style the search box inside the navigation bar */
-        .topnav input[type=text] {
-            float: right;
-            padding: 6px;
-            border: none;
-            margin-top: 8px;
-            margin-right: 16px;
-            font-size: 17px;
-        }
 
 
+@section Scripts{
+    <link href="~/css/css style/gethotelbyname.css" rel="stylesheet" />
 
-
-</style>
-
-
-
+}
 
