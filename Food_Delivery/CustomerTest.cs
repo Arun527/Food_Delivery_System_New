@@ -4,23 +4,7 @@ using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Blazorise;
-using Blazorise.Extensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Food_Delivery.RepositoryService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 namespace Food_Delivery
 {
     public class CustomerTest
@@ -109,9 +93,9 @@ namespace Food_Delivery
         {
             
             List<Customer> Lisobj = new List<Customer>();
+
             Lisobj.Add(TestData);
            
-        
             var controller = new CustomerController(GetallMock(Lisobj).Object);
 
             var okresult = controller.GetAll();
@@ -173,10 +157,10 @@ namespace Food_Delivery
             Messages obj = new Messages();
             obj.Success = true;
             obj.Message = "This  Customer Added Succesfully";
-          
+            
             List<Customer> Obj = new List<Customer>();
             Obj.Add(TestData);
-          
+            
             var controller = new CustomerController(InsertMock(obj).Object);
 
             var okinsert = controller.InsertCustomerDetail(TestData);
@@ -184,21 +168,40 @@ namespace Food_Delivery
             Assert.NotNull(okinsert);
         }
 
-        //[Fact]
-        //public void AddCustomerNotOK()
-        //{
+        [Fact]
+        public void AddCustomerPhoneNumberConflict()
+        {
+            Messages obj = new Messages();
+            obj.Success = false;
+            obj.Message = "The Phone  Number Already Taked";
+            var mockservice = new Mock<ICustomer>();
+            mockservice.Setup(x=>x.GetCustomerDetailByNumber(It.IsAny<string>())).Returns(TestData);
+            mockservice.Setup(x => x.GetCustomerDetailByEmail(It.IsAny<string>())).Returns(TestData);
+            mockservice.Setup(x => x.InsertCustomerDetail(It.IsAny<Customer>())).Returns(obj);
+            var controller = new CustomerController(mockservice.Object);
 
-        //    List<Customer> Obj = new List<Customer>();
-        //    Obj.Add(TestData);
-        //    var mockservice = new Mock<ICustomer>();
+            var okinsert = controller.InsertCustomerDetail(TestData);
+            var output = okinsert as ConflictObjectResult;
+            Assert.IsType<ConflictObjectResult>(output);   
+         }
 
-        //    mockservice.Setup(x => x.InsertCustomerDetail(It.IsAny<Customer>())).Returns(Cus);
-        //    var controller = new CustomerController(mockservice.Object);
 
-        //    var okinsert = controller.InsertCustomerDetail(Cus);
+        [Fact]
+        public void AddCustomerPhoneEmailConflict()
+        {
+            Messages obj = new Messages();
+            obj.Success = false;
+            obj.Message = "The Email  Id Already Taked";
+            var mockservice = new Mock<ICustomer>();
+            mockservice.Setup(x => x.GetCustomerDetailByNumber(It.IsAny<string>())).Returns(TestData);
+            mockservice.Setup(x => x.GetCustomerDetailByEmail(It.IsAny<string>())).Returns(TestData);
+            mockservice.Setup(x => x.InsertCustomerDetail(It.IsAny<Customer>())).Returns(obj);
+            var controller = new CustomerController(mockservice.Object);
 
-        //    Assert.Null(okinsert);
-        //}
+            var okinsert = controller.InsertCustomerDetail(TestData);
+            var output = okinsert as ConflictObjectResult;
+            Assert.IsType<ConflictObjectResult>(output);
+        }
 
         [Fact]
         public void UpdateCustomerOk()
@@ -366,8 +369,7 @@ namespace Food_Delivery
             var NotFoundResult = controller.DeleteCustomerDetail(5);
             var output = NotFoundResult as NotFoundObjectResult;
             Assert.IsType<NotFoundObjectResult>(output);
-            Assert.Equal("The Customer Id Not Found", output.Value);
-
+            
 
           
         }

@@ -11,6 +11,7 @@ namespace Food_Delivery.Controllers
         ICustomer _customer;
         IOrders _order;
         IDeliveryPerson _deliveryperson;
+        private IDeliveryPerson @object;
 
         public DeliveryPersonController(IOrders order, ICustomer customer,IDeliveryPerson deliveryPerson)
         {
@@ -19,6 +20,10 @@ namespace Food_Delivery.Controllers
             _deliveryperson = deliveryPerson;
         }
 
+        public DeliveryPersonController(IDeliveryPerson @object)
+        {
+            _deliveryperson = @object;
+        }
 
         [HttpGet("Getall")]
         public IActionResult GetAllDeliveryPersons()
@@ -52,7 +57,7 @@ namespace Food_Delivery.Controllers
             var number = _deliveryperson.GetDeliveryPersonByNumber(deliveryPerson.ContactNumber);
             if (number != null)
             {
-                return NotFound("This Contact  Number  Already Taked");
+                return Conflict("This Contact  Number  Already Taked");
             }
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
             return Ok(insertDeliveryPerson);
@@ -68,11 +73,11 @@ namespace Food_Delivery.Controllers
                 return NotFound("This Delivery Person Id Not Found");
             }
             var updateDeliveryPerson = _deliveryperson.UpdateDeliveryPerson(deliveryPerson);
-            //if (messages.Success == false)
-            //{
-            //    messages.Message = "The Contact Number Already Taked";
-            //    return Conflict(messages.Message);
-            //}
+            if (messages.Message == "This Contact  Number  Already Taked")
+            {
+                messages.Message = "The Contact Number Already Taked";
+                return Conflict(messages.Message);
+            }
             return Ok(updateDeliveryPerson);
         }
 

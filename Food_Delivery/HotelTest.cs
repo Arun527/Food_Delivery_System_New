@@ -130,6 +130,8 @@ namespace Food_Delivery
             var okresult = controller.GetHotelList();
 
             Assert.IsType<OkObjectResult>(okresult);
+            Assert.Equal(1, Lisobj.Count);
+            Assert.NotNull(okresult);
         }
 
         [Fact]
