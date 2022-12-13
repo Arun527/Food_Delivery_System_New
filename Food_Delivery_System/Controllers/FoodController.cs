@@ -12,11 +12,17 @@ namespace Food_Delivery.Controllers
 
         IFood _food;
         IHotel _hotel;
+        private IFood @object;
 
         public FoodController(IFood food,IHotel hotel)
         {
             _food = food;
             _hotel = hotel;
+        }
+
+        public FoodController(IFood @object)
+        {
+            _food = @object;
         }
 
         [HttpGet("GetAll")]
@@ -33,7 +39,7 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpGet("{Id}")]
-        public IActionResult GetAll(int Id)
+        public IActionResult GetById(int Id)
         {
             var hotel = _food.GetFoodTypeById(Id);
             if(hotel == null)
@@ -46,7 +52,7 @@ namespace Food_Delivery.Controllers
           
 
         [HttpGet("FoodByName/{name}")]
-        public IActionResult GetByFoodName(String name)
+        public IActionResult GetByFoodName(string name)
         {
             var hotel = _food.GetFoodByName(name);
             if (hotel == null)
@@ -65,12 +71,13 @@ namespace Food_Delivery.Controllers
             {
                 return BadRequest("The HotelId Field Is Required");
             }
-            var hotel = _hotel.GetHotelById(food.HotelId.Value);
-            if(hotel == null)
+
+            var fooddetail = _food.InsertFoodType(food);
+            if (fooddetail.Message == "The Hotel Id Not Found")
             {
                 return NotFound("The Hotel Id Not Found");
             }
-            var fooddetail = _food.InsertFoodType(food);
+           
             return Ok(fooddetail);
         }
 
@@ -102,7 +109,7 @@ namespace Food_Delivery.Controllers
             }
             var hotel = _food.DeleteFoodType(foodId);
 
-            if(hotel.Success == false)
+            if(hotel.Message == "The Food Id Is Not Deleted Because Order The Customer")
             {
                 return BadRequest("The Food Id Is Not Deleted Because Order The Customer");
             }

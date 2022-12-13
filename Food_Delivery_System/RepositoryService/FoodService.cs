@@ -58,13 +58,22 @@ namespace Food_Delivery.RepositoryService
         public Messages InsertFoodType(Food foodType)
         {
             Messages msg = new Messages();
+         
             try
             {
-               
+                var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == foodType.HotelId);
+                if (hotel == null)
+                {
                     db.Food.Add(foodType);
                     db.SaveChanges();
                     msg.Message = "The Food Type Inserted Succesfully";
                     msg.Success = true;
+                }
+                else
+                {
+                    msg.Message = "The Hotel Id Not Found";
+                    msg.Success = true;
+                }
 
             }
             catch (Exception ex)
@@ -115,7 +124,9 @@ namespace Food_Delivery.RepositoryService
             Messages msg = new Messages();
             try
             {
+
                 var food = db.Food.FirstOrDefault(x => x.FoodId == foodId);
+                var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == food.HotelId);
                 if (food != null)
                 {
                     db.Food.Remove(food);
@@ -123,6 +134,12 @@ namespace Food_Delivery.RepositoryService
                     msg.Message = "The Food  Is Deleted Succesfully";
                     msg.Success = true;
                 }
+                else if(hotel != null)
+                {
+                    msg.Message = "The Food Id Is Not Deleted Because Order The Customer";
+                    msg.Success = false;
+                }
+
                 else
                 {
                     msg.Message = "The hotel Id Is Invalid";

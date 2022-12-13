@@ -200,34 +200,68 @@ namespace Food_Delivery
         }
 
 
-        //[Fact]
-        //public void AddHotel_ContactNumberConflict()
-        //{
-        //    Messages msg = new Messages();
-        //    msg.Message = "Contact Number Already Taked";
-        //    msg.Success = false;
-        //    var controller = new HotelController(AddHotelMock(msg).Object);
-        //    var output = controller.AddHotelDetail(TestData);
-        //    var result = output as ConflictObjectResult;
-        //    Assert.Equal(msg.Message, result.Value);
-        //    Assert.StrictEqual(409, result.StatusCode);
-        //    Assert.IsType<ConflictObjectResult>(output);
-        //}
+        [Fact]
+        public void AddHotel_ContactNumberConflict()
+        {
+            Messages msg = new Messages();
+            msg.Message = "Contact Number Already Taked";
+            msg.Success = false;
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetHotelDetailByNumber(It.IsAny<string>())).Returns(TestData);
+            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+            var controller = new HotelController(mockservice.Object);
+            var output = controller.AddHotelDetail(TestData);
+            var result = output as ConflictObjectResult;
+            Assert.Equal(msg.Message, result.Value);
+            Assert.StrictEqual(409, result.StatusCode);
+            Assert.IsType<ConflictObjectResult>(output);
+        }
+
+        public void AddHotel_EmailConflict()
+        {
+            Messages msg = new Messages();
+            msg.Message = "Email Id Already Taked";
+            msg.Success = false;
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetHotelDetailByEmail(It.IsAny<string>())).Returns(TestData);
+            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+            var controller = new HotelController(mockservice.Object);
+            var output = controller.AddHotelDetail(TestData);
+            var result = output as ConflictObjectResult;
+            Assert.Equal(msg.Message, result.Value);
+            Assert.StrictEqual(409, result.StatusCode);
+            Assert.IsType<ConflictObjectResult>(output);
+        }
 
 
-        //[Fact]
-        //public void Update_OKResult()
-        //{
-        //    Messages msg = new Messages();
-        //    msg.Success = true;
-        //    msg.Message = "Hotel Id Not Found";
-        //    var controller = new HotelController(UpdateHotelMock(msg).Object);
-        //    var output = controller.UpdateHotelDetail(TestData);
-        //    var result = output as OkObjectResult;
-        //    Assert.IsType<OkObjectResult>(output);
-        //    Assert.StrictEqual(msg.Message, result.Value);
-        //    Assert.StrictEqual(200, result.StatusCode);
-        //}
+        [Fact]
+        public void Update_OKResult()
+        {
+            Messages obj = new Messages();
+            obj.Success = true;
+            obj.Message = "The hotel updated succesfully";
+            Hotel obj1 = (new Hotel
+            {
+                HotelId = 1,
+                HotelName = "saravanabhavan",
+                Email = "Saravanabhavan123@gmail.com",
+                ImageId = "d2f5",
+                Type = "Veg",
+                Address = "Madurai",
+                ContactNumber = "9874563214"
+            });
+            List<Hotel> Obj = new List<Hotel>();
+            Obj.Add(obj1);
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
+            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(obj);
+            var controller = new HotelController(mockservice.Object);
+            var output = controller.UpdateHotelDetail(TestData);
+            var result = output as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+            Assert.StrictEqual(obj, result.Value);
+            Assert.StrictEqual(200, result.StatusCode);
+        }
 
         [Fact]
         public void Update_NotFoundResult()
@@ -260,34 +294,40 @@ namespace Food_Delivery
         }
 
 
-        //[Fact]
-        //public void Update_EmailConfict()
-        //{
-        //    Messages msg = new Messages();
-        //    msg.Success = false;
-        //    msg.Message = "The Email Already Taked";
-        //    var controller = new HotelController(UpdateHotelMock(msg).Object);
-        //    var output = controller.UpdateHotelDetail(TestData);
-        //    var result = output as ConflictObjectResult;
-        //    Assert.IsType<ConflictObjectResult>(output);
-        //    Assert.Equal("The Email Already Taked", result.Value);
-        //    Assert.StrictEqual(409, result.StatusCode);
-        //}
+        [Fact]
+        public void Update_EmailConfict()
+        {
+            Messages msg = new Messages();
+            msg.Success = false;
+            msg.Message = "This Email Id Already taked";
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
+            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+            var controller = new HotelController(mockservice.Object);
+            var output = controller.UpdateHotelDetail(TestData);
+            var result = output as ConflictObjectResult;
+            Assert.IsType<ConflictObjectResult>(output);
+            Assert.Equal("The Email Already Taked", result.Value);
+            Assert.StrictEqual(409, result.StatusCode);
+        }
 
 
-        //[Fact]
-        //public void DeleteHotel_SuccessOK()
-        //{
-        //    Messages msg = new Messages();
-        //    msg.Success = true;
-        //    msg.Message = "The hotel Id deleted Succesfully";
-        //    var controller = new HotelController(DeleteHotelMock(msg).Object);
-        //    var output = controller.DeleteHotelDetail(3);
-        //    var result = output as OkObjectResult;
-        //    Assert.IsType<OkObjectResult>(output);
-        //    Assert.Equal(msg.Message, result.Value);
-        //    Assert.StrictEqual(200, result.StatusCode);
-        //}
+        [Fact]
+        public void DeleteHotel_SuccessOK()
+        {
+            Messages msg = new Messages();
+            msg.Success = false;
+            msg.Message = "The hotel Id deleted Succesfully";
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
+            mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(msg);
+            var controller = new HotelController(mockservice.Object);
+            var output = controller.DeleteHotelDetail(TestData.HotelId);
+            var result = output as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+            Assert.Equal(msg, result.Value);
+            Assert.StrictEqual(200, result.StatusCode);
+        }
 
         [Fact]
         public void DeleteHotel_NotFound()
@@ -304,19 +344,21 @@ namespace Food_Delivery
         }
 
 
-        //[Fact]
-        //public void DeleteHotel_BadRequest()
-        //{
-        //    Messages msg = new Messages();
-        //    msg.Success = false;
-        //    msg.Message = "The Hotel Id Is  Not Deleted,Because This Hotel Management  Created  Available  Food List ";
-        //    var controller = new HotelController(DeleteHotelMock(msg).Object);
-        //    var output = controller.DeleteHotelDetail(3);
-        //    var result = output as BadRequestObjectResult;
-        //    Assert.IsType<BadRequestObjectResult>(output);
-        //    Assert.Equal(msg.Message, result.Value);
-        //    Assert.StrictEqual(404, result.StatusCode);
-        //}
+        [Fact]
+        public void DeleteHotel_BadRequest()
+        {
+            Messages msg = new Messages();
+            msg.Success = false;
+            msg.Message = "The hotel Food Is Available For Users";
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
+            mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(msg);
+            var controller = new HotelController(mockservice.Object);
+            var output = controller.DeleteHotelDetail(TestData.HotelId);
+            var result = output as BadRequestObjectResult;
+            Assert.IsType<BadRequestObjectResult>(output);
+            Assert.StrictEqual(400, result.StatusCode);
+        }
 
     }
 }
