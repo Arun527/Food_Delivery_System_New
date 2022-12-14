@@ -38,7 +38,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetAll()
         {
             Messages messages = new Messages();
-            messages.Message = "Customer List Is Empty";
+            messages.Message = "Customer list is empty";
             var order = _orderDetail.GetAll();
             if (order == null)
             {
@@ -51,7 +51,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetAllById(int id)
         {
             Messages messages = new Messages();
-            messages.Message = "OrderDetail Id Is Not Found";
+            messages.Message = "OrderDetail id is not found";
             var order = _orderDetail.GetOrderDetail(id);
             if (order == null)
             {
@@ -66,7 +66,7 @@ namespace Food_Delivery.Controllers
             var customerId = _customer.GetCustomerDetailById(food.CustomerId);
             if (customerId == null)
             {
-                return NotFound("The Customer Id Is Not Found");
+                return NotFound("The customer id is not found");
             }
             OrderShipmentRequest ord = new OrderShipmentRequest();
             
@@ -77,17 +77,17 @@ namespace Food_Delivery.Controllers
                 var foods = _food.GetFoodTypeById(foodDetaile.FoodId);
                 if (foods == null)
                 {
-                    return NotFound("The Food Id Is Not Found");
+                    return NotFound("The food id is not found");
                 }
                 var hotel = _hotel.GetHotelById(foodDetaile.HotelId);
                 if (hotel == null)
                 {
-                    return NotFound("The Hotel Id Is Not Found");
+                    return NotFound("The hotel id is not found");
                 }
                 var quantity = foodDetaile.Quantity;
                 if(quantity==0)
                 {
-                    return BadRequest("Please Enter Minimum Quantity Of 1 !!");
+                    return BadRequest("Please enter minimum quantity of 1 !!");
                 }
             }
            
@@ -101,37 +101,37 @@ namespace Food_Delivery.Controllers
             Messages messages = new Messages();
             if (detail.OrderDetailId == 0)
             {
-                return BadRequest("The OrderDetailId Field Is Required");
+                return BadRequest("The orderDetail id field is required");
             }
             var id = _orderDetail.GetOrderDetail(detail.OrderDetailId);
             if (id == null)
             {
-                return NotFound("The OrderDetail Id Is Not Found");
+                return NotFound("The orderDetail id is not found");
             }
             var customer = _customer.GetCustomerDetailById(detail.CustomerId.Value);
             if (customer == null)
             {
-                return NotFound("The CustomerId Is Not Found");
+                return NotFound("The customer id is not found");
             }
             var orderId = _orders.GetOrder(detail.OrderId);
             if (orderId == null)
             {
-                return NotFound("The OrderId Is Not Found");
+                return NotFound("The order id is not found");
             }
             var hotelId = _hotel.GetHotelById(detail.HotelId.Value);
             if(hotelId == null)
             {
-                return NotFound("The HotelId Is Not Found");
+                return NotFound("The hotel id is not found");
             }
             var foodId = _food.GetFoodTypeById(detail.FoodId.Value);
             if(foodId == null)
             {
-                return NotFound("The FoodId Is Not Found");
+                return NotFound("The food id is not found");
             }
             var orderDetail = _orderDetail.UpdateOrderDetail(detail);
             if(orderDetail.Success == false)
             {
-                messages.Message = "The Order is Can't Update Because Out For Delivery";
+                messages.Message = "The order is can't update because out for delivery";
                 return Conflict(messages.Message);
             }
             return Ok(orderDetail);
@@ -145,7 +145,7 @@ namespace Food_Delivery.Controllers
             var orderid = _orderDetail.GetOrderDetail(id);
             if (orderid == null)
             {
-                return NotFound("This Order Id Is Not Found");
+                return NotFound("This order id is not found");
             }
 
            

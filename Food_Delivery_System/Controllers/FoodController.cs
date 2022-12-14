@@ -29,11 +29,11 @@ namespace Food_Delivery.Controllers
         public IActionResult GetAll()
         {
             Messages messages = new Messages();
-            messages.Message = "Food List Is Empty";
+            messages.Message = "Food list is empty";
             var food = _food.GetAll();
             if(food == null)
             {
-                return NotFound("The Food Id Not Found");
+                return NotFound("The food id not found");
             }
             return Ok(food);
         }
@@ -44,7 +44,7 @@ namespace Food_Delivery.Controllers
             var hotel = _food.GetFoodTypeById(Id);
             if(hotel == null)
             {
-                return NotFound("The Food Id Not Found");
+                return NotFound("The food id not found");
             }
             var food = _food.GetFoodTypeById(Id);
             return Ok(food);
@@ -57,7 +57,7 @@ namespace Food_Delivery.Controllers
             var hotel = _food.GetFoodByName(name);
             if (hotel == null)
             {
-                return NotFound("The Food Id Not Found");
+                return NotFound("The food id not found");
             }
             var food = _food.GetFoodByName(name);
             return Ok(food);
@@ -69,13 +69,13 @@ namespace Food_Delivery.Controllers
             Messages messages = new Messages();
             if (food.HotelId == 0)
             {
-                return BadRequest("The HotelId Field Is Required");
+                return BadRequest("The hotel id field is required");
             }
 
             var fooddetail = _food.InsertFoodType(food);
-            if (fooddetail.Message == "The Hotel Id Not Found")
+            if (fooddetail.Message == "The hotel id not found")
             {
-                return NotFound("The Hotel Id Not Found");
+                return NotFound("The hotel id not found");
             }
            
             return Ok(fooddetail);
@@ -87,14 +87,14 @@ namespace Food_Delivery.Controllers
             var detail = _food.GetFoodTypeById(food.FoodId);
             if(detail == null)
             {
-                return NotFound("The Food Id Not Found");
+                return NotFound("The food id not found");
             }
            
 
             var fooddetail = _food.UpdateFood(food);
             if (fooddetail.Success == false)
             {
-                return NotFound("The Hotel Id Not Found");
+                return NotFound("The hotel id not found");
             }
             return Ok(fooddetail);
         }
@@ -105,13 +105,13 @@ namespace Food_Delivery.Controllers
             var food =_food.GetFoodTypeById(foodId);
             if (food == null)
             {
-                return NotFound("The Food Id Not Found");
+                return NotFound("The food id not found");
             }
             var hotel = _food.DeleteFoodType(foodId);
 
-            if(hotel.Message == "The Food Id Is Not Deleted Because Order The Customer")
+            if(hotel.Message == "The food id is not deleted because order the customer")
             {
-                return BadRequest("The Food Id Is Not Deleted Because Order The Customer");
+                return BadRequest("The food id is not deleted because order the customer");
             }
             return Ok(hotel);
         }
@@ -123,7 +123,7 @@ namespace Food_Delivery.Controllers
             var food=_food.GetFoodType(foodtype);
             if (food.Count() == 0)
             {
-                return NotFound("The Food Type Is Not Found");
+                return NotFound("The food type is not found");
             }
             var foodType = _food.GetFoodType(foodtype);
             return Ok(foodType);
@@ -135,7 +135,7 @@ namespace Food_Delivery.Controllers
             var food = _hotel.GetHotelById(hotelId);
             if (food == null)
             {
-                return NotFound("The Food Type Is Not Found");
+                return NotFound("The food type is not found");
             }
             var foodType = _food.GetFoodByHotelId(hotelId);
             return Ok(foodType);

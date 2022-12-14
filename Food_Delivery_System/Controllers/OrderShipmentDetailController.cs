@@ -37,7 +37,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetAllOrderShipmentDetail()
         {
             Messages messages = new Messages();
-            messages.Message = "OrderShipmentDetail List Is Empty";
+            messages.Message = "OrderShipmentDetail list is empty";
             var ShipmentDetail = _orderShipmentDetail.GetAllOrderShipmentDetail();
             if(ShipmentDetail == null)
             {
@@ -54,13 +54,13 @@ namespace Food_Delivery.Controllers
             var obj = _deliveryPerson.GetDeliveryPerson(Id);
             if(obj == null)
             {
-                return NotFound("DeliveryPerson Id Is NotFound");
+                return NotFound("DeliveryPerson id is not found");
             }
             
             var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
             if (delivery.Count() == 0)
             {
-                return NotFound("This Delivery Person Don't Delivery Any Order");
+                return NotFound("This delivery person don't delivery any order");
             }
             return Ok(delivery);
         }
@@ -69,7 +69,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetOrderDetailById(int Id)
         {
             Messages messages = new Messages();
-            messages.Message = "OrderShipmentDetail Id Is Not Found";
+            messages.Message = "OrderShipmentDetail id is not found";
             var obj = _orderShipmentDetail.GetOrderShipmentDetailById(Id);
             if(obj==null)
             {
@@ -91,17 +91,17 @@ namespace Food_Delivery.Controllers
 
                 if (order == null)
                 {
-                    return BadRequest("The Order Detail Id Is Not Found");
+                    return BadRequest("The orderDetail id is not found");
                 }
             }
             if (orderShipment.DeliveryPersonId ==null)
             {
-              return BadRequest("The DeliveryPersonId Field Is Required");
+              return BadRequest("The deliveryPerson id field is required");
             }
             var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
             if (deliveryPerson == null)
             {
-                messages.Message = "DeliveryPerson Id Is NotFound";
+                messages.Message = "DeliveryPerson id is not found";
                 return NotFound(messages.Message);
             }
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
@@ -117,28 +117,28 @@ namespace Food_Delivery.Controllers
             var orderDetail = _orderDetail.GetOrderDetail(orderShipment.OrderDetailId);
             if (ordershipmentId == null)
             {
-                return NotFound("The OrderShipmentDetail Id Is NotFound");
+                return NotFound("The orderShipmentDetail id is not found");
             }
             if (orderShipment.DeliveryPersonId == 0)
             {
-                return BadRequest("The DeliveryPersonId Field Is Required");
+                return BadRequest("The deliveryPerson Id field is required");
             }
             if (orderShipment.OrderShipmentDetailId == 0)
             {
-                return BadRequest("The OrderShipmentDetailId Field Is Required");
+                return BadRequest("The orderShipmentDetail id field is required");
             }
             if (orderShipment.OrderDetailId == 0)
             {
-                return BadRequest("The OrderDetailId Field Is Required");
+                return BadRequest("The orderDetail id field is required");
             }
             if (deliveryPerson == null)
             {
-                messages.Message = "The DeliveryPerson Id Is NotFound";
+                messages.Message = "The deliveryPerson id is not found";
                 return NotFound(messages.Message);
             }
             if (orderDetail == null)
             {
-                messages.Message = "The OrderDetail Id Is NotFound";
+                messages.Message = "The orderDetail id is not found";
                 return NotFound(messages.Message);
             }
             var updateOrderShipment = _orderShipmentDetail.UpdateOrderShipmentDetail(orderShipment);
@@ -153,7 +153,7 @@ namespace Food_Delivery.Controllers
             var ordershipmentId = _orderShipmentDetail.GetOrderShipmentDetailById(orderShipmentId);
             if(ordershipmentId == null)
             {
-                messages.Message = "The OrderShipmentDetail Id Is NotFound";
+                messages.Message = "The orderShipmentDetail id is not found";
                 return NotFound(messages.Message);
             }
             var deleteOrderShipment = _orderShipmentDetail.DeleteOrderShipmentDetail(orderShipmentId);
@@ -167,7 +167,7 @@ namespace Food_Delivery.Controllers
             var customerId = _customer.GetCustomerDetailById(CustomerId);
             if (customerId == null)
             {
-                messages.Message = "The CustomerId Id Is NotFound";
+                messages.Message = "The customer id is not found";
                 return NotFound(messages.Message);
             }
             var invoice =  _orderShipmentDetail.GetCustomerOrderDetailsById(CustomerId);
@@ -179,7 +179,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetAllInvoiceDetail()
         {
             Messages messages = new Messages();
-            messages.Message = "The Invoice List Is Empty";
+            messages.Message = "The invoice list is empty";
             var invoice = _orderShipmentDetail.GetAllInvoiceDetail();
             if(invoice==null)
             {
@@ -195,7 +195,7 @@ namespace Food_Delivery.Controllers
             var customerId = _order.GetOrder(orderId);
             if (customerId == null)
             {
-                messages.Message = "The Order Id Is NotFound";
+                messages.Message = "The order id is not found";
                 return NotFound(messages.Message);
             }
             var tracking=_orderShipmentDetail.TrackingStatus(orderId);

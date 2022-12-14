@@ -31,7 +31,7 @@ namespace Food_Delivery.Controllers
             var obj = _deliveryperson.GetAllDeliveryPersons();
             if(obj == null)
             {
-                return NotFound("Delivery Person Is Not Found");
+                return NotFound("Delivery person is not found");
             }
             return Ok(obj);
         }
@@ -45,7 +45,7 @@ namespace Food_Delivery.Controllers
             if (obj == null)
             {
                
-                return NotFound("This Delivery Person Id Is Not Found");
+                return NotFound("This delivery person id is not found");
             }
             return Ok(obj);
         }
@@ -57,7 +57,7 @@ namespace Food_Delivery.Controllers
             var number = _deliveryperson.GetDeliveryPersonByNumber(deliveryPerson.ContactNumber);
             if (number != null)
             {
-                return Conflict("This Contact  Number  Already Taked");
+                return Conflict("This contact number is already exists");
             }
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
             return Ok(insertDeliveryPerson);
@@ -70,12 +70,12 @@ namespace Food_Delivery.Controllers
             var update = _deliveryperson.GetDeliveryPerson(deliveryPerson.DeliveryPersonId);
             if(update == null)
             {
-                return NotFound("This Delivery Person Id Not Found");
+                return NotFound("This delivery person id not found");
             }
             var updateDeliveryPerson = _deliveryperson.UpdateDeliveryPerson(deliveryPerson);
-            if (messages.Message == "This Contact  Number  Already Taked")
+            if (messages.Message == "This contact number is already exists")
             {
-                messages.Message = "The Contact Number Already Taked";
+                messages.Message = "This contact number is already exists";
                 return Conflict(messages.Message);
             }
             return Ok(updateDeliveryPerson);
@@ -88,7 +88,7 @@ namespace Food_Delivery.Controllers
             var id = _deliveryperson.GetDeliveryPerson(deliveryPersonId);
             if (id == null)
             {
-                return NotFound("This Delivery Person Id Is Not Found");
+                return NotFound("This delivery person id is not found");
             }
             var DeliveryPerson = _deliveryperson.DeleteDeliveryPerson(deliveryPersonId);
             return Ok(DeliveryPerson);

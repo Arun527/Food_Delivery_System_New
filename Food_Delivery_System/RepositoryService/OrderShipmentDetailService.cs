@@ -8,42 +8,35 @@ namespace Food_Delivery.RepositoryService
     public class OrderShipmentDetailService : IOrderShipmentDetail
     {
         private readonly FoodDeliveryDbContext db;
-
         public OrderShipmentDetailService(FoodDeliveryDbContext foodDeliveryDbContext)
         {
             this.db = foodDeliveryDbContext;
         }
-
         public IEnumerable<OrderShipmentDetail> GetAllOrderShipmentDetail()
         {
                 return db.OrderShipmentDetail.ToList();
         }
-
         public OrderShipmentDetail GetDeliveryPersonById(int Id)
         {
             var getId = db.OrderShipmentDetail.FirstOrDefault(x => x.DeliveryPersonId == Id);
             return getId;
         }
-
         public OrderShipmentDetail GetOrderShipmentDetailById(int Id)
         {
             var getId = db.OrderShipmentDetail.FirstOrDefault(x => x.OrderShipmentDetailId == Id);
             return getId;
         }
-
         public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages msg = new Messages();
 
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.OrderStatus = "Your Order Is Out For Delivery!!";
-
-
+            orderDetail.OrderStatus = "Your order is out for delivery!!";
             foreach (var request in orderShipment.ShipmentRequest)
             {
                 var ord = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == request.OrderDetailId);
 
-                ord.OrderStatus = "Your Order Is Out For Delivery!!";
+                ord.OrderStatus = "Your order is out for delivery!!";
                 db.OrderDetail.Update(ord);
                 db.SaveChanges();
 
@@ -55,11 +48,9 @@ namespace Food_Delivery.RepositoryService
                 
                 db.Add(shipment);
             }
-
-           
             db.SaveChanges();
             msg.Success = true;
-            msg.Message = " Your Order Is Out For Delivery!!";
+            msg.Message = " Your order is out for delivery!!";
             return msg;
         }
 
@@ -77,7 +68,7 @@ namespace Food_Delivery.RepositoryService
                     db.Update(orderShipment);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "OrderShipmentDetail Updated Succesfully";
+                    msg.Message = "OrderShipmentDetail updated succesfully";
                     return msg;
                 }
                 return msg;
@@ -90,7 +81,6 @@ namespace Food_Delivery.RepositoryService
             }
         }
 
-
         public Messages DeleteOrderShipmentDetail(int orderShipmentId)
         {
             Messages msg = new Messages();
@@ -100,12 +90,10 @@ namespace Food_Delivery.RepositoryService
                 db.Remove(orderShipmentDetailId);
                 db.SaveChanges();
                 msg.Success = true;
-                msg.Message = "OrderShipmentDetail Deleted Succesfully";
+                msg.Message = "OrderShipmentDetail deleted succesfully";
             }
             return msg;
         }
-
-
         public IEnumerable<InvoiceDeliveryPerson> GetdeliveryPersonById(int deliveryPersonId)
         {
 
@@ -181,7 +169,6 @@ namespace Food_Delivery.RepositoryService
             return orderDetails;
 
         }
-
         public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
         {
 
@@ -198,8 +185,6 @@ namespace Food_Delivery.RepositoryService
             return orderDetails;
 
         }
-
-      
     }
 }
 

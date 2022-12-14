@@ -15,17 +15,16 @@ namespace Food_Delivery.RepositoryService
 
         public IEnumerable<OrderDetail> GetAll()
         {
-            var order = db.OrderDetail.Where(x => x.OrderStatus == "Order Placed");
+            var order = db.OrderDetail.Where(x => x.OrderStatus == "Order placed");
             return order;
         }
-
 
         public IEnumerable<OrderDetail> GetAllDto()
         {
             var orderDetails = (from ordershipment in db.OrderShipmentDetail
                                
                                 join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId
-                                where OrderDetail.OrderStatus == "Order Placed"
+                                where OrderDetail.OrderStatus == "Order placed"
                                 select new OrderDetail
                                 {
                                     
@@ -72,7 +71,7 @@ namespace Food_Delivery.RepositoryService
                 }
                 db.SaveChanges();
                 msg.Success = true;
-                msg.Message = "Your Order Is Placed!!";
+                msg.Message = "Your order is placed!!";
                 return msg;
 
             }
@@ -83,19 +82,16 @@ namespace Food_Delivery.RepositoryService
             }
         }
 
-
-
-
         public Messages UpdateOrderDetail(OrderDetail orderDetail)
         {
             Messages msg = new Messages();
             try
             {
                 msg.Success = false;
-                msg.Message = "This OrderId not registered";
+                msg.Message = "This order id not registered";
                 var updateOrder = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetail.OrderDetailId);
                 var update = db.OrderDetail.FirstOrDefault(x => x.OrderStatus == orderDetail.OrderStatus);
-                if (updateOrder != null && update.OrderStatus=="Order Placed")
+                if (updateOrder != null && update.OrderStatus=="Order placed")
                 {
                     updateOrder.HotelId= orderDetail.HotelId;
                     updateOrder.FoodId = orderDetail.FoodId;
@@ -103,7 +99,7 @@ namespace Food_Delivery.RepositoryService
                     db.Update(updateOrder);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "Order Updated Succesfully!!";
+                    msg.Message = "Order updated succesfully!!";
                 }
                 return msg;
             }
@@ -115,7 +111,6 @@ namespace Food_Delivery.RepositoryService
             }
         }
            
-
         public Messages DeleteOrderDetail(int orderDetailId)
         {
             Messages msg = new Messages();
@@ -127,7 +122,7 @@ namespace Food_Delivery.RepositoryService
                     db.Remove(deleteOrder);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "Order Deleted Succesfully";
+                    msg.Message = "Order deleted succesfully";
                 }
                 return msg;
             }
@@ -138,9 +133,5 @@ namespace Food_Delivery.RepositoryService
             }
 
         }
-
-
- 
-
     }
 }

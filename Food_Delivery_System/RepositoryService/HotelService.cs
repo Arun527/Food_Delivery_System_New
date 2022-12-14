@@ -15,7 +15,6 @@ namespace Food_Delivery.RepositoryService
         {
             db = obj;
         }
-
         public   IEnumerable<Hotel> GetAll()
         {
             try
@@ -28,22 +27,14 @@ namespace Food_Delivery.RepositoryService
             {
                 throw;
             }
-           
-        
-           
         }
         public Hotel GetHotelById(int hotelId)
         {
-
-
             var hotel = db.Hotel.Find( hotelId);
             return hotel;
-         
-       
         }
         public Hotel GetHotelDetailByNumber(string Number)
         {
-
             try
             {
                 Message message = new Message();
@@ -55,15 +46,9 @@ namespace Food_Delivery.RepositoryService
             {
                 throw;
             }
-
-
         }
-
-
-
         public Hotel GetHotelDetailByEmail(String Email)
         {
-
             try
             {
                 Message message = new Message();
@@ -75,13 +60,10 @@ namespace Food_Delivery.RepositoryService
             {
                 throw;
             }
-
-
         }
 
         public IEnumerable<Hotel> GetHotelDetailByName(String hotelName)
         {
-
             try
             {
                 Message message = new Message();
@@ -94,10 +76,7 @@ namespace Food_Delivery.RepositoryService
             {
                 throw;
             }
-
-
         }
-
 
         public IEnumerable<FoodList> GetFoodByHotelName(string HotelName)
         {
@@ -133,12 +112,12 @@ namespace Food_Delivery.RepositoryService
                     db.Add(hotelDetail);
                     db.SaveChanges();
                     msg.Success=true;
-                    msg.Message = "The Hotel Added Succesfully";
+                    msg.Message = "The hotel added succesfully";
                 }
                 else
                 {
                     msg.Success=false;
-                    msg.Message = "The Hotel Already Exist";
+                    msg.Message = "The hotel already exist";
                 }
                
             }
@@ -158,7 +137,7 @@ namespace Food_Delivery.RepositoryService
                var hotel=db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail.HotelId);
                 var updateEmail= db.Hotel.FirstOrDefault(x=>x.Email==hotelDetail.Email);
                 var updateNumber = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
-                msg.Message = "The hotel Id Not Registered";
+                msg.Message = "The hotel id not registered";
                 msg.Success = false;
                 if (hotel != null)
                 {
@@ -172,13 +151,13 @@ namespace Food_Delivery.RepositoryService
                            if (id!=null && hotelDetail.HotelId!=id)
                            {
                                  msg.Success = false;
-                                 msg.Message = "This Email Id Already taked";
+                                 msg.Message = "This email id already exist";
                                  return msg;
                            }
                         if (number != null && hotelDetail.HotelId != number)
                         {
                             msg.Success = false;
-                            msg.Message = "This Contact Number  Already taked";
+                            msg.Message = "This contact number  already exist";
                             return msg;
                         }
                         else
@@ -210,7 +189,6 @@ namespace Food_Delivery.RepositoryService
                         msg.Message = "The hotel updated succesfully";
                         return msg;
                      }
-
                }
                return msg;
             }
@@ -224,7 +202,6 @@ namespace Food_Delivery.RepositoryService
             return msg;
         }
 
-
         public Messages DeleteHotelDetail(int hotelDetail)
         {
             Messages msg = new Messages();
@@ -236,22 +213,20 @@ namespace Food_Delivery.RepositoryService
                 {
                     db.Remove(hotel);
                     db.SaveChanges();
-                    msg.Message = "The hotel Id deleted Succesfully";
+                    msg.Message = "The hotel id deleted succesfully";
                     msg.Success=true;
                 }
                 else if(food != null)
                 {
-                    msg.Message = "The hotel Food Is Available For Users";
+                    msg.Message = "The hotel food is available for users";
                     msg.Success = false;
                 }
 
                 else
                 {
-                    msg.Message = "The hotel Id Is Invalid";
+                    msg.Message = "The hotel id is invalid";
                     msg.Success = false;
                 }
-
-
             }
             catch(Exception ex)
             {
@@ -261,7 +236,6 @@ namespace Food_Delivery.RepositoryService
             return msg ;
         }
 
-
         public IEnumerable<Hotel>  GetHotelType(string hoteltype)
         {
 
@@ -269,7 +243,5 @@ namespace Food_Delivery.RepositoryService
            return hotelType;
            
         }
-
-
     }
 }

@@ -7,9 +7,6 @@ namespace Food_Delivery.RepositoryService
 {
     public class FoodService : IFood
     {
-
-
-
         public FoodDeliveryDbContext db;
 
         public FoodService(FoodDeliveryDbContext foodDeliveryDbContext)
@@ -21,7 +18,6 @@ namespace Food_Delivery.RepositoryService
         {
             try
             {
-
                 var food= db.Food.ToList();
                 return food;
             }
@@ -36,8 +32,6 @@ namespace Food_Delivery.RepositoryService
             var coverPhoto = db.Food.FirstOrDefault(x => x.ImageId == imageId);
             return coverPhoto;
         }
-
-
         public Food GetFoodTypeById(int foodTypeId)
         {
             try
@@ -61,19 +55,17 @@ namespace Food_Delivery.RepositoryService
          
             try
             {
+                msg.Message = "The hotel id not found";
+                msg.Success = false;
                 var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == foodType.HotelId);
                 if (hotel == null)
                 {
                     db.Food.Add(foodType);
                     db.SaveChanges();
-                    msg.Message = "The Food Type Inserted Succesfully";
+                    msg.Message = "The food type inserted succesfully";
                     msg.Success = true;
                 }
-                else
-                {
-                    msg.Message = "The Hotel Id Not Found";
-                    msg.Success = true;
-                }
+               return msg;
 
             }
             catch (Exception ex)
@@ -99,12 +91,12 @@ namespace Food_Delivery.RepositoryService
                   
                     db.Update(food);
                     db.SaveChanges();
-                    msg.Message = "The Food  Is Updated Succesfully";
+                    msg.Message = "The food  is updated succesfully";
                     msg.Success = true;
                 }
                 else
                 {
-                    msg.Message = "Invalid FoodTypeId";
+                    msg.Message = "Invalid foodtype id";
                     msg.Success = false;
                 }
 
@@ -124,25 +116,24 @@ namespace Food_Delivery.RepositoryService
             Messages msg = new Messages();
             try
             {
-
                 var food = db.Food.FirstOrDefault(x => x.FoodId == foodId);
                 var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == food.HotelId);
                 if (food != null)
                 {
                     db.Food.Remove(food);
                     db.SaveChanges();
-                    msg.Message = "The Food  Is Deleted Succesfully";
+                    msg.Message = "The food  is deleted succesfully";
                     msg.Success = true;
                 }
                 else if(hotel != null)
                 {
-                    msg.Message = "The Food Id Is Not Deleted Because Order The Customer";
+                    msg.Message = "The food id is not deleted because order the customer";
                     msg.Success = false;
                 }
 
                 else
                 {
-                    msg.Message = "The hotel Id Is Invalid";
+                    msg.Message = "The hotel id is invalid";
                     msg.Success = false;
                 }
 
@@ -162,7 +153,6 @@ namespace Food_Delivery.RepositoryService
             return foodType;
 
         }
-
         public IEnumerable<FoodDto> GetAllFood()
         {
 
@@ -184,9 +174,6 @@ namespace Food_Delivery.RepositoryService
                 return employeeleave;
             }
         }
-
-
-
         public IEnumerable<Food> GetFoodByName(String FoodName)
         {
                 Messages message = new Messages();
@@ -217,11 +204,6 @@ namespace Food_Delivery.RepositoryService
                 return foodlist;
             }
         }
-
-
-
-
-
 
     }
 

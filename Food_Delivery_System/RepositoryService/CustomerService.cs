@@ -109,13 +109,13 @@ namespace Food_Delivery.RepositoryService
                 {
 
                     msg.Success = false;
-                    msg.Message = "This Contact Number Already Exists";
+                    msg.Message = "This contact number already exists";
                     return msg;
                 }
                 if (customerEmail != null)
                 {
                     msg.Success = false;
-                    msg.Message = "This EmailId Already Exists";
+                    msg.Message = "This email id already exists";
                     
                 }
                 else
@@ -123,7 +123,7 @@ namespace Food_Delivery.RepositoryService
                     db.Add(customer);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "This  Customer Added Succesfully";
+                    msg.Message = "This  customer added succesfully";
                    
                 }
                 return msg;
@@ -149,17 +149,17 @@ namespace Food_Delivery.RepositoryService
                 var emailIdExist = GetCustomerDetailByEmail(customer.Email);
                 if (userExist == null)
                 {
-                    messages.Message = "User Id is not found";
+                    messages.Message = "User id is not found";
                     return messages;
                 }
                 else if (phoneExist != null && phoneExist.CustomerId != userExist.CustomerId)
                 {
-                    messages.Message = "The (" + customer.ContactNumber + "), PhoneNumber is already Registered.";
+                    messages.Message = "The (" + customer.ContactNumber + "), Phone number is already registered.";
                     return messages;
                 }
                 else if (emailIdExist != null && emailIdExist.CustomerId != userExist.CustomerId)
                 {
-                    messages.Message = "The (" + customer.Email + "), EmailId is already Registered.";
+                    messages.Message = "The (" + customer.Email + "), Email id is already registered.";
                     return messages;
                 }
                 else
@@ -173,7 +173,7 @@ namespace Food_Delivery.RepositoryService
                     db.Update(userExist);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "Customer Updated Succesfully!!";
+                    msg.Message = "Customer updated succesfully!!";
                 }
 
                 return msg;
@@ -195,17 +195,17 @@ namespace Food_Delivery.RepositoryService
                 db.Remove(deleteCustomer);
                 db.SaveChanges();
                 msg.Success = true;
-                msg.Message = "Customer Deleted Succesfully";
+                msg.Message = "Customer deleted succesfully";
             }
             else if(order!=null)
             {
                 msg.Success = false;
-                msg.Message = "This Customer Ordered Food..!";
+                msg.Message = "This customer ordered food..!";
             }
             else
             {
                 msg.Success = false;
-                msg.Message = "This Customer Id Not Registered";
+                msg.Message = "This customer id not registered";
             }
             return msg;
         }

@@ -23,7 +23,7 @@ namespace Food_Delivery.Controllers
             var hotel = _hotel.GetAll();
             if(hotel == null)
             {
-                return NotFound("Hotel List Is Not Found");
+                return NotFound("Hotel list is not found");
             }
 
             return Ok(hotel);
@@ -36,7 +36,7 @@ namespace Food_Delivery.Controllers
             var hotel = _hotel.GetHotelById(hotelId);
             if (hotel == null)
             {
-                return NotFound("The Hotel Id Is Not Found");
+                return NotFound("The hotel id is not found");
             }
 
             return Ok(hotel);
@@ -46,9 +46,9 @@ namespace Food_Delivery.Controllers
         public IActionResult GetHotelByName(string hotelName)
         {
             var hotel = _hotel.GetHotelDetailByName(hotelName);
-            if (hotel.Count() == 0)
+            if (!hotel.Any())
             {
-                return NotFound("The Hotel Is Not Found");
+                return NotFound("The hotel is not found");
             }
 
             return Ok(hotel);
@@ -60,9 +60,9 @@ namespace Food_Delivery.Controllers
         {
             Messages msg = new Messages();
             var hotel = _hotel.GetFoodByHotelName(hotelName);
-            if (hotel.Count() == 0)
+            if (!hotel.Any())
             {
-                return NotFound("The Food Is Not Found");
+                return NotFound("The food is not found");
             }
             
             return Ok(hotel);
@@ -76,12 +76,12 @@ namespace Food_Delivery.Controllers
             var number = _hotel.GetHotelDetailByNumber(detaile.ContactNumber);
             if (number != null)
             {
-                return Conflict("Contact Number Already Taked");
+                return Conflict("This contact number id already exists");
             }
             var email = _hotel.GetHotelDetailByEmail(detaile.Email);
             if (email != null)
             {
-                return Conflict("Email Id Already Taked");
+                return Conflict("This email id already exists");
             }
             var hoteldetail = _hotel.InsertHotelDetail(detaile);
 
@@ -98,20 +98,20 @@ namespace Food_Delivery.Controllers
            
             if (hotel.HotelId == 0)
             {
-                return BadRequest("The Hotel Field Is Required");
+                return BadRequest("The hotel field is required");
             }
             if(id == null)
             {
-                return NotFound("Hotel Id Not Found");
+                return NotFound("Hotel id not found");
             }
            var hotelUpdate = _hotel.UpdateHotelDetail(hotel);
-            if (hotelUpdate.Message== "This Email Id Already taked")
+            if (hotelUpdate.Message == "This email id already exist")
             {
-                return Conflict("The Email Already Taked");
+                return Conflict("This email id already exist");
             }
-            if (hotelUpdate.Message=="This Contact Number  Already taked")
+            if (hotelUpdate.Message== "This contact number id already exists")
             {
-                return Conflict("This Contact Number  Already taked");
+                return Conflict("This contact number id already exists");
             }
 
             return Ok(hotelUpdate);
@@ -126,12 +126,12 @@ namespace Food_Delivery.Controllers
            
             if (id == null)
             {
-                return NotFound("The Hotel Id Not Found");
+                return NotFound("The hotel id not found");
             }
             var hotel = _hotel.DeleteHotelDetail(hotelDetailId);
-            if (hotel.Message == "The hotel Food Is Available For Users")
+            if (hotel.Message == "The hotel food is available for users")
             {
-                return BadRequest("The Hotel Id Is  Not Deleted,Because This Hotel Management  Created  Available  Food List ");
+                return BadRequest("This hotel already having food list, So Can't delete.");
             }
             return Ok(hotel);
         }
@@ -143,7 +143,7 @@ namespace Food_Delivery.Controllers
             var type=_hotel.GetHotelType(hoteltype);
             if(type.Count() == 0)
             {
-                return NotFound("The Food Type Not Found");
+                return NotFound("The food type not found");
             }
             var hotel = _hotel.GetHotelType(hoteltype);
             return Ok(hotel);
