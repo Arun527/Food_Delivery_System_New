@@ -8,3 +8,7 @@
 .card-registration .select-arrow {
     top: 13px;
 }
+#image{
+    border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;
+
+}

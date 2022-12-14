@@ -7,19 +7,19 @@
 
 <div class="col-md-6 offset-3">
 <div class="input-group " >
-        <input style="font-weight:700" type="search" id="search1" class="form-control rounded" placeholder="Search for restaurents" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" id="search1" class="form-control rounded" placeholder="Search for restaurents" aria-label="Search" aria-describedby="search-addon" />
     <button type="button" class="btn btn-outline-primary" id="btn">search</button>
 </div>
 </div>
-<div class="container-fluid " style="margin-left:5%;">
+<div class="container-fluid " id="imageplace">
     <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-3">
 
         @foreach (Hotel item in Model)    
         {
 
-            <div class="card me-4 mt-4 " style="width:30%;border-radius:5%;" id="card">
-                <a style="text-decoration:none;color:black" href="/FoodMvc/UserByHotelId?hotelId=@item.HotelId">   
-                <img  style=" width: 280px;border-radius:6%; height: 280px;margin-left:9%;margin-top:5%;margin-bottom:5%" src="/css/Image/@item.ImageId" multiple />
+            <div class="card me-4 mt-4 "  id="card">
+                <a href="/FoodMvc/UserByHotelId?hotelId=@item.HotelId">   
+                <img id="explorehotel" src="/css/Image/@item.ImageId" multiple />
                 <div class="row ms-lg-3">
 
                     <div class="col-md-8 offset-1"><strong>@item.HotelName</strong>  </div>
@@ -54,16 +54,8 @@
 
 @section Scripts{
 
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-       
-
-   
    
     <link href="~/css/css style/explore.css" rel="stylesheet" />
    
-
 }

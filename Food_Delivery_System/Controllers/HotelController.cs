@@ -45,7 +45,6 @@ namespace Food_Delivery.Controllers
         [HttpGet("Name/{hotelName}")]
         public IActionResult GetHotelByName(string hotelName)
         {
-            Messages msg = new Messages();
             var hotel = _hotel.GetHotelDetailByName(hotelName);
             if (hotel.Count() == 0)
             {
@@ -86,7 +85,7 @@ namespace Food_Delivery.Controllers
             }
             var hoteldetail = _hotel.InsertHotelDetail(detaile);
 
-            return Created("https://localhost:7187/Api/Hotel/" + detaile.HotelId + "", hoteldetail);
+            return Created(detaile.HotelId + "", hoteldetail);
         }
 
 

@@ -132,7 +132,6 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult UpdateFood(int FoodId)
         {
             var obj = _food.GetFoodTypeById(FoodId);
-            var coverPhoto = _food.GetCoverPhoto(obj.ImageId);
             return View(obj);
         }
 

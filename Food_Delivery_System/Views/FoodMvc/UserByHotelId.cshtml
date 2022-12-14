@@ -4,7 +4,7 @@
     ViewData["Title"] = "GetAllFood";
 }
 <div id="errormsg"   ></div>
-<div class="container-fluid " id="container1" style="" >
+<div class="container-fluid " id="container1" >
     <div class="row row-cols-4 row-cols-sm-4 row-cols-md-4 row-cols-lg-4">
 
         @foreach (FoodList item in Model)
@@ -12,10 +12,10 @@
 
             <div class="card me-4 mt-4  basket"  id="card">
 
-                <img id="img" style=" width: 280px;border-radius:6%; height: 180px;margin-left:10%;margin-top:5%;margin-bottom:5%" src="/css/Image/@item.ImageId" multiple />
+                <img id="img"  src="/css/Image/@item.ImageId" multiple />
 
-                @*  <p>HotelId:@item.HotelId</p>*@
-                <div class="row col-md-12" style="font-weight: bold;">
+              
+                <div class="row col-md-12" id="food">
                     <div class="col-md-7 offset-1"  > @item.FoodName </div>
                     <div class="col-md-4">   ₹ @item.Price  </div>
                 </div>
@@ -37,7 +37,7 @@
 
                     </div>
 
-                        <div style="text-align:center"><span> </span><span id="offer">50% off | Use WELCOME50</span></div>
+                        <div id="off" ><span> </span><span id="offer">50% off | Use WELCOME50</span></div>
 
                     </div>
 

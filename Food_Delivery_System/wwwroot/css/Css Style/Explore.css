@@ -13,10 +13,14 @@
     border-radius: 5%
 }
 
-    #card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 00px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-    }
+#imageplace {
+    margin-left: 5%;
+}
+
+#card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 00px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
 
 .topnav {
     overflow: hidden;
@@ -55,3 +59,20 @@
         margin-right: 16px;
         font-size: 17px;
     }
+    a{
+        text-decoration:none;
+        color:black;
+    }
+
+#explorehotel {
+    width: 280px;
+    border-radius: 6%;
+    height: 280px;
+    margin-left: 9%;
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+#search1 {
+    font-weight: 700
+}

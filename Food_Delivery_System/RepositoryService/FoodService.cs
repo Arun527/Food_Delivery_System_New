@@ -190,17 +190,11 @@ namespace Food_Delivery.RepositoryService
         public IEnumerable<Food> GetFoodByName(String FoodName)
         {
 
-            try
-            {
+           
                 Messages message = new Messages();
                 var getId = db.Food.Where(x => EF.Functions.Like(x.FoodName, $"%{FoodName}%")).ToList();
                 return getId;
-            }
-
-            catch (Exception)   
-            {
-                throw;
-            }
+           
 
 
         }

@@ -59,18 +59,14 @@ namespace Food_Delivery_System.Controllers_Mvc
 
         public IActionResult GetAllShipment()
         {
-            OrderShipmentRequest shipment = new OrderShipmentRequest();
             var delivery = _orderShipmentDetail.GetAllInvoiceDetail();
-
             return View(delivery);
         }
 
 
         public IActionResult GetShipmentByUser(int customerId)
         {
-            OrderShipmentRequest shipment = new OrderShipmentRequest();
             var delivery = _orderShipmentDetail.GetCustomerOrderDetailsById(customerId);
-
             return View(delivery);
         }
     }
