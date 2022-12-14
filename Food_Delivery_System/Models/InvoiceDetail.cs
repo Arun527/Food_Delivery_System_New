@@ -10,8 +10,6 @@ namespace Food_Delivery.Models
         public string CustomerName { get; set; }
         public DateTime Orderdate { get; set; }
        
-
-        //  public int FoodId { get; set; }
         public string HotelName { get; set; }
         public string FoodName{ get; set; }
       

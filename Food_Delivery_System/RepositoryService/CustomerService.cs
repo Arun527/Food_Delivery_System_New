@@ -176,78 +176,6 @@ namespace Food_Delivery.RepositoryService
                     msg.Message = "Customer Updated Succesfully!!";
                 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                //msg.Success = false;
-                //msg.Message = "This Customer id not registered";
-                //var updateCustomer = db.Customer.FirstOrDefault(x => x.CustomerId == customer.CustomerId);
-                //var number = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
-                //var Email = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
-
-                //if (updateCustomer != null)
-                //{
-                //    if (number != null && Email!=null)
-                //    {
-                //        var contactNumber=db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
-                //        var contact = contactNumber.CustomerId;
-                //        var EmailId = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
-                //        var Id = EmailId.CustomerId;
-
-                //        if (contact != null && customer.CustomerId != contact)
-                //        {
-
-                //            msg.Success = false;
-                //            msg.Message = "This Contact Number Already taked";
-                //            return msg;
-                //        }
-                //        if (Id != null && customer.CustomerId != Id)
-                //        {
-
-                //            msg.Success = false;
-                //            msg.Message = "This Email Id  Already taked";
-                //            return msg;
-                //        }
-                //        else
-                //        {
-                //            updateCustomer.Name = customer.Name;
-                //            updateCustomer.Email = customer.Email;
-                //            updateCustomer.Gender = customer.Gender;
-                //            updateCustomer.Address = customer.Address;
-                //            updateCustomer.ContactNumber = customer.ContactNumber;
-                //            updateCustomer.IsActive = customer.IsActive;
-                //            db.Update(updateCustomer);
-                //            db.SaveChanges();
-                //            msg.Success = true;
-                //            msg.Message = "Customer Updated Succesfully!!";
-                //        }
-
-                //    }
-                //    else
-                //    {
-                //        updateCustomer.Name = customer.Name;
-                //        updateCustomer.Email = customer.Email;
-                //        updateCustomer.Gender = customer.Gender;
-                //        updateCustomer.Address = customer.Address;
-                //        updateCustomer.ContactNumber = customer.ContactNumber;
-                //        updateCustomer.IsActive = customer.IsActive;
-                //        db.Update(updateCustomer);
-                //        db.SaveChanges();
-                //        msg.Success = true;
-                //        msg.Message = "Customer Updated Succesfully!!";
-                //    }
-
-                //}
                 return msg;
             }
 
@@ -284,13 +212,10 @@ namespace Food_Delivery.RepositoryService
 
         public Customer  GetNumber(string Number)
         {
-           
-
-
-            var custbfomer = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
+            var customer = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
            
                
-            return custbfomer;
+            return customer;
 
         }
 

@@ -8,7 +8,7 @@ namespace Food_Delivery.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Add uniqueness constraint
+          
             modelBuilder.Entity<Customer>().HasIndex(s => s.ContactNumber).IsUnique();
             modelBuilder.Entity<Customer>().HasIndex(s => s.Email).IsUnique();
             modelBuilder.Entity<Hotel>().HasIndex(s => s.ContactNumber).IsUnique();
