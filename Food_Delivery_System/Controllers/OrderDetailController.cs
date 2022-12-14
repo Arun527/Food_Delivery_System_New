@@ -17,8 +17,8 @@ namespace Food_Delivery.Controllers
         IHotel _hotel;
         IFood _food;
         IOrders _orders;
-        private ICustomer @object;
-        private IOrderDetail Object;
+
+        public IOrderDetail Object { get; }
 
         public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel,IFood food , IOrders orders)
         {
@@ -29,12 +29,10 @@ namespace Food_Delivery.Controllers
             _orders = orders;
         }
 
-       
-
-        public OrderDetailController(IOrderDetail object1)
-        {
-            _orderDetail = object1;
-        }
+        //public OrderDetailController(IOrderDetail @object)
+        //{
+        //   _orderDetail = @object;
+        //}
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()
@@ -94,7 +92,7 @@ namespace Food_Delivery.Controllers
             }
            
             var orderDetail = _orderDetail.InsertOrderDetail(food);
-            return Created("https://localhost:7187/Api/OrderDetail/" +food.OrderId + "",orderDetail);
+            return Created("",orderDetail);
         }
 
         [HttpPut("")]
