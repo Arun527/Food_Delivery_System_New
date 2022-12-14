@@ -2,15 +2,16 @@
     text-decoration: none;
 }
 
-tablehead {
+
+h2 {
+    height: 60px
+}
+
+#t {
     text-align: center;
     background-color: khaki;
 }
 
-text {
-    text-align: center;
-}
-
-h2 {
-    height: 60px
+#t1 {
+    text-align: center
 }

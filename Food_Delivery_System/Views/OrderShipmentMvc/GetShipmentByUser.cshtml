@@ -7,23 +7,23 @@
  
 
     <table class="table" id="dataTable">
-        <thead id="tablehead";>
-            <tr>
-                <th id="text" style="text-align:center">Order date </th>
-                <th id="text">Hotel Name</th>
-                <th id="text">  Food Name </th>
-                <th id="text">  Quantity </th>
-                <th id="text">  Price </th>
-                <th id="text">  Total Price </th>
-                <th id="text">  Order Status </th>
+        <thead id="t">
+            <tr id="t">
+                <th id="t">Order date </th>
+                <th id="t">Hotel Name</th>
+                <th id="t">  Food Name </th>
+                <th id="t">  Quantity </th>
+                <th id="t">  Price </th>
+                <th id="t">  Total Price </th>
+                <th id="t">  Order Status </th>
             </tr>
         </thead>
 
 
-        <tbody id="text">
+        <tbody id="t1">
             @foreach (var item in Model)
             {
-                <tr id="text">
+                <tr id="t1">
                     <td>@item.Orderdate  </td>
                     <td>@item.HotelName</td>
                     <td>@item.FoodName</td>

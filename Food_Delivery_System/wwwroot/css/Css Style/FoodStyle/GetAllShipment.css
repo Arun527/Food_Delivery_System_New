@@ -11,7 +11,9 @@
     text-align: center;
     backround-color: khaki;
 }
-
+#t {
+    text-align: center;
+}
 h2 {
     height: 60px;
 }
