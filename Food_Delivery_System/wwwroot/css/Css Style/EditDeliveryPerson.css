@@ -1,6 +1,4 @@
-﻿
-
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
+﻿.card-registration .select-input.form-control[readonly]:not([disabled]) {
     font-size: 1rem;
     line-height: 2.15;
     padding-left: .75em;
@@ -11,13 +9,12 @@
     top: 13px;
 }
 
-#mandatory {
+span {
     color: red;
     font-size: 20px
 }
 
-#image3 {
+#image6 {
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
-    font-size: 20px;
 }

@@ -138,8 +138,5 @@ namespace Food_Delivery.Controllers_Mvc
                 return View("CustomerDetail");
             }
         }
-
-       
-
     }
 }

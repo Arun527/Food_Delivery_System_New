@@ -16,6 +16,7 @@ namespace Food_Delivery.Controllers
         IOrderDetail _orderDetail;
         IDeliveryPerson _deliveryPerson;
         ICustomer _customer;
+        private IOrderShipmentDetail @object;
 
         public OrderShipmentDetailController(IOrders order, IOrderShipmentDetail orderShipmentDetail, IOrderDetail orderDetail,IDeliveryPerson deliveryPerson,ICustomer customer)
         {
@@ -27,6 +28,10 @@ namespace Food_Delivery.Controllers
             
         }
 
+        public OrderShipmentDetailController(IOrderShipmentDetail @object)
+        {
+            _orderShipmentDetail = @object;
+        }
 
         [HttpGet("getall")]
         public IActionResult GetAllOrderShipmentDetail()
@@ -77,7 +82,7 @@ namespace Food_Delivery.Controllers
         public IActionResult InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages messages = new Messages();
-            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
+         
             List<OrderShipmentList>obj = new List<OrderShipmentList>();
             obj = orderShipment.ShipmentRequest;
             foreach(OrderShipmentList item in obj)
@@ -93,7 +98,8 @@ namespace Food_Delivery.Controllers
             {
               return BadRequest("The DeliveryPersonId Field Is Required");
             }
-            if(deliveryPerson == null)
+            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
+            if (deliveryPerson == null)
             {
                 messages.Message = "DeliveryPerson Id Is NotFound";
                 return NotFound(messages.Message);

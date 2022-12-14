@@ -1,0 +1,61 @@
+﻿.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}
+
+span {
+    color: red;
+    font-size: 20px
+}
+
+#image6 {
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+.btn {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
+    .btn .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: steelblue;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        text-decoration: none;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+        .btn .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            text-decoration: none;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+    .btn:hover .tooltiptext {
+        visibility: visible;
+        text-decoration: none;
+        opacity: 0.9;
+    }
