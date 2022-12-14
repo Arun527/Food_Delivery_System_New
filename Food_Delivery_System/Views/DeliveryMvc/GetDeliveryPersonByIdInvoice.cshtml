@@ -3,28 +3,22 @@
     ViewData["Title"] = "DeliveryPersonView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
 <body>
     <table class="table" id="dataTable">
-        <thead style="text-align:center ; background-color:khaki;">
-            <tr style="text-align:center">
+        <thead>
+            <tr >
               
-                <th style="text-align:center"> OrderId      </th>
-                <th style="text-align:center">Customer Name </th>
-                <th style="text-align:center">Customer Address </th>
-                <th style="text-align:center">Delivery Date </th>
+                <th id="t"> OrderId      </th>
+                <th id="t">Customer Name </th>
+                <th id="t">Customer Address </th>
+                <th id="t">Delivery Date </th>
                 
             </tr>
         </thead>
-
-
-        <tbody style="text-align:center">
+        <tbody id="t1">
             @foreach (var item in Model)
             {
-                <tr style="text-align:center">
-                 
+                <tr id="t1">
                     <td>@item.OrderId  </td>
                     <td>@item.CustomerName </td>
                     <td>@item.Address </td>
@@ -32,9 +26,6 @@
                 </tr>
             }
         </tbody>
-
-
-
         <tfoot>
             <tr>
             </tr>
@@ -56,4 +47,6 @@
             $("#dataTable").DataTable();
         })
     </script>
+
+    <link href="~/css/css style/deliverypersonview.css" rel="stylesheet" />
 }

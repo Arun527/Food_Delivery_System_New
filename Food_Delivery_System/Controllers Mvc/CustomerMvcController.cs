@@ -138,19 +138,5 @@ namespace Food_Delivery.Controllers_Mvc
                 return View("CustomerDetail");
             }
         }
-
-        public IActionResult OrderDetail(int customerId)
-        {
-            var delete = _customer.GetCustomerDetailById(customerId);
-            var order = _deliveryShipmentDetail.GetCustomerOrderDetailsById(customerId);
-            return View(order);
-        }
-        public IActionResult OrderStatus(int customerId)
-        {
-            var delete = _customer.GetCustomerDetailById(customerId);
-            var order = _deliveryShipmentDetail.GetCustomerOrderDetailsById(customerId);
-            return View(order);
-        }
-
     }
 }

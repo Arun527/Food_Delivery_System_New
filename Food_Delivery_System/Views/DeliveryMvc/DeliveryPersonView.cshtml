@@ -22,52 +22,40 @@
         </svg>  @Html.ActionLink("Add", "Add")
     </div>
 
-
     <table class="table" id="dataTable">
-        <thead style="text-align:center ;background-color:khaki;">
+        <thead>
             <tr >
-                <th style="text-align:center;" data-visible="false"> DeliveryPersonId      </th>
-
-                <th style="text-align:center">DeliveryPersonName </th>
-
-
-                <th style="text-align:center"> Contact Number </th>
-
-                <th style="text-align:center">Vechile No</th>
-                <th style="text-align:center">Gender</th>
-                <th data-orderable="false" id="deletebutton" style="text-align:center">  Action </th>
+                <th id="t" data-visible="false"> DeliveryPersonId </th>
+                <th id="t">DeliveryPersonName </th>
+                <th id="t" > Contact Number </th>
+                <th id="t">Vechile No</th>
+                <th id="t">Gender</th>
+                <th data-orderable="false" id="t" >  Action </th>
             </tr>
         </thead>
 
-
-        <tbody style="text-align:center">
+        <tbody id="t1">
             @foreach (var item in Model)
             {
-                <tr style="text-align:center">
-                    <td>  @item.DeliveryPersonId  </td>
+                <tr id="t1">
+                    <td>@item.DeliveryPersonId  </td>
                     <td> <a class="nav-link" asp-area="" asp-controller="DeliveryMvc" asp-action="GetDeliveryPersonByIdInvoice" asp-route-id="@item.DeliveryPersonId"> <span class=tooltiptext>Delivery Status</span>  @item.DeliveryPersonName</a>  </td>
-                    <td>   @item.ContactNumber  </td>
+                    <td>@item.ContactNumber  </td>
                     <td>@item.VechileNo</td>
                     <td>@item.Gender</td>
-
-
-
-                    <td style="text-align:center">
-
-                        
+                    <td id="t1">
                         <a class="btn  text-white" href="/DeliveryMvc/Edit?DeliveryPersonId=+ @item.DeliveryPersonId">
-                            <i style="font-size:24px;color:cornflowerblue;" class="fa">&#xf044;</i>
+                            <span class=tooltiptext>Edit</span>
+                            <i id="icon3"  class="fa">&#xf044;</i>
                         </a>
                         <a class="btn text-white" href="/DeliveryMvc/DeleteDeliveryPerson?DeliveryPersonId=+ @item.DeliveryPersonId" >
-                            <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i>
+                            <span class=tooltiptext>Delete</span>
+                            <i id="icon2" class='fas'>&#xf2ed;</i>
                         </a>
                     </td>
                 </tr>
             }
         </tbody>
-
-
-
         <tfoot>
             <tr>
             </tr>
@@ -89,11 +77,10 @@
             $("#dataTable").DataTable();
         })
     </script>
+    <link href="~/css/css style/deliverypersonview.css" rel="stylesheet" />
 }
 
 
-<style>
-    a{
-        text-decoration:none;
-    }
-</style>
+
+
+
