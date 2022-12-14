@@ -10,9 +10,9 @@ namespace Food_Delivery.Controllers
     public class FoodController : ControllerBase
     {
 
-        IFood _food;
+        IFood _food ;
         IHotel _hotel;
-        private IFood @object;
+       
 
         public FoodController(IFood food,IHotel hotel)
         {

@@ -105,7 +105,7 @@ namespace Food_Delivery.Controllers
                 return NotFound(messages.Message);
             }
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
-                return Ok(orderShipmentDetail);
+                return Created(orderShipment.OrderShipmentDetailId+"",  orderShipmentDetail);
         }
 
         [HttpPut("")]
