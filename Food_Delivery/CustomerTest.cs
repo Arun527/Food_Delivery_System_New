@@ -58,8 +58,6 @@ namespace Food_Delivery
         {
             
             var mockservice = Mock();
-            //mockservice.Setup(x => x.GetCustomerDetailById(It.IsAny<int>())).Returns(TestData);
-            //return 
 
             mockservice.Setup(x => x.UpdateCustomerDetail(It.IsAny<Customer>())).Returns(msg);
             
@@ -109,14 +107,14 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "Customer List Is Empty";
+            obj.Message = "Customer list is empty";
             List<Customer> ObjList = null;
             
             var controller = new CustomerController(GetallMock(ObjList).Object);
 
             var NotFoundResult =controller.GetAll();
             var output = NotFoundResult as NotFoundObjectResult;
-            Assert.Equal("Customer List Is Empty", output.Value);
+            Assert.Equal("Customer list is empty", output.Value);
         }
 
         [Fact]
@@ -141,14 +139,14 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "Customer Id Is Not Found";
+            obj.Message = "Customer id is not found";
             Customer cus = null;
             
             var controller = new CustomerController(GetByIdMock(cus).Object);
 
             var NotFoundResult = controller.GetCustomerDetailById(5);
             var output = NotFoundResult as NotFoundObjectResult;
-            Assert.Equal("Customer Id Is Not Found", output.Value);
+            Assert.Equal("Customer id is not found", output.Value);
         }
 
         [Fact]

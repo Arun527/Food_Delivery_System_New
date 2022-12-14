@@ -21,6 +21,7 @@ using System.Collections.Concurrent;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.ComponentModel;
 using Food_Delivery_System.Controllers_Mvc;
+using Castle.Core.Resource;
 
 namespace Food_Delivery
 {
@@ -40,7 +41,16 @@ namespace Food_Delivery
             list.Add(new OrderShipmentList() { OrderDetailId = 1 });
             return list;
         }
-       
+
+        private OrderShipmentDetail test = new OrderShipmentDetail()
+        {
+
+            OrderShipmentDetailId = 1,
+            OrderDetailId=1,
+            DeliveryPersonId=1
+
+        };
+
         private Mock<IOrderShipmentDetail> Mock()
         {
             var mockservice = new Mock<IOrderShipmentDetail>();
@@ -95,18 +105,17 @@ namespace Food_Delivery
         }
 
         [Fact]
-        public void FoodGetAll_NotFoundResult()
+        public void GetAll_NotFoundResult()
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "OrderShipmentDetail List Is Empty";
             List<OrderShipmentDetail> Lisobj = null;
             var mockservice = new Mock<IOrderShipmentDetail>();
             mockservice.Setup(x => x.GetAllOrderShipmentDetail()).Returns(Lisobj);
             var controller = new OrderShipmentDetailController(mockservice.Object);
             var NotFoundResult = controller.GetAllOrderShipmentDetail();
             var output = NotFoundResult as NotFoundObjectResult;
-            Assert.Equal("OrderShipmentDetail List Is Empty", output.Value);
+            Assert.Equal("OrderShipmentDetail list is empty", output.Value);
 
         }
 
@@ -126,7 +135,74 @@ namespace Food_Delivery
             Assert.StrictEqual(409, result.StatusCode);
         }
 
+        [Fact]
+        public void DeleteOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "OrderShipmentDetail Deleted Succesfully";
+            var mockservice = new Mock<IOrderShipmentDetail>();
+            mockservice.Setup(x => x.GetOrderShipmentDetailById(It.IsAny<int>())).Returns(test);
+            mockservice.Setup(x => x.DeleteOrderShipmentDetail(It.IsAny<int>())).Returns(messages);
+            var controller = new OrderShipmentDetailController(mockservice.Object);
+            var output = controller.DeleteOrderShipmentDetail(5);
+            var result = output as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+            Assert.StrictEqual(messages, result.Value);
+            Assert.StrictEqual(200, result.StatusCode);
+
+        }
 
 
+        [Fact]
+        public void Delete_NotFound()
+        {
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "The orderShipmentDetail id is not found";
+            OrderShipmentDetail order = null;
+            var mockservice = new Mock<IOrderShipmentDetail>();
+            mockservice.Setup(x => x.GetOrderShipmentDetailById(It.IsAny<int>())).Returns(order);
+            mockservice.Setup(x => x.DeleteOrderShipmentDetail(It.IsAny<int>())).Returns(messages);
+            var controller = new OrderShipmentDetailController(mockservice.Object);
+            var output = controller.DeleteOrderShipmentDetail(5);
+            var result = output as NotFoundObjectResult;
+            Assert.IsType<NotFoundObjectResult>(output);
+            Assert.StrictEqual(messages.Message, result.Value);
+            Assert.StrictEqual(404, result.StatusCode);
+        }
+
+
+        [Fact]
+        public void GetAllInvoice_OkResult()
+        {
+            List<InvoiceDetail> Lisobj = new List<InvoiceDetail>();
+            var mockservice = new Mock<IOrderShipmentDetail>();
+            mockservice.Setup(x => x.GetAllInvoiceDetail()).Returns(Lisobj);
+            var controller = new OrderShipmentDetailController(mockservice.Object);
+            var output = controller.GetAllInvoiceDetail();
+            var result = output as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+            Assert.StrictEqual(200, result.StatusCode);
+        }
+
+
+        [Fact]
+        public void GetAllInvoice_NotFound()    
+        {
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "The invoice list is empty";
+            List<InvoiceDetail> Lisobj = null;
+            var mockservice = new Mock<IOrderShipmentDetail>();
+            mockservice.Setup(x => x.GetAllInvoiceDetail()).Returns(Lisobj);
+            var controller = new OrderShipmentDetailController(mockservice.Object);
+            var output = controller.GetAllInvoiceDetail();
+            var result = output as NotFoundObjectResult;
+            Assert.IsType<NotFoundObjectResult>(output);
+            Assert.StrictEqual(messages.Message, result.Value);
+            Assert.StrictEqual(404, result.StatusCode);
+
+        }
     }
 }

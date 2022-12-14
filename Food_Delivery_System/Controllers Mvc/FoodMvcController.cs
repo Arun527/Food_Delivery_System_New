@@ -52,15 +52,14 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult GetallDetail(JqueryDatatableParam param)
         {
             var hoteldetail = _hotel.GetAll();
-
-
+            var parm = param.sSearch.ToLower();
             if (!string.IsNullOrEmpty(param.sSearch))
             {
-                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.Address.ToLower().Contains(param.sSearch.ToLower())
-                                               || x.Type.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower())
-                                               || x.ContactNumber.ToString().Contains(param.sSearch.ToString()));
+                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(parm)
+                                              || x.Address.ToLower().Contains(parm)
+                                               || x.Type.ToLower().Contains(parm)
+                                              || x.IsActive.ToString().Contains(parm)
+                                               || x.ContactNumber.ToString().Contains(parm));
             }
 
 
@@ -83,7 +82,7 @@ namespace Food_Delivery.Controllers_Mvc
             var hotelList = _hotel.GetAll();
             types.hotelname = new List<SelectListItem>();
             types.hotelname.AddRange(
-                _hotel.GetAll().Where(x =>x.HotelId == id).Select(a => new SelectListItem
+                hotelList.Where(x =>x.HotelId == id).Select(a => new SelectListItem
                 {
                     Text = a.HotelName,
                     Value = a.HotelId.ToString(),
@@ -95,7 +94,6 @@ namespace Food_Delivery.Controllers_Mvc
         {
             var uploadDirecotroy = "Css/Image/";
 
-            string location = "~wwwroot/Css/Image/";
             var uploadPath = Path.Combine(webHostEnvironment.WebRootPath, uploadDirecotroy);
 
             if (!Directory.Exists(uploadPath))
@@ -107,9 +105,9 @@ namespace Food_Delivery.Controllers_Mvc
             foodType.ImageId = fileName;
 
               var food= _food.InsertFoodType(foodType);
-            if (food.Message == "The Food Type Inserted Succesfully")
+            if (food.Message == "The food type inserted succesfully")
             {
-                TempData["AlertMessage"] = "The Food Added Succesfully";
+                TempData["AlertMessage"] = food.Message;
                
             }
             return Redirect("GetFoodByHotelId?HotelId=" + foodType.HotelId);
@@ -137,9 +135,8 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Update(Food foodDetaile)
         {
-          
             var obj = _food.UpdateFood(foodDetaile);
-            TempData["AlertMessage"] = "The Food Updated Succesfully";
+            TempData["AlertMessage"] = obj.Message;
             return Redirect("GetFoodByHotelId?HotelId=" + foodDetaile.HotelId);
         }
 
@@ -149,7 +146,7 @@ namespace Food_Delivery.Controllers_Mvc
             var food = _food.GetFoodTypeById(foodId);
             var id = food.HotelId;  
             var obj = _food.DeleteFoodType(foodId);
-            TempData["AlertMessage"] = "The Food Deleted Succesfully";
+            TempData["AlertMessage"] = obj.Message;
            return Redirect("GetFoodByHotelId?HotelId=" + id);
         }
 

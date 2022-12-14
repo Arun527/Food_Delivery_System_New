@@ -70,12 +70,12 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "Delivery Person Is Not Found";
+            obj.Message = "Delivery person is not found";
             List<DeliveryPerson> list = null;
             var controller = new DeliveryPersonController(getallMock(list).Object);
             var notFoundObjectResult= controller.GetAllDeliveryPersons();
             var output = notFoundObjectResult as NotFoundObjectResult;
-            Assert.Equal("Delivery Person Is Not Found", output.Value);
+            Assert.Equal("Delivery person is not found", output.Value);
           //  Assert.Null(output);
         
 
@@ -100,7 +100,7 @@ namespace Food_Delivery
             var result = controller.GetDeliveryPerson(5);
             var output = result as NotFoundObjectResult;
             Assert.IsType<NotFoundObjectResult>(output);
-            Assert.Equal("This Delivery Person Id Is Not Found", output.Value);
+            Assert.Equal("This delivery person id is not found", output.Value);
         }
 
 

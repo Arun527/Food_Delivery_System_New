@@ -128,14 +128,13 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "Food List Is Empty";
             List<Food> Lisobj = null;
             var mockservice = new Mock<IFood>();
             mockservice.Setup(x => x.GetAll()).Returns(Lisobj);
             var controller = new FoodController(mockservice.Object);
             var NotFoundResult = controller.GetAll();
             var output = NotFoundResult as NotFoundObjectResult;
-            Assert.Equal("The Food Id Not Found", output.Value);
+            Assert.Equal("The food id not found", output.Value);
 
         }
 
@@ -157,7 +156,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "The Food Id Not Found";
+            msg.Message = "The food id not found";
             Hotel obj1 = null;
             var mockservice = new Mock<IFood>();
             var controller = new FoodController(mockservice.Object);
@@ -188,7 +187,7 @@ namespace Food_Delivery
             Food food= new Food { HotelId=0 };
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "The HotelId Field Is Required";
+            msg.Message = "The hotel id field is required";
             var controller = new FoodController(AddFoodMock(msg).Object);
             var output = controller.InsertFoodType(food);
             var result = output as BadRequestObjectResult;
@@ -202,7 +201,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "The Hotel Id Not Found";
+            msg.Message = "The hotel id not found";
             var controller = new FoodController(AddFoodMock(msg).Object);
             var output = controller.InsertFoodType(testData);
             var result = output as NotFoundObjectResult;
@@ -235,13 +234,12 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = false;
-            msg.Message = "The Food Id Not Found";
             List<Food> Lisobj = null;
             var controller = new FoodController(GetFoodByName(Lisobj).Object);
             var output = controller.GetByFoodName("grsd");
             var result = output as NotFoundObjectResult;
             Assert.IsType<NotFoundObjectResult>(output);
-            Assert.Equal("The Food Id Not Found", result.Value);
+            Assert.Equal("The food id not found", result.Value);
             Assert.StrictEqual(404, result.StatusCode);
         }
 
@@ -279,7 +277,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "The Food Id Not Found";
+            msg.Message = "The food id not found";
             var controller = new FoodController(UpdateFoodMock(msg).Object);
             var output = controller.UpdateFoodType(testData);
             var result = output as NotFoundObjectResult;
@@ -311,7 +309,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "The Food Id Not Found";
+            msg.Message = "The food id not found";
             var controller = new FoodController(DeleteFoodMock(msg).Object);
             var output = controller.DeleteFoodType(3);
             var result = output as NotFoundObjectResult;
@@ -325,7 +323,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = false;
-            msg.Message = "The Food Id Is Not Deleted Because Order The Customer";
+            msg.Message = "The food id is not deleted because order the customer";
             var mockservice = new Mock<IFood>();
             mockservice.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(testData);
             mockservice.Setup(x => x.DeleteFoodType(It.IsAny<int>())).Returns(msg);

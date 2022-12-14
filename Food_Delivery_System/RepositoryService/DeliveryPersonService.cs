@@ -44,7 +44,7 @@ namespace Food_Delivery.RepositoryService
                 var deliveryPersonId = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
                 var delivery=db.DeliveryPerson.FirstOrDefault(x=>x.ContactNumber==deliveryPerson.ContactNumber);
                 msg.Success = false;
-                msg.Message = "This DeliveryPerson Already Exists";
+                msg.Message = "This delivery person already exists";
                 if (deliveryPersonId == null)
                 {
                     if (delivery != null)
@@ -54,7 +54,7 @@ namespace Food_Delivery.RepositoryService
                         if(id !=null && deliveryPerson.DeliveryPersonId != null)
                         {
                             msg.Success = false;
-                            msg.Message = "The Contact Number Already taked";
+                            msg.Message = "The contact number already exists";
                             return msg;
                         }
                         else
@@ -62,7 +62,7 @@ namespace Food_Delivery.RepositoryService
                             db.Add(deliveryPerson);
                             db.SaveChanges();
                             msg.Success = true;
-                            msg.Message = "DeliveryPerson Added Succesfully";
+                            msg.Message = "Delivery person added succesfully";
                             return msg;
 
                         }
@@ -75,7 +75,7 @@ namespace Food_Delivery.RepositoryService
                         db.Add(deliveryPerson);
                         db.SaveChanges();
                         msg.Success = true;
-                        msg.Message = "DeliveryPerson Added Succesfully";
+                        msg.Message = "Delivery person added succesfully";
                         return msg;
                     }
                 }
@@ -95,7 +95,7 @@ namespace Food_Delivery.RepositoryService
             try
             {
                 msg.Success = false;
-                msg.Message = "This DeliveryPersonId not registered";
+                msg.Message = "This Delivery person id not registered";
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
                 var number = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
 
@@ -108,18 +108,18 @@ namespace Food_Delivery.RepositoryService
                         db.Update(updateDeliveryPerson);
                         db.SaveChanges();
                         msg.Success = true;
-                        msg.Message = "DeliveryPerson Updated Succesfully!!";
+                        msg.Message = "Delivery person updated succesfully!!";
                         return msg;
 
                 }
-               else if(number != null)
+               else 
                 {
                     msg.Success = false;
-                    msg.Message = "Contact Number Already Exist!!";
+                    msg.Message = "Contact number already exist!!";
                     return msg;
                 }
 
-                       return msg;
+               return msg;
                 
             }
             catch (Exception ex)
@@ -140,7 +140,7 @@ namespace Food_Delivery.RepositoryService
                 db.Remove(deleteDeliveryPerson);
                 db.SaveChanges();
                 msg.Success = true;
-                msg.Message = "DeliveryPerson Deleted Succesfully";
+                msg.Message = "Delivery Person deleted succesfully";
             }
             return msg;
         }

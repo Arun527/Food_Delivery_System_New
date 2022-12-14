@@ -34,14 +34,14 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult AddPerson(DeliveryPerson  deliveryPerson)
         {
             var delivery=_deliveryPerson.InsertDeliveryPerson(deliveryPerson);
-            if(delivery.Message== "DeliveryPerson Added Succesfully")
+            if(delivery.Message== "DeliveryPerson added succesfully")
             {
-                TempData["AlertMessage"] = "DeliverPerson Created Successfully.. !";
+                TempData["AlertMessage"] = delivery.Message;
                 return RedirectToAction("DeliveryPersonView");
             }
             else
             {
-                TempData["AlertMessage"] = "The Contact Number Already Exist";
+                TempData["AlertMessage"] = "The contact number already exist";
                 return RedirectToAction("Add");
             }
          
@@ -63,14 +63,14 @@ namespace Food_Delivery_System.Controllers_Mvc
         {
             int id = deliveryPerson.DeliveryPersonId;
             var update=_deliveryPerson.UpdateDeliveryPerson(deliveryPerson);
-            if(update.Message== "DeliveryPerson Updated Succesfully!!")
+            if(update.Message== "DeliveryPerson updated succesfully!!")
             {
-                TempData["AlertMessage"] = "DeliverPerson Updated Successfully.. !";
+                TempData["AlertMessage"] = update.Message;
                 return RedirectToAction("DeliveryPersonView");
             } 
             else
             {
-                TempData["AlertMessage"] = "Contact Number Already Exist!!";
+                TempData["AlertMessage"] = "Contact number already exist!!";
                 return Redirect("Edit?deliveryPersonId=" + id);
             }
         }
@@ -80,7 +80,7 @@ namespace Food_Delivery_System.Controllers_Mvc
             var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
             if (delivery.Count() == 0)
             {
-                return NotFound("This Delivery Person Don't Delivery Any Order");
+                return NotFound("This delivery person don't delivery any order");
             }
             return View(delivery);
         }
@@ -88,7 +88,7 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult  DeleteDeliveryPerson(int DeliveryPersonId)
         {
             var delivery=_deliveryPerson.DeleteDeliveryPerson(DeliveryPersonId); 
-            TempData["AlertMessage"] = "DeliverPerson Deleted Successfully.. !";
+            TempData["AlertMessage"] = delivery.Message;
             return RedirectToAction("DeliveryPersonView");
         }
     }
