@@ -12,7 +12,7 @@ namespace Food_Delivery.RepositoryInterface
         public Messages UpdateDeliveryPerson(DeliveryPerson deliveryPerson);
         public Messages DeleteDeliveryPerson(int deliveryPersonId);
 
-      //  public LoginDto loginbyid(string contactNumber, string password);
+
 
     }
 }

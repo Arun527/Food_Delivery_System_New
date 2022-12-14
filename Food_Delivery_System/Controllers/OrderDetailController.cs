@@ -152,10 +152,7 @@ namespace Food_Delivery.Controllers
 
            
             var orderDetail = _orderDetail.DeleteOrderDetail(id);
-            //if (messages.Success == false)
-            //{
-            //    return BadRequest("The Ordered Food was Delivered So This Order don't removable");
-            //}
+           
             return Ok(orderDetail);
         }
     }

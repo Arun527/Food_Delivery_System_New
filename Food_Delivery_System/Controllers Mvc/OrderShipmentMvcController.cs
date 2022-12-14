@@ -30,7 +30,6 @@ namespace Food_Delivery_System.Controllers_Mvc
 
 
             OrderShipmentDto shipment = new OrderShipmentDto();
-           // var delivery = _deliveryPerson.GetAllDeliveryPersons();
             shipment.DeliveryList = new List<SelectListItem>();
             shipment.DeliveryList.Add(new SelectListItem() { Value = "0", Text = "Select Delivery Person" });
             shipment.DeliveryList.AddRange(_deliveryPerson.GetAllDeliveryPersons().Select(a => new SelectListItem

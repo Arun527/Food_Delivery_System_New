@@ -271,53 +271,5 @@ namespace Food_Delivery.RepositoryService
         }
 
 
-
-
-
-
-
-
-
-
-
-
-        //public IEnumerable<LFoodDetail> GetFoodDetail(int hotelId)
-        //{
-
-        //    {
-        //        var employeeleave = (from Food in db.Food
-        //                             join Hotel in db.Hotel on Food.HotelId equals Hotel.HotelId
-        //                             where Hotel.HotelId == hotelId
-        //                             select new LFoodDetail
-        //                             {
-        //                                 HotelId = Hotel.HotelId,
-        //                                 FoodId = Food.FoodId,
-        //                                 FoodName = Food.FoodName,
-        //                                 Price = Food.Price
-        //                             }).ToList();
-        //        return employeeleave;
-        //    }
-        //}
-
-
-        //public LoginDto loginbyid(string contactNumber, string password)
-        //{
-        //    var result = (from Role in db.Role
-        //                  join Hotel in db.Hotel on Role.RoleId equals Hotel.RoleId
-        //                  where Hotel.ContactNumber == contactNumber && Hotel.Password == password
-
-        //                  select new LoginDto()
-        //                  {
-        //                      Password = Hotel.Password,
-        //                      ContactNumber = Hotel.ContactNumber,
-        //                      RoleId = Hotel.RoleId,
-        //                      HotelId = Hotel.HotelId,
-
-        //                      RoleNmae = Role.RoleName
-        //                  }).FirstOrDefault();
-        //    return result;
-        //}
-
-
     }
 }

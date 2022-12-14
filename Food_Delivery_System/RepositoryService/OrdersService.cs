@@ -5,22 +5,22 @@ namespace Food_Delivery.RepositoryService
 {
     public class OrdersService : IOrders
     {
-            private readonly FoodDeliveryDbContext db;
-            public OrdersService(FoodDeliveryDbContext foodDeliveryDbContext)
-            {
-                this.db = foodDeliveryDbContext;
-            }
+        private readonly FoodDeliveryDbContext db;
+        public OrdersService(FoodDeliveryDbContext foodDeliveryDbContext)
+        {
+            this.db = foodDeliveryDbContext;
+        }
 
-            public IEnumerable<Orders> GetAll()
-            {
-                return db.orders.ToList();
-            }
+        public IEnumerable<Orders> GetAll()
+        {
+            return db.orders.ToList();
+        }
 
-            public Orders GetOrder(int orderId)
-            {
-                var getId = db.orders.FirstOrDefault(x => x.OrderId == orderId);
-                return getId;
-            }
+        public Orders GetOrder(int orderId)
+        {
+            var getId = db.orders.FirstOrDefault(x => x.OrderId == orderId);
+            return getId;
+        }
 
         public Messages InsertOrder(Orders order)
         {
@@ -78,18 +78,18 @@ namespace Food_Delivery.RepositoryService
 
         public Messages DeleteOrder(int orderId)
 
+        {
+            Messages msg = new Messages();
+            var deleteOrder = db.orders.FirstOrDefault(x => x.OrderId == orderId);
+            if (deleteOrder != null)
             {
-                Messages msg = new Messages();
-                var deleteOrder = db.orders.FirstOrDefault(x => x.OrderId == orderId);
-                if (deleteOrder != null)
-                {
-                    db.Remove(deleteOrder);
-                    db.SaveChanges();
-                    msg.Success = true;
-                    msg.Message = "Order Deleted Succesfully";
-                }
-                return msg;
+                db.Remove(deleteOrder);
+                db.SaveChanges();
+                msg.Success = true;
+                msg.Message = "Order Deleted Succesfully";
             }
+            return msg;
+        }
 
     }
 }
