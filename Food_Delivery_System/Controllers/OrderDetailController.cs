@@ -31,10 +31,10 @@ namespace Food_Delivery.Controllers
 
        
 
-        public OrderDetailController(IOrderDetail object1)
-        {
-            _orderDetail = object1;
-        }
+        //public OrderDetailController(IOrderDetail object1)
+        //{
+        //    _orderDetail = object1;
+        //}
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()
@@ -94,7 +94,7 @@ namespace Food_Delivery.Controllers
             }
            
             var orderDetail = _orderDetail.InsertOrderDetail(food);
-            return Created("https://localhost:7187/Api/OrderDetail/" +food.OrderId + "",orderDetail);
+            return Created(food.OrderId + "",orderDetail);
         }
 
         [HttpPut("")]

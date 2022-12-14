@@ -20,10 +20,10 @@ namespace Food_Delivery.Controllers
             _deliveryperson = deliveryPerson;
         }
 
-        public DeliveryPersonController(IDeliveryPerson @object)
-        {
-            _deliveryperson = @object;
-        }
+        //public DeliveryPersonController(IDeliveryPerson @object)
+        //{
+        //    _deliveryperson = @object;
+        //}
 
         [HttpGet("Getall")]
         public IActionResult GetAllDeliveryPersons()
@@ -60,7 +60,7 @@ namespace Food_Delivery.Controllers
                 return Conflict("This Contact  Number  Already Taked");
             }
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
-            return Ok(insertDeliveryPerson);
+            return Created(deliveryPerson.DeliveryPersonId+"", insertDeliveryPerson);
         }
 
         [HttpPut("/api/DeliveryPerson")]

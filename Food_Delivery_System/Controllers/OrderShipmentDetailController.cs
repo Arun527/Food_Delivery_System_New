@@ -28,10 +28,10 @@ namespace Food_Delivery.Controllers
             
         }
 
-        public OrderShipmentDetailController(IOrderShipmentDetail @object)
-        {
-            _orderShipmentDetail = @object;
-        }
+        //public OrderShipmentDetailController(IOrderShipmentDetail @object)
+        //{
+        //    _orderShipmentDetail = @object;
+        //}
 
         [HttpGet("getall")]
         public IActionResult GetAllOrderShipmentDetail()

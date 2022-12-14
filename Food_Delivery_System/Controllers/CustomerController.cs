@@ -93,7 +93,7 @@ namespace Food_Delivery.Controllers
             var insertCustomer = _customer.InsertCustomerDetail(customer);
             
             
-            return Created("https://localhost:7187/Api/customer/"+customer.CustomerId+"", insertCustomer);
+            return Created(customer.CustomerId+"",insertCustomer);
         }
 
         [HttpPut("/api/Customer")]

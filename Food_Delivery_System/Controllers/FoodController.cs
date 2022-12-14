@@ -20,10 +20,10 @@ namespace Food_Delivery.Controllers
             _hotel = hotel;
         }
 
-        public FoodController(IFood @object)
-        {
-            _food = @object;
-        }
+        //public FoodController(IFood @object)
+        //{
+        //    _food = @object;
+        //}
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()
@@ -78,7 +78,7 @@ namespace Food_Delivery.Controllers
                 return NotFound("The Hotel Id Not Found");
             }
            
-            return Ok(fooddetail);
+            return Created(food.FoodId+"", fooddetail);
         }
 
         [HttpPut("")]
