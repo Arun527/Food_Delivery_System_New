@@ -10,20 +10,20 @@ namespace Food_Delivery.Controllers
     public class FoodController : ControllerBase
     {
 
-        IFood _food;
+        IFood _food ;
         IHotel _hotel;
-        private IFood @object;
+       
 
         public FoodController(IFood food,IHotel hotel)
         {
             _food = food;
             _hotel = hotel;
         }
-
-        public FoodController(IFood @object)
-        {
-            _food = @object;
-        }
+      
+        //public FoodController(IFood @object)
+        //{
+        //    _food = @object;
+        //}
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()

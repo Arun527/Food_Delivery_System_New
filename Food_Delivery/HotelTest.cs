@@ -197,7 +197,6 @@ namespace Food_Delivery
             var result = output as CreatedResult;
             Assert.IsType<CreatedResult>(output);
             Assert.StrictEqual(msg, result.Value);
-            Assert.StrictEqual("https://localhost:7187/Api/Hotel/1", result.Location);
             Assert.StrictEqual(201, result.StatusCode);
         }
 
