@@ -10,28 +10,23 @@ namespace Food_Delivery.Controllers
     [ApiController]
     public class OrderShipmentDetailController : ControllerBase
     {
-        
-        IOrders _order;
         IOrderShipmentDetail _orderShipmentDetail;
+        IOrders _order;
         IOrderDetail _orderDetail;
         IDeliveryPerson _deliveryPerson;
         ICustomer _customer;
-        private IOrderShipmentDetail @object;
 
-        public OrderShipmentDetailController(IOrders order, IOrderShipmentDetail orderShipmentDetail, IOrderDetail orderDetail,IDeliveryPerson deliveryPerson,ICustomer customer)
+        public OrderShipmentDetailController(IOrderShipmentDetail orderShipmentDetail, IOrders order,  IOrderDetail orderDetail,IDeliveryPerson deliveryPerson,ICustomer customer)
         {
+            _orderShipmentDetail = orderShipmentDetail;
             _order = order;
-            _orderShipmentDetail=orderShipmentDetail;
             _orderDetail=orderDetail;
             _deliveryPerson=deliveryPerson;
             _customer=customer;
             
         }
 
-        public OrderShipmentDetailController(IOrderShipmentDetail @object)
-        {
-            _orderShipmentDetail = @object;
-        }
+       
 
         [HttpGet("getall")]
         public IActionResult GetAllOrderShipmentDetail()

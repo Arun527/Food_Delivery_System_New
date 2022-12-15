@@ -29,11 +29,7 @@ namespace Food_Delivery.Controllers
             _orders = orders;
         }
 
-        //public OrderDetailController(IOrderDetail @object)
-        //{
-        //   _orderDetail = @object;
-        //}
-
+       
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
