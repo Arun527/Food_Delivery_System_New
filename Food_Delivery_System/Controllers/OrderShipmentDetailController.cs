@@ -15,7 +15,6 @@ namespace Food_Delivery.Controllers
         IOrderDetail _orderDetail;
         IDeliveryPerson _deliveryPerson;
         ICustomer _customer;
-
         public OrderShipmentDetailController(IOrderShipmentDetail orderShipmentDetail, IOrders order,  IOrderDetail orderDetail,IDeliveryPerson deliveryPerson,ICustomer customer)
         {
             _orderShipmentDetail = orderShipmentDetail;
@@ -25,23 +24,12 @@ namespace Food_Delivery.Controllers
             _customer=customer;
             
         }
-
-       
-
         [HttpGet("getall")]
         public IActionResult GetAllOrderShipmentDetail()
         {
-            Messages messages = new Messages();
-            messages.Message = "OrderShipmentDetail list is empty";
             var ShipmentDetail = _orderShipmentDetail.GetAllOrderShipmentDetail();
-            if(ShipmentDetail == null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(ShipmentDetail);
+            return (ShipmentDetail == null) ? NotFound("OrderShipmentDetail list is empty") : Ok(ShipmentDetail);
         }
-
-
         [HttpGet("GetDeliveryPerson/{Id}")]
         public IActionResult GetDeliveryPersonById(int Id)
         {
@@ -51,7 +39,7 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("DeliveryPerson id is not found");
             }
-            
+
             var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
             if (delivery.Count() == 0)
             {
