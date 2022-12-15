@@ -25,23 +25,18 @@ namespace Food_Delivery.Controllers
         {
             var obj = _deliveryperson.GetAllDeliveryPersons();
             return (obj != null)? Ok(obj) :  NotFound("Delivery person is not found");
-            
         }
 
         [HttpGet("{deliveryPersonId}")]
         public IActionResult GetDeliveryPerson(int deliveryPersonId)
         {
-        
             var obj = _deliveryperson.GetDeliveryPerson(deliveryPersonId);
             return  (obj != null)?  Ok(obj) : NotFound("This delivery person id is not found");
-            
-          
         }
 
         [HttpPost("/api/DeliveryPerson")]
         public IActionResult InsertDeliveryPerson(DeliveryPerson deliveryPerson)
         {
-            
             var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
             return Output(insertDeliveryPerson);
         }
@@ -49,9 +44,7 @@ namespace Food_Delivery.Controllers
         [HttpPut("/api/DeliveryPerson")]
         public IActionResult UpdateDeliveryPerson([FromBody]DeliveryPerson deliveryPerson)
         {
-           
             var updateDeliveryPerson = _deliveryperson.UpdateDeliveryPerson(deliveryPerson);
-           
             return Output(updateDeliveryPerson);
         }
 

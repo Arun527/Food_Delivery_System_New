@@ -3,6 +3,7 @@ using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers
 {
@@ -22,7 +23,6 @@ namespace Food_Delivery.Controllers
             _orderDetail=orderDetail;
             _deliveryPerson=deliveryPerson;
             _customer=customer;
-            
         }
         [HttpGet("getall")]
         public IActionResult GetAllOrderShipmentDetail()
@@ -33,142 +33,52 @@ namespace Food_Delivery.Controllers
         [HttpGet("GetDeliveryPerson/{Id}")]
         public IActionResult GetDeliveryPersonById(int Id)
         {
-            
             var obj = _deliveryPerson.GetDeliveryPerson(Id);
-            if(obj == null)
-            {
-                return NotFound("DeliveryPerson id is not found");
-            }
-
-            var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
-            if (delivery.Count() == 0)
-            {
-                return NotFound("This delivery person don't delivery any order");
-            }
-            return Ok(delivery);
+            return (obj == null) ? NotFound("DeliveryPerson id is not found") : Ok(_orderShipmentDetail.GetdeliveryPersonById(Id));
         }
 
         [HttpGet("{Id}")]
         public IActionResult GetOrderDetailById(int Id)
         {
-            Messages messages = new Messages();
-            messages.Message = "OrderShipmentDetail id is not found";
             var obj = _orderShipmentDetail.GetOrderShipmentDetailById(Id);
-            if(obj==null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(obj);
+            return (obj==null) ? NotFound("OrderShipmentDetail id is not found") :Ok(obj);
         }
 
-        [HttpPost("")]
+        [HttpPost]
         public IActionResult InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
-            Messages messages = new Messages();
-         
-            List<OrderShipmentList>obj = new List<OrderShipmentList>();
-            obj = orderShipment.ShipmentRequest;
-            foreach(OrderShipmentList item in obj)
-            {
-                var order=_orderDetail.GetOrderDetail(item.OrderDetailId);
-
-                if (order == null)
-                {
-                    return BadRequest("The orderDetail id is not found");
-                }
-            }
-            if (orderShipment.DeliveryPersonId ==null)
-            {
-              return BadRequest("The deliveryPerson id field is required");
-            }
-            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
-            if (deliveryPerson == null)
-            {
-                messages.Message = "DeliveryPerson id is not found";
-                return NotFound(messages.Message);
-            }
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
-                return Ok(orderShipmentDetail);
+                return Output(orderShipmentDetail);
         }
 
-        [HttpPut("")]
+        [HttpPut]
         public IActionResult UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment)
         {
-            Messages messages = new Messages();
-            var ordershipmentId= _orderShipmentDetail.GetOrderShipmentDetailById(orderShipment.OrderShipmentDetailId);
-            var deliveryPerson = _deliveryPerson.GetDeliveryPerson(orderShipment.DeliveryPersonId);
-            var orderDetail = _orderDetail.GetOrderDetail(orderShipment.OrderDetailId);
-            if (ordershipmentId == null)
-            {
-                return NotFound("The orderShipmentDetail id is not found");
-            }
-            if (orderShipment.DeliveryPersonId == 0)
-            {
-                return BadRequest("The deliveryPerson Id field is required");
-            }
-            if (orderShipment.OrderShipmentDetailId == 0)
-            {
-                return BadRequest("The orderShipmentDetail id field is required");
-            }
-            if (orderShipment.OrderDetailId == 0)
-            {
-                return BadRequest("The orderDetail id field is required");
-            }
-            if (deliveryPerson == null)
-            {
-                messages.Message = "The deliveryPerson id is not found";
-                return NotFound(messages.Message);
-            }
-            if (orderDetail == null)
-            {
-                messages.Message = "The orderDetail id is not found";
-                return NotFound(messages.Message);
-            }
             var updateOrderShipment = _orderShipmentDetail.UpdateOrderShipmentDetail(orderShipment);
-            return Ok(updateOrderShipment);
+            return (orderShipment.OrderShipmentDetailId == 0) ? BadRequest("The ordershipment detail id field is required") :
+                   (orderShipment.OrderDetailId == 0) ? BadRequest("The orderdetail id field is required") :
+                   (orderShipment.DeliveryPersonId == 0) ? BadRequest("The delivery person id field is required") : Output(updateOrderShipment);
         }
-
 
         [HttpDelete("{orderShipmentId}")]
         public IActionResult DeleteOrderShipmentDetail(int orderShipmentId)
         {
-            Messages messages = new Messages();
-            var ordershipmentId = _orderShipmentDetail.GetOrderShipmentDetailById(orderShipmentId);
-            if(ordershipmentId == null)
-            {
-                messages.Message = "The orderShipmentDetail id is not found";
-                return NotFound(messages.Message);
-            }
             var deleteOrderShipment = _orderShipmentDetail.DeleteOrderShipmentDetail(orderShipmentId);
-            return Ok(deleteOrderShipment);
+            return Output(deleteOrderShipment);
         }
 
         [HttpGet("Invoice/{CustomerId}")]
         public IActionResult GetCustomerOrderDetailsById(int CustomerId)
         {
-            Messages messages = new Messages();
             var customerId = _customer.GetCustomerDetailById(CustomerId);
-            if (customerId == null)
-            {
-                messages.Message = "The customer id is not found";
-                return NotFound(messages.Message);
-            }
-            var invoice =  _orderShipmentDetail.GetCustomerOrderDetailsById(CustomerId);
-            return Ok(invoice);
+            return (customerId == null) ? NotFound("The customer id is not found") : Ok(_orderShipmentDetail.GetCustomerOrderDetailsById(CustomerId));
         }
-
 
         [HttpGet("Invoice/GetAll")]
         public IActionResult GetAllInvoiceDetail()
         {
-            Messages messages = new Messages();
-            messages.Message = "The invoice list is empty";
             var invoice = _orderShipmentDetail.GetAllInvoiceDetail();
-            if(invoice==null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(invoice);
+            return (invoice==null) ? NotFound("The invoice list is empty") : Ok(invoice);
         }
 
         [HttpGet("Tracking/{orderId}")]
@@ -176,13 +86,22 @@ namespace Food_Delivery.Controllers
         {
             Messages messages = new Messages();
             var customerId = _order.GetOrder(orderId);
-            if (customerId == null)
+            return (customerId == null) ? NotFound("The order id is not found") : Ok(_orderShipmentDetail.TrackingStatus(orderId));
+        }
+        public IActionResult Output(Messages result)
+        {
+            switch (result.Status)
             {
-                messages.Message = "The order id is not found";
-                return NotFound(messages.Message);
+                case Statuses.BadRequest:
+                    return BadRequest(result.Message);
+                case Statuses.NotFound:
+                    return NotFound(result.Message);
+                case Statuses.Conflict:
+                    return Conflict(result.Message);
+                case Statuses.Created:
+                    return Created("", result.Message);
             }
-            var tracking=_orderShipmentDetail.TrackingStatus(orderId);
-            return Ok(tracking);
+            return Ok(result.Message);
         }
 
     }

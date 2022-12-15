@@ -10,8 +10,6 @@ namespace Food_Delivery.Controllers
     public class CustomerController : Controller
     {
         ICustomer _customer;
-     
-
         public CustomerController(ICustomer customer)
         {
             _customer = customer;
@@ -65,7 +63,6 @@ namespace Food_Delivery.Controllers
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
             return Output(deleteCustomer);
         }
-
         public IActionResult Output(Messages result)
         {
             switch (result.Status)
@@ -78,10 +75,8 @@ namespace Food_Delivery.Controllers
                     return Conflict(result.Message);
                 case Statuses.Created:
                     return Created("",result.Message);
-               
             }
             return Ok(result.Message);
         }
-
     }
 }

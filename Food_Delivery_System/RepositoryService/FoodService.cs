@@ -51,27 +51,21 @@ namespace Food_Delivery.RepositoryService
             Messages msg = new Messages();
             try
             {
-                msg.Message = "The hotel id not found";
-                msg.Success = false;
-                msg.Status = Statuses.NotFound;
                 var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == foodType.HotelId);
-                if (foodType.HotelId != 0)
+                if (hotel != null)
                 {
-                    if (hotel == null)
-                    {
-                        db.Food.Add(foodType);
-                        db.SaveChanges();
-                        msg.Message = "The food type inserted succesfully";
-                        msg.Success = true;
-                        msg.Status = Statuses.Success;
-                    }
-                    return msg;
+                    db.Food.Add(foodType);
+                    db.SaveChanges();
+                    msg.Message = "The food type inserted succesfully";
+                    msg.Success = true;
+                    msg.Status = Statuses.Success;
                 }
                 else
                 {
-                    msg.Message = "The hotel id field is required";
+                    msg.Message = "The hotel id not found";
                     msg.Success = false;
-                    msg.Status = Statuses.BadRequest;
+                    msg.Status = Statuses.NotFound;
+                    return msg;
                 }
             }
             catch (Exception ex)
