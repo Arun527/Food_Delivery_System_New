@@ -4,6 +4,7 @@ using Food_Delivery_System.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers
 {
@@ -33,117 +34,56 @@ namespace Food_Delivery.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            Messages messages = new Messages();
-            messages.Message = "Customer list is empty";
             var order = _orderDetail.GetAll();
-            if (order == null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(order);
+            return (order !=null)?Ok(order) : NotFound("OrderDetail list is empty");
         }
 
         [HttpGet("{id}")]
         public IActionResult GetAllById(int id)
         {
-            Messages messages = new Messages();
-            messages.Message = "OrderDetail id is not found";
             var order = _orderDetail.GetOrderDetail(id);
-            if (order == null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(order);
+            return (order!=null)?  Ok(order) : NotFound("OrderDetail id is not found");
         }
 
         [HttpPost("")]
         public IActionResult InsertFoodType(OrderRequest food)
         {
-            var customerId = _customer.GetCustomerDetailById(food.CustomerId);
-            if (customerId == null)
-            {
-                return NotFound("The customer id is not found");
-            }
-            OrderShipmentRequest ord = new OrderShipmentRequest();
-            
-            List<FoodDetaile> obj = new List<FoodDetaile>();
-            obj = food.Food;
-            foreach (FoodDetaile foodDetaile in obj)
-            {
-                var foods = _food.GetFoodTypeById(foodDetaile.FoodId);
-                if (foods == null)
-                {
-                    return NotFound("The food id is not found");
-                }
-                var hotel = _hotel.GetHotelById(foodDetaile.HotelId);
-                if (hotel == null)
-                {
-                    return NotFound("The hotel id is not found");
-                }
-                var quantity = foodDetaile.Quantity;
-                if(quantity==0)
-                {
-                    return BadRequest("Please enter minimum quantity of 1 !!");
-                }
-            }
-           
             var orderDetail = _orderDetail.InsertOrderDetail(food);
-            return Created("",orderDetail);
+            return Output(orderDetail);
         }
 
         [HttpPut("")]
         public IActionResult UpdateOrderDetail(OrderDetail detail)
         {
-            Messages messages = new Messages();
-            if (detail.OrderDetailId == 0)
-            {
-                return BadRequest("The orderDetail id field is required");
-            }
-            var id = _orderDetail.GetOrderDetail(detail.OrderDetailId);
-            if (id == null)
-            {
-                return NotFound("The orderDetail id is not found");
-            }
-            var customer = _customer.GetCustomerDetailById(detail.CustomerId.Value);
-            if (customer == null)
-            {
-                return NotFound("The customer id is not found");
-            }
-          
-            var hotelId = _hotel.GetHotelById(detail.HotelId.Value);
-            if(hotelId == null)
-            {
-                return NotFound("The hotel id is not found");
-            }
-            var foodId = _food.GetFoodTypeById(detail.FoodId.Value);
-            if(foodId == null)
-            {
-                return NotFound("The food id is not found");
-            }
+           
             var orderDetail = _orderDetail.UpdateOrderDetail(detail);
-            if (orderDetail.Success == false)
-            {
-                //messages.Message = "The order is can't update because out for delivery";
-                return Conflict(messages.Message);
-            }
-            return Ok(orderDetail);
+            return Output(orderDetail);
         }
           
         [HttpDelete("{id}")]
 
         public IActionResult DeleteOrderDetail(int id)
         {
-            Messages messages = new Messages();
-            var orderid = _orderDetail.GetOrderDetail(id);
-            if (orderid == null)
-            {
-                return NotFound("This order id is not found");
-            }
-
-           
             var orderDetail = _orderDetail.DeleteOrderDetail(id);
-           
-            return Ok(orderDetail);
+            return Output(orderDetail);
         }
+
+        public IActionResult Output(Messages messages)
+        {
+            switch (messages.Status)
+            {
+                case Statuses.Conflict:
+                    return Conflict(messages.Message);
+                case Statuses.Created:
+                    return Created("", messages.Message);
+                case Statuses.NotFound:
+                    return NotFound(messages.Message);
+                case Statuses.BadRequest:
+                    return BadRequest(messages.Message);
+
+            }
+            return Ok(messages.Message);
+        }
+
     }
 }
