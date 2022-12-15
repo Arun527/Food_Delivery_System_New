@@ -17,7 +17,6 @@ namespace Food_Delivery.RepositoryService
         {
             return db.DeliveryPerson.ToList();
         }
-
         public DeliveryPerson GetDeliveryPerson(int deliveryPersonId)
         {
             var getId = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPersonId);
@@ -67,15 +66,10 @@ namespace Food_Delivery.RepositoryService
             Messages msg = new Messages();
             try
             {
-                msg.Success = false;
-                msg.Message = "This contact number is already exists";
-                msg.Status = Statuses.NotFound;
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
                 var number = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
-
                 if (updateDeliveryPerson != null )
                 {
-                    
                         updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
                         updateDeliveryPerson.Gender = deliveryPerson.Gender;
                         updateDeliveryPerson.VechileNo = deliveryPerson.VechileNo;
@@ -84,15 +78,14 @@ namespace Food_Delivery.RepositoryService
                         msg.Success = true;
                         msg.Message = "Delivery person updated succesfully!!";
                         return msg;
-
                 }
                else 
-                {
+               {
                     msg.Success = false;
-                    msg.Message = "Contact number already exist!!";
-                    msg.number = false;
+                    msg.Message = "Delivery person id not found";
+                    msg.Status = Statuses.NotFound;
                     return msg;
-                }
+               }
 
                return msg;
                 

@@ -42,7 +42,7 @@ namespace Food_Delivery.Controllers
         public IActionResult InsertFoodType(Food food)
         {
             var fooddetail = _food.InsertFoodType(food);  
-            return Output(fooddetail);
+            return (food.HotelId==null)? BadRequest ("The hotel field is required") : Output(fooddetail);
         }
 
         [HttpPut("")]

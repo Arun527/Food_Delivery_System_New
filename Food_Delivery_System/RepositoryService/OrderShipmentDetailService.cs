@@ -1,7 +1,10 @@
-﻿using Food_Delivery.Models;
+﻿using Azure.Core;
+using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
+using ServiceStack.Web;
 using System.Security.Cryptography;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -29,58 +32,84 @@ namespace Food_Delivery.RepositoryService
         public Messages InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             Messages msg = new Messages();
-
+            OrderShipmentList Shipment = new OrderShipmentList();
+            var delivery = db.DeliveryPerson.FirstOrDefault(x=>x.DeliveryPersonId==orderShipment.DeliveryPersonId);
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.OrderStatus = "Your order is out for delivery!!";
-            foreach (var request in orderShipment.ShipmentRequest)
+            if (delivery != null)
             {
-                var ord = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == request.OrderDetailId);
-
-                ord.OrderStatus = "Your order is out for delivery!!";
-                db.OrderDetail.Update(ord);
-                db.SaveChanges();
-
-                var shipment = new OrderShipmentDetail()
+                foreach (var request in orderShipment.ShipmentRequest)
                 {
-                    DeliveryPersonId = orderShipment.DeliveryPersonId,
-                    OrderDetailId = request.OrderDetailId 
-                };
-                
-                db.Add(shipment);
+                    var ord = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == request.OrderDetailId);
+                    if (ord == null)
+                    {
+                        msg.Success = false;
+                        msg.Status = Statuses.NotFound;
+                        msg.Message = "The orderdetail id is not found";
+                        return msg;
+                    }
+                    else
+                    {
+                        ord.OrderStatus = "Your order is out for delivery!!";
+                        db.OrderDetail.Update(ord);
+                        db.SaveChanges();
+                        var shipment = new OrderShipmentDetail()
+                        {
+                            DeliveryPersonId = orderShipment.DeliveryPersonId,
+                            OrderDetailId = request.OrderDetailId
+                        };
+                        db.Add(shipment);
+                        db.SaveChanges();
+                        msg.Success = true;
+                        msg.Message = " Your order is out for delivery!!";
+                        msg.Status = Statuses.Created;
+                        return msg;
+                    }
+                }
             }
-            db.SaveChanges();
-            msg.Success = true;
-            msg.Message = " Your order is out for delivery!!";
+            else
+            {
+                msg.Success = false;
+                msg.Status = Statuses.NotFound;
+                var message = (delivery == null) ? ("The delivery person id is not found") : ("The orderdetail id is not found");
+                msg.Message = message;
+            }
             return msg;
         }
-
         public Messages UpdateOrderShipmentDetail(OrderShipmentDetail orderShipment)
         {
             Messages msg = new Messages();
             try
             { 
                 var id = db.OrderShipmentDetail.FirstOrDefault(x=>x.OrderShipmentDetailId==orderShipment.OrderShipmentDetailId);
-                if (id!= null)
+                var orderid = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderShipment.OrderDetailId);
+                var deliveryid = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == orderShipment.DeliveryPersonId);
+                if (id!= null && orderid!=null && deliveryid!=null)
                 {
                     id.DeliveryPersonId = orderShipment.DeliveryPersonId;
                     id.OrderDetailId = orderShipment.OrderDetailId;
-
                     db.Update(orderShipment);
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "OrderShipmentDetail updated succesfully";
+                    msg.Status = Statuses.Success;
                     return msg;
+                }
+                else
+                {
+                    msg.Success = false;
+                    msg.Status = Statuses.NotFound;
+                    var message = (id == null) ?  ("The ordershipment id is not found") : (orderid == null) ? ("The orderdetail id is not found") : ("The delivery person id is not found");
+                    msg.Message = message;
                 }
                 return msg;
             }
-
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
                 return msg;
             }
         }
-
         public Messages DeleteOrderShipmentDetail(int orderShipmentId)
         {
             Messages msg = new Messages();
@@ -91,7 +120,12 @@ namespace Food_Delivery.RepositoryService
                 db.SaveChanges();
                 msg.Success = true;
                 msg.Message = "OrderShipmentDetail deleted succesfully";
+                msg.Status = Statuses.Success;
             }
+            msg.Success = false;
+            msg.Message = "Ordershipmentdetail id is not found";
+            msg.Status = Statuses.NotFound;
+
             return msg;
         }
         public IEnumerable<InvoiceDeliveryPerson> GetdeliveryPersonById(int deliveryPersonId)
@@ -109,7 +143,7 @@ namespace Food_Delivery.RepositoryService
                                  DeliveryPersonName= deliveryPerson.DeliveryPersonName,
                                  CustomerName = Customer.Name,
                                  Address=Customer.Address,
-                                  OrderDetailId = ordershipment.OrderDetailId,
+                                 OrderDetailId = ordershipment.OrderDetailId,
                                  OrderId= OrderDetail.OrderId,
                                  OrderShipmentdateTime=ordershipment.OrderShipmentdateTime,
                                  Quantity =OrderDetail.Quantity,
@@ -119,7 +153,6 @@ namespace Food_Delivery.RepositoryService
                                 }).ToList();
             return orderDetails;
         }
-
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
         {
 
@@ -145,7 +178,6 @@ namespace Food_Delivery.RepositoryService
                                 }).ToList();
             return orderDetails;
         }
-
         public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
         {
         

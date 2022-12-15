@@ -148,7 +148,7 @@ namespace Food_Delivery.RepositoryService
                 var emailIdExist = GetCustomerDetailByEmail(customer.Email);
                 if (userExist == null)
                 {
-                    messages.Message = "User id is not found";
+                    messages.Message = "customer id is not found";
                     messages.Status = Statuses.NotFound;
                     return messages;
                 }
@@ -206,7 +206,7 @@ namespace Food_Delivery.RepositoryService
             else if(order!=null)
             {
                 msg.Success = false;
-                msg.Message = "This customer ordered food..!";
+                msg.Message = "This customer ordered food..!, so you can't delete";
                 msg.Status = Statuses.BadRequest;
             }
             else
