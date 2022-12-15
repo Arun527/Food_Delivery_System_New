@@ -4,6 +4,7 @@ using Food_Delivery_System.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceStack.Messaging;
 using System.Transactions;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -17,20 +18,20 @@ namespace Food_Delivery.RepositoryService
         }
         public   IEnumerable<Hotel> GetAll()
         {
-            try
+            Messages msg = new Messages();
+            var hotel= db.Hotel.ToList();
+            if(!hotel.Any())
             {
-                var hotel= db.Hotel.ToList();
+                msg.Success = false;
+                msg.Message = "This hotel list is empty";
+                msg.Status = Statuses.NotFound;
+            }
                 return hotel;
-            }
-
-            catch(Exception)
-            {
-                throw;
-            }
         }
         public Hotel GetHotelById(int hotelId)
         {
-            var hotel = db.Hotel.Find( hotelId);
+            Messages msg = new Messages();
+            var hotel = db.Hotel.Find(hotelId);
             return hotel;
         }
         public Hotel GetHotelDetailByNumber(string Number)
@@ -71,7 +72,6 @@ namespace Food_Delivery.RepositoryService
              
                 return getId;
             }
-
             catch (Exception)
             {
                 throw;

@@ -19,53 +19,29 @@ namespace Food_Delivery.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetHotelList()
         {
-            Messages msg=new Messages();
             var hotel = _hotel.GetAll();
-            if(hotel == null)
-            {
-                return NotFound("Hotel list is not found");
-            }
-
-            return Ok(hotel);
+            return (hotel == null)? NotFound("Hotel list is not found") :Ok(hotel);
         }
 
         [HttpGet("{hotelid}")]
         public IActionResult GetHotelById(int hotelId)
         {
-            Messages msg = new Messages();
             var hotel = _hotel.GetHotelById(hotelId);
-            if (hotel == null)
-            {
-                return NotFound("The hotel id is not found");
-            }
-
-            return Ok(hotel);
+            return (hotel==null)? NotFound("The hotel id is not found") : Ok(hotel);
         }
 
         [HttpGet("Name/{hotelName}")]
         public IActionResult GetHotelByName(string hotelName)
         {
             var hotel = _hotel.GetHotelDetailByName(hotelName);
-            if (!hotel.Any())
-            {
-                return NotFound("The hotel is not found");
-            }
-
-            return Ok(hotel);
+            return (!hotel.Any()) ? NotFound("The hotel is not found") : Ok(hotel);
         }
-
 
         [HttpGet("HotelAgainstFood/{hotelName}")]
         public IActionResult GetHotelByNameAgainsFood(string hotelName)
         {
-            Messages msg = new Messages();
             var hotel = _hotel.GetFoodByHotelName(hotelName);
-            if (!hotel.Any())
-            {
-                return NotFound("The food is not found");
-            }
-            
-            return Ok(hotel);
+            return (!hotel.Any()) ? NotFound("The food is not found") : Ok(hotel);
         }
 
 
@@ -148,5 +124,21 @@ namespace Food_Delivery.Controllers
             var hotel = _hotel.GetHotelType(hoteltype);
             return Ok(hotel);
         }
+
+          public IActionResult Output(Messages result)
+          {
+            switch (result.Status)
+            {
+                case Statuses.BadRequest:
+                    return BadRequest(result.Message);
+                case Statuses.NotFound:
+                    return NotFound(result.Message);
+                case Statuses.Conflict:
+                    return Conflict(result.Message);
+            }
+            return Ok(result.Message);
+          }
+
+
     }
 }
