@@ -31,7 +31,7 @@ namespace Food_Delivery.Controllers
             return (obj==null)?NotFound("Customer id is not found") :Ok(obj);
         }
 
-        [HttpGet("IsActive/{isActive}")]
+        [HttpGet("IsActive/{isActive}")]   
         public IActionResult GetCustomerDetailByIsActive(bool isActive)
         {
             var obj = _customer.GetCustomerDetailByIsActive(isActive);
@@ -42,27 +42,14 @@ namespace Food_Delivery.Controllers
         public IActionResult GetCustomerDetailByNumber(string contactNumber)
         {
             var obj = _customer.GetCustomerDetailByNumber(contactNumber);
-            return  (obj==null)?NotFound("Customer id is not found"):Ok();
+            return  (obj!=null)?NotFound("Customer id is not found"):Ok();
         }
 
         [HttpPost("/api/Customer")]
         public IActionResult InsertCustomerDetail(Customer customer)
         {
-            Messages messages = new Messages();
-            var number = _customer.GetCustomerDetailByNumber(customer.ContactNumber);
-            var email = _customer.GetCustomerDetailByEmail(customer.Email);
-            if (number != null)
-            {
-                messages.Message = "The phone  number already taked";
-                return Conflict(messages.Message);
-            }
-            if (email != null)
-            {
-                messages.Message = "The Email  id already taked";
-                return Conflict(messages.Message);
-            }
             var insertCustomer = _customer.InsertCustomerDetail(customer);
-            return Created("",insertCustomer);
+            return Output(insertCustomer);
         }
 
         [HttpPut("/api/Customer")]

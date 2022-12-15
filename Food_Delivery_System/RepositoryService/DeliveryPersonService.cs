@@ -1,6 +1,7 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using ServiceStack.Messaging;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -35,50 +36,22 @@ namespace Food_Delivery.RepositoryService
                 throw;
             }
         }
-
         public Messages InsertDeliveryPerson(DeliveryPerson deliveryPerson)
         {
             Messages msg = new Messages();
             try
             {
                 var deliveryPersonId = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
-                var delivery=db.DeliveryPerson.FirstOrDefault(x=>x.ContactNumber==deliveryPerson.ContactNumber);
                 msg.Success = false;
                 msg.Message = "This delivery person already exists";
+                msg.Status = Statuses.Conflict;
                 if (deliveryPersonId == null)
                 {
-                    if (delivery != null)
-                    {
-                        var contactnimber = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
-                        var id = deliveryPerson.DeliveryPersonId;
-                        if(id !=null && deliveryPerson.DeliveryPersonId != null)
-                        {
-                            msg.Success = false;
-                            msg.Message = "The contact number already exists";
-                            msg.number = false;
-                            return msg;
-                        }
-                        else
-                        {
-                            db.Add(deliveryPerson);
-                            db.SaveChanges();
-                            msg.Success = true;
-                            msg.Message = "Delivery person added succesfully";
-                            return msg;
-
-                        }
-
-                    }
-
-
-                    else
-                    {
                         db.Add(deliveryPerson);
                         db.SaveChanges();
                         msg.Success = true;
                         msg.Message = "Delivery person added succesfully";
-                        return msg;
-                    }
+                        msg.Status= Statuses.Created;
                 }
                 return msg;
             }
@@ -89,18 +62,18 @@ namespace Food_Delivery.RepositoryService
             }
         }
 
-
         public Messages UpdateDeliveryPerson(DeliveryPerson deliveryPerson)
         {
             Messages msg = new Messages();
             try
             {
                 msg.Success = false;
-                msg.Message = "This Delivery person id not registered";
+                msg.Message = "This contact number is already exists";
+                msg.Status = Statuses.NotFound;
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
                 var number = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
 
-                if (updateDeliveryPerson != null && number==null )
+                if (updateDeliveryPerson != null )
                 {
                     
                         updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
@@ -132,17 +105,29 @@ namespace Food_Delivery.RepositoryService
          
         }
 
-
         public Messages DeleteDeliveryPerson(int deliveryPersonId)
         {
             Messages msg = new Messages();
             var deleteDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPersonId);
+            if(deliveryPersonId ==0)
+            {
+                msg.Success = false;
+                msg.Message = "Delivery Person deleted succesfully";
+                msg.Status = Statuses.BadRequest;
+            }
             if (deleteDeliveryPerson != null)
             {
                 db.Remove(deleteDeliveryPerson);
                 db.SaveChanges();
                 msg.Success = true;
                 msg.Message = "Delivery Person deleted succesfully";
+                msg.Status=Statuses.Success;
+            }
+            else
+            {
+                msg.Success=false;
+                msg.Message = "This delivery person id is not found";
+                msg.Status = Statuses.NotFound;
             }
             return msg;
         }

@@ -9,8 +9,6 @@ namespace Food_Delivery.RepositoryService
 {
     public class CustomerService : ICustomer
     {
-
-
         private readonly FoodDeliveryDbContext db;
         public CustomerService(FoodDeliveryDbContext foodDeliveryDbContext)
         {
@@ -21,7 +19,6 @@ namespace Food_Delivery.RepositoryService
         {
             return db.Customer.ToList();
         }
-
 
         public Customer GetCustomerDetailById(int customerId)
         {
@@ -78,8 +75,6 @@ namespace Food_Delivery.RepositoryService
 
         }
 
-
-
         public Customer GetCustomerDetailByEmail(String Email)
         {
 
@@ -112,12 +107,14 @@ namespace Food_Delivery.RepositoryService
                     msg.Success = false;
                     msg.number = false;
                     msg.Message = "This contact number already exists";
+                    msg.Status = Statuses.Conflict;
                     return msg;
                 }
                 if (customerEmail != null)
                 {
                     msg.Success = false;
                     msg.Message = "This email id already exists";
+                    msg.Status= Statuses.Conflict;
                     return msg;
                 }
                 else
@@ -126,6 +123,7 @@ namespace Food_Delivery.RepositoryService
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "This  customer added succesfully";
+                    msg.Status = Statuses.Created;
                     return msg;
                 }
                 
@@ -136,7 +134,6 @@ namespace Food_Delivery.RepositoryService
                 return msg;
             }
         }
-
 
         public Messages UpdateCustomerDetail(Customer customer)
         {
@@ -229,7 +226,6 @@ namespace Food_Delivery.RepositoryService
             return customer;
 
         }
-
       
     }
 
