@@ -152,18 +152,20 @@ namespace Food_Delivery.RepositoryService
                 if (userExist == null)
                 {
                     messages.Message = "User id is not found";
-
+                    messages.Status = Statuses.NotFound;
                     return messages;
                 }
                 else if (phoneExist != null && phoneExist.CustomerId != userExist.CustomerId)
                 {
                     messages.Message = "The (" + customer.ContactNumber + "), Phone number is already registered.";
                     messages.number = false;
+                    messages.Status = Statuses.Conflict;
                     return messages;
                 }
                 else if (emailIdExist != null && emailIdExist.CustomerId != userExist.CustomerId)
                 {
                     messages.Message = "The (" + customer.Email + "), Email id is already registered.";
+                    messages.Status = Statuses.Conflict;
                     return messages;
                 }
                 else
@@ -177,6 +179,7 @@ namespace Food_Delivery.RepositoryService
                     db.Update(userExist);
                     db.SaveChanges();
                     msg.Success = true;
+                    messages.Status = Statuses.Success;
                     msg.Message = "Customer updated succesfully!!";
                 }
 
