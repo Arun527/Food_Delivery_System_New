@@ -34,7 +34,7 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult AddPerson(DeliveryPerson  deliveryPerson)
         {
             var delivery=_deliveryPerson.InsertDeliveryPerson(deliveryPerson);
-            if(delivery.Message== "DeliveryPerson added succesfully")
+            if (delivery.number == false)
             {
                 TempData["AlertMessage"] = delivery.Message;
                 return RedirectToAction("DeliveryPersonView");
@@ -63,14 +63,14 @@ namespace Food_Delivery_System.Controllers_Mvc
         {
             int id = deliveryPerson.DeliveryPersonId;
             var update=_deliveryPerson.UpdateDeliveryPerson(deliveryPerson);
-            if(update.Message== "DeliveryPerson updated succesfully!!")
+            if(update.number==false)
             {
                 TempData["AlertMessage"] = update.Message;
                 return RedirectToAction("DeliveryPersonView");
             } 
             else
             {
-                TempData["AlertMessage"] = "Contact number already exist!!";
+                TempData["AlertMessage"] = update.Message;
                 return Redirect("Edit?deliveryPersonId=" + id);
             }
         }

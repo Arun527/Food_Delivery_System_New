@@ -151,12 +151,14 @@ namespace Food_Delivery.RepositoryService
                            if (id!=null && hotelDetail.HotelId!=id)
                            {
                                  msg.Success = false;
+                                 msg.Email = false;
                                  msg.Message = "This email id already exist";
                                  return msg;
                            }
                         if (number != null && hotelDetail.HotelId != number)
                         {
                             msg.Success = false;
+                            msg.number = false;
                             msg.Message = "This contact number  already exist";
                             return msg;
                         }

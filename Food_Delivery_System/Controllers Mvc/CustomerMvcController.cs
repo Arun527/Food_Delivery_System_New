@@ -43,19 +43,19 @@ namespace Food_Delivery.Controllers_Mvc
          
             var create = _customer.InsertCustomerDetail(customer);
            
-            if (create.Message== "This  customer added succesfully")
+            if (create.Success==true)
             {
                 TempData["AlertMessage"] = create.Message;
                 return RedirectToAction("CustomerDetail");
             }
-            else if(create.Message== "This contact number already exists")
+            else if(create.number == false)
             {
                 TempData["AlertMessage"] = create.Message;
                 return RedirectToAction("CreateCustomer");
             }
             else
             {
-                TempData["AlertMessage"] = "This email id already exists..!";
+                TempData["AlertMessage"] = create.Message;
                 return RedirectToAction("CreateCustomer");
             }
         }
@@ -106,19 +106,19 @@ namespace Food_Delivery.Controllers_Mvc
         {
             int id = obj.CustomerId;
             var update = _customer.UpdateCustomerDetail(obj);
-            if(update.Message == "Customer updated succesfully!!")
+            if (update.Success == true)
             {
                 TempData["AlertMessage"] = update.Message;
                 return RedirectToAction("CustomerDetail");
             } 
-            else if(update.Message == "This contact number already exists")
+            else if(update.number==false)
             {
                 TempData["AlertMessage"] =update.Message;
                 return Redirect("UpdateCustomer?customerId="+id);
             }
             else
             {
-                TempData["AlertMessage"] = "This email id already exists..!";
+                TempData["AlertMessage"] = update.Message;
                 return Redirect("UpdateCustomer?customerId=" + id);
             }
            

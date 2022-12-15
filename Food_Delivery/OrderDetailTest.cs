@@ -70,6 +70,13 @@ namespace Food_Delivery
             return mockservice;
         }
 
+        public Mock<IOrderDetail> UpdateOkMock(Messages messages)
+        {
+            var mockservice = new Mock<IOrderDetail>();
+            mockservice.Setup(x => x.UpdateOrderDetail(It.IsAny<OrderDetail>())).Returns(messages);
+            return mockservice;
+        }
+
         private OrderRequest testData => new ()
         {
             OrderDetailId = 1,
@@ -198,46 +205,86 @@ namespace Food_Delivery
 
         }
 
+        [Fact]
+        public void InsertCustomerNotOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "Your Order Is Placed!!";
+            var customerMock = new Mock<ICustomer>();
+            Customer customer = null;
+            customerMock.Setup(x => x.GetCustomerDetailById(It.IsAny<int>())).Returns(customer);
 
-        //[Fact]
-        //public void UpdateOk()
-        //{
+            var mockservicehotel = new Mock<IHotel>();
+            mockservicehotel.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(hotelData);
+            var mockserviceFood = new Mock<IFood>();
+            mockserviceFood.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(foodData);
 
-        //}
+            var controller = new OrderDetailController(InsertOkMock(messages).Object, customerMock.Object, mockservicehotel.Object, mockserviceFood.Object, OrdersMock().Object);
+            var result = controller.InsertFoodType(testData);
+            var output = result as NotFoundObjectResult;
+            Assert.IsType<NotFoundObjectResult>(output);
+
+        }
+        [Fact]
+        public void UpdateOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "Order updated succesfully!!";
+
+            var customerMock = new Mock<ICustomer>();
+            Customer customer = null;
+            customerMock.Setup(x => x.GetCustomerDetailById(It.IsAny<int>())).Returns(customer);
+
+            var mockservicehotel = new Mock<IHotel>();
+            mockservicehotel.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(hotelData);
+            var mockserviceFood = new Mock<IFood>();
+            mockserviceFood.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(foodData);
 
 
 
 
-        //[Fact]
-        //public void DeleteOk()
-        //{
-        //    Messages messages = new Messages();
-        //    messages.Success = true;
-        //    messages.Message = "Your Order Is Placed!!";
-        //    var mockservice = new Mock<IOrderDetail>();
-        //    mockservice.Setup(x=>x.GetOrderDetail(It.IsAny<int>())).Returns(test);
-        //    mockservice.Setup(x=>x.DeleteOrderDetail(It.IsAny<int>())).Returns(messages);
-        //    var controller = new OrderDetailController(mockservice.Object);
-        //    var output = controller.DeleteOrderDetail(5);
-        //    Assert.IsType<OkObjectResult>(output);
+            var controller = new OrderDetailController(UpdateOkMock(messages).Object, customerMock.Object, mockservicehotel.Object, mockserviceFood.Object, OrdersMock().Object);
+            var result = controller.UpdateOrderDetail(test);
+            var output = result as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);  
 
-        //}
+        }
 
-        //[Fact]
-        //public void DeleteNotOk()
-        //{
-        //    Messages messages = new Messages();
-        //    messages.Success = false;
-        //    messages.Message = "Your Order Is Placed!!";
-        //    OrderDetail ord = null;
-        //    var mockservice = new Mock<IOrderDetail>();
-        //    mockservice.Setup(x => x.GetOrderDetail(It.IsAny<int>())).Returns(ord);
-        //    mockservice.Setup(x => x.DeleteOrderDetail(It.IsAny<int>())).Returns(messages);
-        //    var controller = new OrderDetailController(mockservice.Object);
-        //    var output = controller.DeleteOrderDetail(5);
-        //    Assert.IsType<NotFoundObjectResult>(output);
 
-        //}
+
+
+        [Fact]
+        public void DeleteOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "Your Order Is Placed!!";
+            var controller = new OrderDetailController(GetByIdMock(test).Object, CustomerMock().Object, HotelMock().Object, FoodMock().Object, OrdersMock().Object);
+
+        
+            var output = controller.DeleteOrderDetail(5);
+            Assert.IsType<OkObjectResult>(output);
+
+        }
+
+        [Fact]
+        public void DeleteNotOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "Your Order Is Placed!!";
+            OrderDetail ord = null;
+            var mockservice = new Mock<IOrderDetail>();
+            mockservice.Setup(x => x.GetOrderDetail(It.IsAny<int>())).Returns(ord);
+            mockservice.Setup(x => x.DeleteOrderDetail(It.IsAny<int>())).Returns(messages);
+            OrderDetail order = null;
+            var controller = new OrderDetailController(GetByIdMock(order).Object, CustomerMock().Object, HotelMock().Object, FoodMock().Object, OrdersMock().Object);
+            var output = controller.DeleteOrderDetail(5);
+            Assert.IsType<NotFoundObjectResult>(output);
+
+        }
 
     }
 }

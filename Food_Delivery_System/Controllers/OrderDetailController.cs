@@ -113,11 +113,7 @@ namespace Food_Delivery.Controllers
             {
                 return NotFound("The customer id is not found");
             }
-            var orderId = _orders.GetOrder(detail.OrderId);
-            if (orderId == null)
-            {
-                return NotFound("The order id is not found");
-            }
+          
             var hotelId = _hotel.GetHotelById(detail.HotelId.Value);
             if(hotelId == null)
             {

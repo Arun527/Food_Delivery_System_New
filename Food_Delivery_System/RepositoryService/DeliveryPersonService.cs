@@ -55,6 +55,7 @@ namespace Food_Delivery.RepositoryService
                         {
                             msg.Success = false;
                             msg.Message = "The contact number already exists";
+                            msg.number = false;
                             return msg;
                         }
                         else
@@ -116,6 +117,7 @@ namespace Food_Delivery.RepositoryService
                 {
                     msg.Success = false;
                     msg.Message = "Contact number already exist!!";
+                    msg.number = false;
                     return msg;
                 }
 

@@ -122,19 +122,19 @@ namespace Food_Delivery.Controllers_Mvc
         { 
             int id = hoteldetail.HotelId;
             var obj = _hotel.UpdateHotelDetail(hoteldetail);
-            if (obj.Message == "The hotel updated succesfully")
+            if (obj.Success==true)
             {
                 TempData["AlertMessage"] = obj.Message;
                 return Redirect("GetAll?hotelId=" + id);
             }
-            else if (obj.Message == "This email id already exist")
+            else if (obj.number==false)
             {
                 TempData["AlertMessage"] =obj.Message;
                 return Redirect("UpdateHotel?hotelId="+id);
             }
             else
             {
-                TempData["AlertMessage"] = "This contact number  already exist";
+                TempData["AlertMessage"] = obj.Message;
                 return Redirect("UpdateHotel?hotelId=" + id);
             }
         }

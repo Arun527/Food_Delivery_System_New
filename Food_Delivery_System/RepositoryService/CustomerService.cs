@@ -109,6 +109,7 @@ namespace Food_Delivery.RepositoryService
                 {
 
                     msg.Success = false;
+                    msg.number = false;
                     msg.Message = "This contact number already exists";
                     return msg;
                 }
@@ -116,7 +117,7 @@ namespace Food_Delivery.RepositoryService
                 {
                     msg.Success = false;
                     msg.Message = "This email id already exists";
-                    
+                    return msg;
                 }
                 else
                 {
@@ -124,9 +125,9 @@ namespace Food_Delivery.RepositoryService
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "This  customer added succesfully";
-                   
+                    return msg;
                 }
-                return msg;
+                
             }
             catch (Exception ex)
             {
@@ -150,11 +151,13 @@ namespace Food_Delivery.RepositoryService
                 if (userExist == null)
                 {
                     messages.Message = "User id is not found";
+
                     return messages;
                 }
                 else if (phoneExist != null && phoneExist.CustomerId != userExist.CustomerId)
                 {
                     messages.Message = "The (" + customer.ContactNumber + "), Phone number is already registered.";
+                    messages.number = false;
                     return messages;
                 }
                 else if (emailIdExist != null && emailIdExist.CustomerId != userExist.CustomerId)
