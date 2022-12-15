@@ -125,9 +125,9 @@ namespace Food_Delivery.Controllers
                 return NotFound("The food id is not found");
             }
             var orderDetail = _orderDetail.UpdateOrderDetail(detail);
-            if(orderDetail.Success == false)
+            if (orderDetail.Success == false)
             {
-                messages.Message = "The order is can't update because out for delivery";
+                //messages.Message = "The order is can't update because out for delivery";
                 return Conflict(messages.Message);
             }
             return Ok(orderDetail);

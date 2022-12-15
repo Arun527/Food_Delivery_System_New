@@ -1,6 +1,7 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers
 {
@@ -9,6 +10,8 @@ namespace Food_Delivery.Controllers
     public class CustomerController : Controller
     {
         ICustomer _customer;
+     
+
         public CustomerController(ICustomer customer)
         {
             _customer = customer;
@@ -112,18 +115,25 @@ namespace Food_Delivery.Controllers
         [HttpDelete("/api/Customer/{customerId}")]
         public IActionResult DeleteCustomerDetail(int customerId)
         {
-            Messages messages =new Messages();
-            var id = _customer.GetCustomerDetailById(customerId);
-            if (id == null)
-            {
-                return NotFound("The customer id not found");
-            }
+            
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
-            if (deleteCustomer.Success==false)
-            {
-                return BadRequest("This customer already order the food. So can't delete this customer.");
-            }
-            return Ok(deleteCustomer);
+           
+            return Output(deleteCustomer);
         }
+
+        public IActionResult Output(Messages result)
+        {
+            switch (result.Status)
+            {
+                case Statuses.BadRequest:
+                    return BadRequest(result.Message);
+                case Statuses.NotFound:
+                    return NotFound(result.Message);
+                case Statuses.Conflict:
+                    return Conflict(result.Message);
+            }
+            return Ok(result.Message);
+        }
+
     }
 }

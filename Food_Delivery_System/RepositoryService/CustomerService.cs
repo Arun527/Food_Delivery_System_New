@@ -3,6 +3,7 @@ using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using ServiceStack.Messaging;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -199,16 +200,20 @@ namespace Food_Delivery.RepositoryService
                 db.SaveChanges();
                 msg.Success = true;
                 msg.Message = "Customer deleted succesfully";
+                msg.Status= Statuses.Success;
+               
             }
             else if(order!=null)
             {
                 msg.Success = false;
                 msg.Message = "This customer ordered food..!";
+                msg.Status = Statuses.BadRequest;
             }
             else
             {
                 msg.Success = false;
                 msg.Message = "This customer id not registered";
+                msg.Status = Statuses.NotFound;
             }
             return msg;
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers_Mvc
 {
@@ -106,18 +107,19 @@ namespace Food_Delivery.Controllers_Mvc
         {
             int id = obj.CustomerId;
             var update = _customer.UpdateCustomerDetail(obj);
-            if (update.Success == true)
+            if (update.Success)
             {
                 TempData["AlertMessage"] = update.Message;
                 return RedirectToAction("CustomerDetail");
             } 
-            else if(update.number==false)
+            else if(update.Success==false)
             {
                 TempData["AlertMessage"] =update.Message;
                 return Redirect("UpdateCustomer?customerId="+id);
             }
             else
             {
+                //check the email id
                 TempData["AlertMessage"] = update.Message;
                 return Redirect("UpdateCustomer?customerId=" + id);
             }
@@ -127,7 +129,9 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult Delete(int customerId)
         {
             var delete=_customer.DeleteCustomerDetail(customerId);
-            if (delete.Message == "Customer deleted succesfully")
+
+            //sucess
+            if (delete.number)
             {
                 TempData["AlertMessage"] = delete.Message;
                 return View("CustomerDetail");
@@ -138,5 +142,20 @@ namespace Food_Delivery.Controllers_Mvc
                 return View("CustomerDetail");
             }
         }
+
+
+        public IActionResult Output(Messages result)
+        {
+            switch (result.Status)
+            {
+                case Statuses.BadRequest:
+                    return BadRequest(result);
+
+            }
+            return Ok(result.Message);
+        }
+
+
+
     }
 }
