@@ -3,6 +3,7 @@ using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceStack.Messaging;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers
 {
