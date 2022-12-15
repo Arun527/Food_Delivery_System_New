@@ -131,7 +131,7 @@ namespace Food_Delivery
             OrderId = 1,
             OrderDetailId = 1,
             OrderStatus = "Order Placed"
-
+            
 
         };
         private Hotel hotelData => new()
@@ -230,8 +230,38 @@ namespace Food_Delivery
         public void UpdateOk()
         {
             Messages messages = new Messages();
-            messages.Success = false;
+            messages.Success = true;
             messages.Message = "Order updated succesfully!!";
+
+            var customerMock = new Mock<ICustomer>();
+            Customer customer = TestCustomer;
+            customerMock.Setup(x => x.GetCustomerDetailById(It.IsAny<int>())).Returns(customer);
+
+            var mockservicehotel = new Mock<IHotel>();
+            mockservicehotel.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(hotelData);
+            var mockserviceFood = new Mock<IFood>();
+            mockserviceFood.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(foodData);
+
+
+
+            var orderDetailMock = new Mock<IOrderDetail>();
+
+            orderDetailMock.Setup(x => x.GetOrderDetail(It.IsAny<int>())).Returns(test);
+            orderDetailMock.Setup(x => x.UpdateOrderDetail(It.IsAny<OrderDetail>())).Returns(messages);
+
+            var controller = new OrderDetailController(orderDetailMock.Object, customerMock.Object, mockservicehotel.Object, mockserviceFood.Object, OrdersMock().Object);
+            var result = controller.UpdateOrderDetail(test);
+            var output = result as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);  
+
+        }
+
+        [Fact]
+        public void UpdateCustomerNotOKOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "The customer id is not found";
 
             var customerMock = new Mock<ICustomer>();
             Customer customer = null;
@@ -244,16 +274,46 @@ namespace Food_Delivery
 
 
 
+            var orderDetailMock = new Mock<IOrderDetail>();
 
-            var controller = new OrderDetailController(UpdateOkMock(messages).Object, customerMock.Object, mockservicehotel.Object, mockserviceFood.Object, OrdersMock().Object);
+            orderDetailMock.Setup(x => x.GetOrderDetail(It.IsAny<int>())).Returns(test);
+            orderDetailMock.Setup(x => x.UpdateOrderDetail(It.IsAny<OrderDetail>())).Returns(messages);
+
+            var controller = new OrderDetailController(orderDetailMock.Object, customerMock.Object, mockservicehotel.Object, mockserviceFood.Object, OrdersMock().Object);
             var result = controller.UpdateOrderDetail(test);
-            var output = result as OkObjectResult;
-            Assert.IsType<OkObjectResult>(output);  
+            var output = result as NotFoundObjectResult;
+            Assert.IsType<NotFoundObjectResult>(output);
 
         }
+        [Fact]
+        public void UpdateOrderIdNotOk()
+        {
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "Order updated succesfully!!";
+
+            var customerMock = new Mock<ICustomer>();
+            Customer customer = TestCustomer;
+            customerMock.Setup(x => x.GetCustomerDetailById(It.IsAny<int>())).Returns(customer);
+
+            var mockservicehotel = new Mock<IHotel>();
+            mockservicehotel.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(hotelData);
+            var mockserviceFood = new Mock<IFood>();
+            mockserviceFood.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(foodData);
 
 
 
+            var orderDetailMock = new Mock<IOrderDetail>();
+
+            orderDetailMock.Setup(x => x.GetOrderDetail(It.IsAny<int>())).Returns(test);
+            orderDetailMock.Setup(x => x.UpdateOrderDetail(It.IsAny<OrderDetail>())).Returns(messages);
+
+            var controller = new OrderDetailController(orderDetailMock.Object, customerMock.Object, mockservicehotel.Object, mockserviceFood.Object, OrdersMock().Object);
+            var result = controller.UpdateOrderDetail(test);
+            var output = result as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+
+        }
 
         [Fact]
         public void DeleteOk()

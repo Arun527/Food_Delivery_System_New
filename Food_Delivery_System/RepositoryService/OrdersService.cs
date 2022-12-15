@@ -61,6 +61,7 @@ namespace Food_Delivery.RepositoryService
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "Order updated succesfully!!";
+                    return msg;
                 }
                 return msg;
             }
