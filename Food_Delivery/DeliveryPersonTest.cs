@@ -12,15 +12,15 @@ using System.Text;
 using System.Threading.Tasks;
 using static Food_Delivery.Models.Messages;
 
-namespace Food_Delivery
-{
-    public class DeliveryPersonTest
-    {
-        private Mock<IDeliveryPerson> Mock()
-        {
-            var mockservice = new Mock<IDeliveryPerson>();
-            return mockservice;
-        }
+//namespace Food_Delivery
+//{
+//    public class DeliveryPersonTest
+//    {
+//        private Mock<IDeliveryPerson> Mock()
+//        {
+//            var mockservice = new Mock<IDeliveryPerson>();
+//            return mockservice;
+//        }
 
         private Mock<IDeliveryPerson> getallMock(List<DeliveryPerson> listObj)
         {
@@ -52,7 +52,7 @@ namespace Food_Delivery
             CreatedOn = DateTime.Now,
             IsActive = true
 
-        };
+//        };
 
         [Fact]
         public void GetAll()
@@ -65,7 +65,7 @@ namespace Food_Delivery
             Assert.Equal(1, list.Count);
             Assert.NotNull(output);
 
-        }
+//        }
 
         [Fact]
         public void GetAllNotOk()
@@ -161,7 +161,7 @@ namespace Food_Delivery
             Assert.StrictEqual(200, output.StatusCode);
             Assert.Equal(messages.Message, output.Value);
 
-        }
+//        }
 
         [Fact]
         public void UpdatePhoneNumberConflictOk()
@@ -180,7 +180,7 @@ namespace Food_Delivery
             Assert.Equal(messages.Message, output.Value);
 
 
-        }
+//        }
 
         [Fact]
         public void DeleteOk()
@@ -217,5 +217,5 @@ namespace Food_Delivery
             Assert.Equal(messages.Message, output.Value);
         }
 
-    }
-}
+//    }
+//}

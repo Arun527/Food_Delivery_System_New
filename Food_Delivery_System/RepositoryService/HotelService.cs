@@ -2,6 +2,7 @@
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using ServiceStack.Messaging;
 using System.Transactions;
 using static Food_Delivery.Models.Messages;
@@ -29,48 +30,21 @@ namespace Food_Delivery.RepositoryService
         }
         public Hotel GetHotelById(int hotelId)
         {
-            Messages msg = new Messages();
-            var hotel = db.Hotel.Find(hotelId);
-            return hotel;
+            return db.Hotel.FirstOrDefault(x=>x.HotelId==hotelId);
         }
         public Hotel GetHotelDetailByNumber(string Number)
         {
-            try
-            {
-                Message message = new Message();
-                var getId = db.Hotel.FirstOrDefault(x => x.ContactNumber == Number);
-                return getId;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+              var getId = db.Hotel.FirstOrDefault(x => x.ContactNumber == Number);
+              return getId;  
         }
         public Hotel GetHotelDetailByEmail(String Email)
         {
-            try
-            {
-                Message message = new Message();
                 var getId = db.Hotel.FirstOrDefault(x => x.Email == Email);
-                return getId;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                return getId;  
         }
         public IEnumerable<Hotel> GetHotelDetailByName(String hotelName)
         {
-            try
-            {
-                Message message = new Message();
-                var getId = db.Hotel .Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
-                return getId;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                return db.Hotel .Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
         }
         public IEnumerable<FoodList> GetFoodByHotelName(string HotelName)
         {
@@ -81,11 +55,9 @@ namespace Food_Delivery.RepositoryService
                                 select new FoodList
                                 {
                                     HotelName = hotel.HotelName,
-                                   
                                     FoodName = food.FoodName,
                                     Price = food.Price,
                                     Type = food.Type,
-
                                 }).ToList();
                 return foodlist;
             }
@@ -108,9 +80,10 @@ namespace Food_Delivery.RepositoryService
                 }
                 else
                 {
-                    msg.Success=false;
-                    msg.Message = "The hotel already exist";
-                    msg.Status= Statuses.Conflict;
+                    msg.Success = false;
+                    msg.Status = Statuses.Conflict; 
+                    var message = (hotel!=null) ? "The hotel contact number already exist" : "The hotel email id already exist";
+                    msg.Message = message;
                 }  
             }
             catch(Exception Ex)
@@ -151,7 +124,6 @@ namespace Food_Delivery.RepositoryService
                             if (id != null && hotelDetail.HotelId != id)
                             {
                                 msg.Success = false;
-                                msg.Email = false;
                                 msg.Message = "This email id already exist";
                                 msg.Status = Statuses.Conflict;
                                 return msg;
@@ -159,7 +131,6 @@ namespace Food_Delivery.RepositoryService
                             if (number != null && hotelDetail.HotelId != number)
                             {
                                 msg.Success = false;
-                                msg.number = false;
                                 msg.Message = "This contact number  already exist";
                                 msg.Status = Statuses.Conflict;
                                 return msg;
@@ -238,7 +209,6 @@ namespace Food_Delivery.RepositoryService
             catch(Exception ex)
             {
                 msg.Message = ex.Message;
-                
             }
             return msg ;
         }

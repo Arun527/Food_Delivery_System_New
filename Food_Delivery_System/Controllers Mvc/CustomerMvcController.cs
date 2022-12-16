@@ -30,8 +30,6 @@ namespace Food_Delivery.Controllers_Mvc
         {
             return View();
         }
-
-
         public IActionResult CreateCustomer()
         {
             return View();

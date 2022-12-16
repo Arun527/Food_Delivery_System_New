@@ -34,11 +34,11 @@ namespace Food_Delivery.Controllers
         public IActionResult GetDeliveryPersonById(int Id)
         {
             var obj = _deliveryPerson.GetDeliveryPerson(Id);
-            return (obj == null) ? NotFound("DeliveryPerson id is not found") : Ok(_orderShipmentDetail.GetdeliveryPersonById(Id));
+            return (obj != null) ? Ok(_orderShipmentDetail.GetdeliveryPersonById(Id)):NotFound("DeliveryPerson id is not found");
         }
 
         [HttpGet("{Id}")]
-        public IActionResult GetOrderDetailById(int Id)
+        public IActionResult GetOrderShipmentDetailById(int Id)
         {
             var obj = _orderShipmentDetail.GetOrderShipmentDetailById(Id);
             return (obj==null) ? NotFound("OrderShipmentDetail id is not found") :Ok(obj);
@@ -48,7 +48,8 @@ namespace Food_Delivery.Controllers
         public IActionResult InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
-                return Output(orderShipmentDetail);
+                return (orderShipment.OrderShipmentDetailId==0)? BadRequest("The ordershipment detail id field is required") :
+                       (orderShipment.DeliveryPersonId==0)? BadRequest("The delivery person id field is required") : Output(orderShipmentDetail);
         }
 
         [HttpPut]
