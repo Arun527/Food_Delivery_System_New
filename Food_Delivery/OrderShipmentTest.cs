@@ -205,7 +205,10 @@ namespace Food_Delivery
         //    Assert.StrictEqual(200, output.StatusCode);
         //    Assert.IsType<OkObjectResult>(output);
         //}
-
+        [Fact]
+        public void GetDeliveryPersonById_NotFound()
+        {
+        }
         //[Fact]
         //public void GetDeliveryPersonById_NotFound()
         //{

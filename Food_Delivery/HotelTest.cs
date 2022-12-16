@@ -326,7 +326,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Message = "This contact number id already exists";
             msg.Success = false;
-            msg.Status= Statuses.Conflict;
+            msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
             mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
             var controller = new HotelController(mockservice.Object);
@@ -345,7 +345,7 @@ namespace Food_Delivery
             msg.Success = false;
             msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
-           mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+            mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
             var controller = new HotelController(mockservice.Object);
             var output = controller.AddHotelDetail(TestData);
             var result = output as ConflictObjectResult;
@@ -474,7 +474,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = false;
             msg.Message = "The hotel food is available for users";
-            msg.Status= Statuses.BadRequest;
+            msg.Status = Statuses.BadRequest;
             var mockservice = new Mock<IHotel>();
             mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
             mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(msg);
