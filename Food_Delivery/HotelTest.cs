@@ -16,7 +16,7 @@ using Moq;
 using Food_Delivery.Models;
 using Xunit.Sdk;
 using ServiceStack.DataAnnotations;
-
+using static Food_Delivery.Models.Messages;
 namespace Food_Delivery
 {
     public class HotelTest
@@ -191,11 +191,12 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = true;
             msg.Message = "Contact Number Already Taked";
+            msg.Status = Statuses.Created;
             var controller = new HotelController(AddHotelMock(msg).Object);
             var output = controller.AddHotelDetail(TestData);
             var result = output as CreatedResult;
             Assert.IsType<CreatedResult>(output);
-            Assert.StrictEqual(msg, result.Value);
+            Assert.StrictEqual(msg.Message, result.Value);
             Assert.StrictEqual(201, result.StatusCode);
         }
 
@@ -206,9 +207,9 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Message = "This contact number id already exists";
             msg.Success = false;
+            msg.Status= Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
-            mockservice.Setup(x => x.GetHotelDetailByNumber(It.IsAny<string>())).Returns(TestData);
-            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+            mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
             var controller = new HotelController(mockservice.Object);
             var output = controller.AddHotelDetail(TestData);
             var result = output as ConflictObjectResult;
@@ -217,14 +218,15 @@ namespace Food_Delivery
             Assert.IsType<ConflictObjectResult>(output);
         }
 
+        [Fact]
         public void AddHotel_EmailConflict()
         {
             Messages msg = new Messages();
             msg.Message = "Email Id Already Taked";
             msg.Success = false;
+            msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
-            mockservice.Setup(x => x.GetHotelDetailByEmail(It.IsAny<string>())).Returns(TestData);
-            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+           mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
             var controller = new HotelController(mockservice.Object);
             var output = controller.AddHotelDetail(TestData);
             var result = output as ConflictObjectResult;
@@ -259,7 +261,7 @@ namespace Food_Delivery
             var output = controller.UpdateHotelDetail(TestData);
             var result = output as OkObjectResult;
             Assert.IsType<OkObjectResult>(output);
-            Assert.StrictEqual(obj, result.Value);
+            Assert.StrictEqual(obj.Message, result.Value);
             Assert.StrictEqual(200, result.StatusCode);
         }
 
@@ -269,6 +271,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = true;
             msg.Message = "Hotel id not found";
+            msg.Status = Statuses.NotFound;
             var controller = new HotelController(UpdateHotelMock(msg).Object);
             var output = controller.UpdateHotelDetail(TestData);
             var result = output as NotFoundObjectResult;
@@ -283,11 +286,12 @@ namespace Food_Delivery
             Hotel hotel = new Hotel { HotelId = 0 };
             Messages msg = new Messages();
             msg.Success = false;
+            msg.Status = Statuses.BadRequest;
             var controller = new HotelController(UpdateHotelMock(msg).Object);
             var output = controller.UpdateHotelDetail(hotel);
             var result = output as BadRequestObjectResult;
             Assert.IsType<BadRequestObjectResult>(output);
-            Assert.StrictEqual("The hotel field is required", result.Value);
+            Assert.StrictEqual(msg.Message, result.Value);
             Assert.StrictEqual(400, result.StatusCode);
             Assert.True(hotel.HotelId == 0);
         }
@@ -299,6 +303,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = false;
             msg.Message = "This email id already exist";
+            msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
             mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
             mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(msg);
@@ -324,7 +329,7 @@ namespace Food_Delivery
             var output = controller.DeleteHotelDetail(TestData.HotelId);
             var result = output as OkObjectResult;
             Assert.IsType<OkObjectResult>(output);
-            Assert.Equal(msg, result.Value);
+            Assert.Equal(msg.Message, result.Value);
             Assert.StrictEqual(200, result.StatusCode);
         }
 
@@ -334,6 +339,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = true;
             msg.Message = "The hotel id not found";
+            msg.Status = Statuses.NotFound;
             var controller = new HotelController(DeleteHotelMock(msg).Object);
             var output = controller.DeleteHotelDetail(3);
             var result = output as NotFoundObjectResult;
@@ -349,6 +355,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = false;
             msg.Message = "The hotel food is available for users";
+            msg.Status= Statuses.BadRequest;
             var mockservice = new Mock<IHotel>();
             mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
             mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(msg);

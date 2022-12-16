@@ -39,14 +39,13 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult GetallDetail(JqueryDatatableParam param)
         {
             var hoteldetail = _hotel.GetAll();
-            var parm = param.sSearch.ToLower();
             if (!string.IsNullOrEmpty(param.sSearch))
             {
-                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(parm)
-                                              || x.Address.ToLower().Contains(parm)
-                                               || x.Type.ToLower().Contains(parm)
-                                              || x.IsActive.ToString().Contains(parm)
-                                               || x.ContactNumber.ToString().Contains(parm));
+                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToLower().Contains(param.sSearch.ToLower())
+                                               || x.Type.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower())
+                                               || x.ContactNumber.ToString().Contains(param.sSearch.ToLower()));
             }
             var displayResult = hoteldetail.Skip(param.iDisplayStart)
                 .Take(param.iDisplayLength).ToList();
@@ -85,10 +84,7 @@ namespace Food_Delivery.Controllers_Mvc
             await foodType.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create)); 
             foodType.ImageId = fileName;
               var food= _food.InsertFoodType(foodType);
-            if (food.Status == Statuses.Created )
-            {
-                TempData["AlertMessage"] = food.Message;
-            }
+              TempData["AlertMessage"] = food.Message;
             return Redirect("GetFoodByHotelId?HotelId=" + foodType.HotelId);
         }
         public IActionResult Food(Food foodType)
@@ -115,10 +111,9 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult DeleteFood(int foodId)
         {
             var food = _food.GetFoodTypeById(foodId);
-            var id = food.HotelId;  
             var obj = _food.DeleteFoodType(foodId);
             TempData["AlertMessage"] = obj.Message;
-           return Redirect("GetFoodByHotelId?HotelId=" + id);
+           return Redirect("GetFoodByHotelId?HotelId=" + food.HotelId);
         }
         public IActionResult GetFoodByHotelId(int hotelId)
         {

@@ -22,7 +22,6 @@ namespace Food_Delivery_System.Controllers_Mvc
             _deliveryPerson = person;
             _orderDetail = orderDetail;
             _orderShipmentDetail = orderShipmentDetail;
-
         }
         public IActionResult AddShipment()
         {

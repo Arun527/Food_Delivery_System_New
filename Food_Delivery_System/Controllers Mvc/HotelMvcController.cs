@@ -41,17 +41,7 @@ namespace Food_Delivery.Controllers_Mvc
             await hotelDetail.CoverPhoto.CopyToAsync(new FileStream(Iamgepath, FileMode.Create));
             hotelDetail.ImageId = fileName;
             var create = _hotel.InsertHotelDetail(hotelDetail);
-            if (create.Status == Statuses.Created)
-            {
-                TempData["AlertMessage"] = create.Message;
-                return RedirectToAction("GetAll");
-            }
-            else
-            {
-                create.Status = Statuses.Conflict;
-                TempData["AlertMessage"] = create.Message;
-                return RedirectToAction("AddHotel");
-            }
+            return (create.Status == Statuses.Created) ? RedirectToAction("GetAll") : RedirectToAction("AddHotel");
         }
 
         [HttpGet("api/[controller]/{hotelName}")]
@@ -68,14 +58,14 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult GetallDetail(JqueryDatatableParam  param)
         {
             var hoteldetail = _hotel.GetAll();
-            var parm = param.sSearch.ToLower();
+         
             if (!string.IsNullOrEmpty(param.sSearch))
             {
-                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(parm)
-                                              || x.Address.ToLower().Contains(parm)
-                                               || x.Type.ToLower().Contains(parm)
-                                              || x.IsActive.ToString().Contains(parm)
-                                              || x.ContactNumber.ToString().Contains(parm));
+                hoteldetail = hoteldetail.Where(x => x.HotelName.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToLower().Contains(param.sSearch.ToLower())
+                                               || x.Type.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.IsActive.ToString().Contains(param.sSearch.ToLower())
+                                              || x.ContactNumber.ToString().Contains(param.sSearch.ToLower()));
             }
 
                 var displayResult = hoteldetail.Skip(param.iDisplayStart)
@@ -106,32 +96,15 @@ namespace Food_Delivery.Controllers_Mvc
             return View(obj);
         }
         public IActionResult Update(Hotel hoteldetail)
-        { 
-            int id = hoteldetail.HotelId;
+        {
             var obj = _hotel.UpdateHotelDetail(hoteldetail);
-            if (obj.Status==Statuses.Success)
-            {
-                TempData["AlertMessage"] = obj.Message;
-                return Redirect("GetAll?hotelId=" + id);
-            }
-            else if (obj.Status==Statuses.Conflict)
-            {
-                TempData["AlertMessage"] =obj.Message;
-            }
-            return Redirect("UpdateHotel?hotelId=" + id);
+            TempData["AlertMessage"] = obj.Message;
+            return (obj.Status == Statuses.Success) ? Redirect( "GetAll?hotelId=" + hoteldetail.HotelId) : Redirect("UpdateHotel?hotelId=" + hoteldetail.HotelId);
         }
         public IActionResult DeleteHotel(int hotelId)
         {
             var obj = _hotel.DeleteHotelDetail(hotelId);
-            if (obj.Status == Statuses.Success)
-            {
-                TempData["AlertMessage"] = obj.Message;
-            }
-            else
-            {
-                obj.Status = Statuses.BadRequest;
-                TempData["AlertMessage"] = obj.Message;
-            }
+            TempData["AlertMessage"] = obj.Message;
             return View("GetAll");
         }
     }

@@ -30,15 +30,11 @@ namespace Food_Delivery.Controllers_Mvc
         {
             return View();
         }
-
-
         public IActionResult CreateCustomer()
         {
          
             return View();
         }
-
-
         public IActionResult Create(Customer customer)
         {
          
@@ -70,14 +66,14 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult GetAll(JqueryDatatableParam param)
         {
             var customerdetail = _customer.GetAll();
-            var parm = param.sSearch.ToLower();
+           
             if (!string.IsNullOrEmpty(param.sSearch))
             {
-                customerdetail = customerdetail.Where(x => x.Name.Contains(parm)
-                                              || x.ContactNumber.ToString().Contains(parm)
-                                              || x.Email.ToLower().Contains(parm)
-                                              || x.Gender.ToLower().Contains(parm)
-                                              || x.Address.ToLower().Contains(parm));
+                customerdetail = customerdetail.Where(x => x.Name.Contains(param.sSearch.ToLower())
+                                              || x.ContactNumber.ToString().Contains(param.sSearch.ToLower())
+                                              || x.Email.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Gender.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToLower().Contains(param.sSearch.ToLower()));
             }
 
 
