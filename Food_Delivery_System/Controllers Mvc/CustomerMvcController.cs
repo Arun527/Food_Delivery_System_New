@@ -34,30 +34,20 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult CreateCustomer()
         {
-         
             return View();
         }
-
-
         public IActionResult Create(Customer customer)
         {
-         
             var create = _customer.InsertCustomerDetail(customer);
-           
-            if (create.Success==true)
+            if (create.Status==Statuses.Created)
             {
                 TempData["AlertMessage"] = create.Message;
                 return RedirectToAction("CustomerDetail");
             }
-            else if(create.number == false)
+            else 
             {
                 TempData["AlertMessage"] = create.Message;
-                return RedirectToAction("CreateCustomer");
-            }
-            else
-            {
-                TempData["AlertMessage"] = create.Message;
-                return RedirectToAction("CreateCustomer");
+                return View("CreateCustomer");
             }
         }
 
@@ -70,23 +60,19 @@ namespace Food_Delivery.Controllers_Mvc
         public IActionResult GetAll(JqueryDatatableParam param)
         {
             var customerdetail = _customer.GetAll();
-            var parm = param.sSearch.ToLower();
             if (!string.IsNullOrEmpty(param.sSearch))
             {
-                customerdetail = customerdetail.Where(x => x.Name.Contains(parm)
-                                              || x.ContactNumber.ToString().Contains(parm)
-                                              || x.Email.ToLower().Contains(parm)
-                                              || x.Gender.ToLower().Contains(parm)
-                                              || x.Address.ToLower().Contains(parm));
+                customerdetail = customerdetail.Where(x => x.Name.Contains(param.sSearch.ToLower())
+                                              || x.ContactNumber.ToString().Contains(param.sSearch.ToLower())
+                                              || x.Email.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Gender.ToLower().Contains(param.sSearch.ToLower())
+                                              || x.Address.ToLower().Contains(param.sSearch.ToLower()));
             }
 
 
             var displayResult = customerdetail.Skip(param.iDisplayStart)
                 .Take(param.iDisplayLength).ToList();
             var totalRecords = customerdetail.Count();
-
-
-
             return Json(new
             {
                 param.sEcho,
@@ -105,57 +91,24 @@ namespace Food_Delivery.Controllers_Mvc
 
         public IActionResult Update(Customer obj)
         {
-            int id = obj.CustomerId;
             var update = _customer.UpdateCustomerDetail(obj);
-            if (update.Success)
+            if (update.Status==Statuses.Success)
             {
                 TempData["AlertMessage"] = update.Message;
                 return RedirectToAction("CustomerDetail");
             } 
-            else if(update.Success==false)
+            else 
             {
                 TempData["AlertMessage"] =update.Message;
-                return Redirect("UpdateCustomer?customerId="+id);
+                return Redirect("UpdateCustomer?customerId="+obj.CustomerId);
             }
-            else
-            {
-                //check the email id
-                TempData["AlertMessage"] = update.Message;
-                return Redirect("UpdateCustomer?customerId=" + id);
-            }
-           
         }
 
         public IActionResult Delete(int customerId)
         {
             var delete=_customer.DeleteCustomerDetail(customerId);
-
-            //sucess
-            if (delete.number)
-            {
-                TempData["AlertMessage"] = delete.Message;
-                return View("CustomerDetail");
-            }
-            else
-            {
-                TempData["AlertMessage"] = "This customer ordered food..!";
-                return View("CustomerDetail");
-            }
+            TempData["AlertMessage"] = delete.Message;
+            return View("CustomerDetail");
         }
-
-
-        public IActionResult Output(Messages result)
-        {
-            switch (result.Status)
-            {
-                case Statuses.BadRequest:
-                    return BadRequest(result);
-
-            }
-            return Ok(result.Message);
-        }
-
-
-
     }
 }

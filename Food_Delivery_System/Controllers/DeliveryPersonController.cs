@@ -10,13 +10,9 @@ namespace Food_Delivery.Controllers
     [ApiController]
     public class DeliveryPersonController : ControllerBase
     {
-        ICustomer _customer;
-        IOrders _order;
         IDeliveryPerson _deliveryperson;
-        public DeliveryPersonController(IOrders order, ICustomer customer,IDeliveryPerson deliveryPerson)
+        public DeliveryPersonController(IDeliveryPerson deliveryPerson)
         {
-            _order = order;
-            _customer = customer;
             _deliveryperson = deliveryPerson;
         }
 

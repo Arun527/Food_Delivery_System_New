@@ -22,76 +22,24 @@ namespace Food_Delivery.RepositoryService
 
         public Customer GetCustomerDetailById(int customerId)
         {
-
-            try
-            {
-                Message message = new Message();
-                var getId = db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
-                return getId;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
+            return db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
         }
 
         public IEnumerable<Customer> GetCustomerDetailByIsActive(bool isActive)
         {
-
-            try
-            {
-                Message message = new Message();
-                
-                var customerList = db.Customer.Where(x => x.IsActive == isActive).ToList();
-             
-             
-                return customerList;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
+            return db.Customer.Where(x => x.IsActive == isActive).ToList();          
         }
 
         public Customer GetCustomerDetailByNumber(string Number)
         {
-
-            try
-            {
-                Message message = new Message();
-                var getId = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
-                return getId;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
-
+            return db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
+              
         }
 
         public Customer GetCustomerDetailByEmail(String Email)
         {
-
-            try
-            {
-                Message message = new Message();
-                var getId = db.Customer.FirstOrDefault(x => x.Email == Email);
-                return getId;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
-
-        }
+               return  db.Customer.FirstOrDefault(x => x.Email == Email);
+        }  
 
         public Messages InsertCustomerDetail(Customer customer)
         {
@@ -154,14 +102,16 @@ namespace Food_Delivery.RepositoryService
                 }
                 else if (phoneExist != null && phoneExist.CustomerId != userExist.CustomerId)
                 {
-                    messages.Message = "The (" + customer.ContactNumber + "), Phone number is already registered.";
+
+                  
+                    messages.Message = $"The ({customer.ContactNumber}), Phone number is already registered.";
                     messages.number = false;
                     messages.Status = Statuses.Conflict;
                     return messages;
                 }
                 else if (emailIdExist != null && emailIdExist.CustomerId != userExist.CustomerId)
                 {
-                    messages.Message = "The (" + customer.Email + "), Email id is already registered.";
+                    messages.Message = $"The ( { customer.Email}  ), Email id is already registered.";
                     messages.Status = Statuses.Conflict;
                     return messages;
                 }
@@ -221,8 +171,6 @@ namespace Food_Delivery.RepositoryService
         public Customer  GetNumber(string Number)
         {
             var customer = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
-           
-               
             return customer;
 
         }

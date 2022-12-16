@@ -2,6 +2,7 @@
 using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery_System.Controllers_Mvc
 {
@@ -34,14 +35,14 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult AddPerson(DeliveryPerson  deliveryPerson)
         {
             var delivery=_deliveryPerson.InsertDeliveryPerson(deliveryPerson);
-            if (delivery.number == false)
+            if (delivery.Status == Statuses.Success)
             {
                 TempData["AlertMessage"] = delivery.Message;
                 return RedirectToAction("DeliveryPersonView");
             }
             else
             {
-                TempData["AlertMessage"] = "The contact number already exist";
+                TempData["AlertMessage"] = delivery.Message;
                 return RedirectToAction("Add");
             }
          
@@ -78,10 +79,6 @@ namespace Food_Delivery_System.Controllers_Mvc
         public IActionResult GetDeliveryPersonByIdInvoice(int Id)
         {
             var delivery = _orderShipmentDetail.GetdeliveryPersonById(Id);
-            if (delivery.Count() == 0)
-            {
-                return NotFound("This delivery person don't delivery any order");
-            }
             return View(delivery);
         }
 

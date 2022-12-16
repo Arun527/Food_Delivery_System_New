@@ -19,7 +19,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetAll()
         {
             var obj = _customer.GetAll();
-            return (obj.Count()==0)? NotFound("Customer list is empty"):Ok(obj);
+            return (obj==null)? NotFound("Customer list is empty"):Ok(obj);
         }
 
         [HttpGet("/api/Customer/{customerId}")]

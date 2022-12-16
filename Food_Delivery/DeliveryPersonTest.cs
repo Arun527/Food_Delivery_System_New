@@ -3,12 +3,14 @@ using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery
 {
@@ -22,33 +24,33 @@ namespace Food_Delivery
 
         private Mock<IDeliveryPerson> getallMock(List<DeliveryPerson> listObj)
         {
-            var mockService= new Mock<IDeliveryPerson>();
-            mockService.Setup(x=>x.GetAllDeliveryPersons()).Returns(listObj);
+            var mockService = new Mock<IDeliveryPerson>();
+            mockService.Setup(x => x.GetAllDeliveryPersons()).Returns(listObj);
             return mockService;
         }
 
         public Mock<IDeliveryPerson> getByIdMock(DeliveryPerson obj)
         {
-            var mockService=new Mock<IDeliveryPerson>();
+            var mockService = new Mock<IDeliveryPerson>();
             mockService.Setup(x => x.GetDeliveryPerson(It.IsAny<int>())).Returns(obj);
             return mockService;
         }
 
-        public Mock<IDeliveryPerson>InsertMock(Messages obj)
+        public Mock<IDeliveryPerson> InsertMock(Messages obj)
         {
-            var mockservice=new Mock<IDeliveryPerson>();
+            var mockservice = new Mock<IDeliveryPerson>();
             mockservice.Setup(x => x.InsertDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(obj);
             return mockservice;
         }
 
         private DeliveryPerson testData = new DeliveryPerson()
         {
-            DeliveryPersonId=1,
-            DeliveryPersonName="Mohan",
-            ContactNumber="8547124857",
-            Gender="Male",
-            CreatedOn=DateTime.Now,
-            IsActive=true
+            DeliveryPersonId = 1,
+            DeliveryPersonName = "Mohan",
+            ContactNumber = "8547124857",
+            Gender = "Male",
+            CreatedOn = DateTime.Now,
+            IsActive = true
 
         };
 
@@ -58,7 +60,7 @@ namespace Food_Delivery
             List<DeliveryPerson> list = new List<DeliveryPerson>();
             list.Add(testData);
             var controller = new DeliveryPersonController(getallMock(list).Object);
-            var output=controller.GetAllDeliveryPersons();
+            var output = controller.GetAllDeliveryPersons();
             Assert.IsType<OkObjectResult>(output);
             Assert.Equal(1, list.Count);
             Assert.NotNull(output);
@@ -68,16 +70,17 @@ namespace Food_Delivery
         [Fact]
         public void GetAllNotOk()
         {
-            Messages obj = new Messages();
-            obj.Success = false;
-            obj.Message = "Delivery person is not found";
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "Delivery person is not found";
+            messages.Status=Statuses.NotFound;
             List<DeliveryPerson> list = null;
             var controller = new DeliveryPersonController(getallMock(list).Object);
-            var notFoundObjectResult= controller.GetAllDeliveryPersons();
+            var notFoundObjectResult = controller.GetAllDeliveryPersons();
             var output = notFoundObjectResult as NotFoundObjectResult;
-            Assert.Equal("Delivery person is not found", output.Value);
-          //  Assert.Null(output);
-        
+            Assert.Equal(messages.Message, output.Value);
+            Assert.IsType<NotFoundObjectResult>(output);
+            Assert.StrictEqual(404,output.StatusCode);
 
         }
 
@@ -86,7 +89,7 @@ namespace Food_Delivery
         {
             var controller = new DeliveryPersonController(getByIdMock(testData).Object);
             var output = controller.GetDeliveryPerson(5);
-            var id=output as OkObjectResult;
+            var id = output as OkObjectResult;
             Assert.IsAssignableFrom<OkObjectResult>(output);
             Assert.IsType<OkObjectResult>(id);
             Assert.NotNull(output);
@@ -95,107 +98,123 @@ namespace Food_Delivery
         [Fact]
         public void GetByIdNotOk()
         {
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "This delivery person id is not found";
             DeliveryPerson person = null;
             var controller = new DeliveryPersonController(getByIdMock(person).Object);
             var result = controller.GetDeliveryPerson(5);
             var output = result as NotFoundObjectResult;
             Assert.IsType<NotFoundObjectResult>(output);
-            Assert.Equal("This delivery person id is not found", output.Value);
+            Assert.Equal(messages.Message, output.Value);
+            Assert.StrictEqual(404, output.StatusCode);
         }
 
 
         [Fact]
         public void InsertOk()
         {
-            Messages obj = new Messages();
-            obj.Success = false;
-            obj.Message = "DeliveryPerson Added Succesfully";
-            var controller = new DeliveryPersonController(InsertMock(obj).Object);
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "DeliveryPerson Added Succesfully";
+            messages.Status = Statuses.Created;
+            var controller = new DeliveryPersonController(InsertMock(messages).Object);
             var okinsert = controller.InsertDeliveryPerson(testData);
-            var output=okinsert as OkObjectResult;
-            Assert.IsType<OkObjectResult>(output);
+            var output = okinsert as CreatedResult;
+            Assert.IsType<CreatedResult>(output);
+            Assert.Equal(messages.Message, output.Value);
+            Assert.StrictEqual(201, output.StatusCode);
         }
 
 
         [Fact]
         public void InsertContactNumberConflict()
         {
-            Messages obj = new Messages();
-            obj.Success = false;
-            obj.Message = "This Contact  Number  Already Taked";
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "This Contact  Number  Already Taked";
+            messages.Status = Statuses.Conflict;
             var mockservice = new Mock<IDeliveryPerson>();
-            mockservice.Setup(x=>x.GetDeliveryPersonByNumber(It.IsAny<string>())).Returns(testData);
-            mockservice.Setup(x => x.InsertDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(obj);
+    
+            mockservice.Setup(x => x.InsertDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
-            var okinsert= controller.InsertDeliveryPerson(testData);
+            var okinsert = controller.InsertDeliveryPerson(testData);
             var output = okinsert as ConflictObjectResult;
             Assert.IsType<ConflictObjectResult>(output);
+            Assert.StrictEqual(409, output.StatusCode);
+            Assert.Equal(messages.Message, output.Value);
         }
 
         [Fact]
         public void UpdateOk()
         {
-            Messages obj = new Messages();
-            obj.Success = true;
-            obj.Message = "DeliveryP!!";
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "Delivery person updated succesfully!!";
+            messages.Status=Statuses.Success;
             var mockservice = new Mock<IDeliveryPerson>();
-            mockservice.Setup(x => x.GetDeliveryPerson(It.IsAny<int>())).Returns(testData);
-            mockservice.Setup(x => x.UpdateDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(obj);
+            mockservice.Setup(x => x.UpdateDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
             var okinsert = controller.UpdateDeliveryPerson(testData);
-            var output= okinsert as OkObjectResult;
+            var output = okinsert as OkObjectResult;
             Assert.IsType<OkObjectResult>(output);
-            Assert.Equal(obj, output.Value);
+            Assert.StrictEqual(200, output.StatusCode);
+            Assert.Equal(messages.Message, output.Value);
 
         }
 
         [Fact]
         public void UpdatePhoneNumberConflictOk()
         {
-            Messages obj = new Messages();
-            obj.Success = false;
-            obj.Message = "This Contact  Number  Already Taked";
+            Messages messages = new Messages();
+            messages.Success = false;
+            messages.Message = "This Contact  Number  Already Taked";
+            messages.Status =Statuses.Conflict;
             var mockservice = new Mock<IDeliveryPerson>();
-            mockservice.Setup(x => x.GetDeliveryPerson(It.IsAny<int>())).Returns(testData);
-            mockservice.Setup(x => x.UpdateDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(obj);
+            mockservice.Setup(x => x.UpdateDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
             var okinsert = controller.UpdateDeliveryPerson(testData);
-            var output = okinsert as OkObjectResult;
-            Assert.IsType<OkObjectResult>(output);
+            var output = okinsert as ConflictObjectResult;
+            Assert.IsType<ConflictObjectResult>(output);
+            Assert.StrictEqual(409, output.StatusCode);
+            Assert.Equal(messages.Message, output.Value);
+
 
         }
 
         [Fact]
         public void DeleteOk()
         {
-            Messages obj = new Messages();
-            obj.Success = true;
-            obj.Message = "DeliveryPerson Deleted Succesfully";
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "DeliveryPerson Deleted Succesfully";
+            messages.Status = Statuses.Success;
             var mockservice = new Mock<IDeliveryPerson>();
-            mockservice.Setup(x => x.GetDeliveryPerson(It.IsAny<int>())).Returns(testData);
-            mockservice.Setup(x => x.DeleteDeliveryPerson(It.IsAny<int>())).Returns(obj);
+            mockservice.Setup(x => x.DeleteDeliveryPerson(It.IsAny<int>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
             var okinsert = controller.DeleteDeliveryPerson(5);
             var output = okinsert as OkObjectResult;
             Assert.IsType<OkObjectResult>(output);
-            Assert.Equal(obj, output.Value);
+            Assert.StrictEqual(200, output.StatusCode);
+            Assert.Equal(messages.Message, output.Value);
         }
 
         [Fact]
         public void DeleteNotOk()
         {
-            Messages obj = new Messages();
-            obj.Success = true;
-            obj.Message = "This Delivery Person Id Is Not Found";
+            Messages messages = new Messages();
+            messages.Success = true;
+            messages.Message = "This Delivery Person Id Is Not Found";
+            messages.Status = Messages.Statuses.NotFound;
             DeliveryPerson person = null;
             var mockservice = new Mock<IDeliveryPerson>();
-            mockservice.Setup(x => x.GetDeliveryPerson(It.IsAny<int>())).Returns(person);
-            mockservice.Setup(x => x.DeleteDeliveryPerson(It.IsAny<int>())).Returns(obj);
+            mockservice.Setup(x => x.DeleteDeliveryPerson(It.IsAny<int>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
             var okinsert = controller.DeleteDeliveryPerson(5);
             var output = okinsert as NotFoundObjectResult;
             Assert.IsType<NotFoundObjectResult>(output);
-       
+            Assert.StrictEqual(404, output.StatusCode);
+            Assert.Equal(messages.Message, output.Value);
         }
 
     }
