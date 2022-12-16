@@ -25,17 +25,17 @@ using Castle.Core.Resource;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using static Food_Delivery.Models.Messages;
 
-//namespace Food_Delivery
-//{
-//    public class OrderShipmentTest
-//    {
-//        private OrderShipmentRequest testData => new()
-//        {
-//           OrderShipmentDetailId=1,
-//            DeliveryPersonId=1,
-//            ShipmentRequest= TestShipment()
+namespace Food_Delivery
+{
+    public class OrderShipmentTest
+    {
+        private OrderShipmentRequest testData => new()
+        {
+            OrderShipmentDetailId = 1,
+            DeliveryPersonId = 1,
+            ShipmentRequest = TestShipment()
 
-//        };
+        };
 
         private List<OrderShipmentList> TestShipment()
         {
@@ -50,12 +50,12 @@ using static Food_Delivery.Models.Messages;
             return list;
         }
 
-//        private OrderShipmentDetail test = new OrderShipmentDetail()
-//        {
+        private OrderShipmentDetail test = new OrderShipmentDetail()
+        {
 
-//            OrderShipmentDetailId = 1,
-//            OrderDetailId=1,
-//            DeliveryPersonId=1
+            OrderShipmentDetailId = 1,
+            OrderDetailId = 1,
+            DeliveryPersonId = 1
 
         };
         private InvoiceDeliveryPerson delivery = new InvoiceDeliveryPerson()
@@ -63,12 +63,12 @@ using static Food_Delivery.Models.Messages;
             DeliveryPersonId = 1,
             DeliveryPersonName = "suresh",
             CustomerName = "dinesh",
-            Address ="madurai",
+            Address = "madurai",
             OrderDetailId = 1,
             OrderId = 1,
             Quantity = 5,
             Contactnumber = "9874563214",
-            OrderShipmentdateTime=DateTime.Now,
+            OrderShipmentdateTime = DateTime.Now,
             OrderShipmentDetailId = 1
 
         };
@@ -123,68 +123,68 @@ using static Food_Delivery.Models.Messages;
             return mockservice;
         }
 
-//        private Mock<IOrderShipmentDetail> GetAllMock(List<OrderShipmentDetail> order)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetAllOrderShipmentDetail()).Returns(order);
-//            return mockservice;
-//        }
+        private Mock<IOrderShipmentDetail> GetAllMock(List<OrderShipmentDetail> order)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetAllOrderShipmentDetail()).Returns(order);
+            return mockservice;
+        }
 
-//        private Mock<IOrderShipmentDetail> GetByIdMock(OrderShipmentDetail order)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetOrderShipmentDetailById(It.IsAny<int>())).Returns(order);
-//            return mockservice;
-//        }
-//        private Mock<IOrderShipmentDetail> AddOrderShipmentMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.InsertOrderShipmentDetail(It.IsAny<OrderShipmentRequest>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IOrderShipmentDetail> GetByIdMock(OrderShipmentDetail order)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetOrderShipmentDetailById(It.IsAny<int>())).Returns(order);
+            return mockservice;
+        }
+        private Mock<IOrderShipmentDetail> AddOrderShipmentMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.InsertOrderShipmentDetail(It.IsAny<OrderShipmentRequest>())).Returns(message);
+            return mockservice;
+        }
 
-//        private Mock<IOrderShipmentDetail> UpdateOrderShipmentMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.UpdateOrderShipmentDetail(It.IsAny<OrderShipmentDetail>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IOrderShipmentDetail> UpdateOrderShipmentMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.UpdateOrderShipmentDetail(It.IsAny<OrderShipmentDetail>())).Returns(message);
+            return mockservice;
+        }
 
-//        private Mock<IOrderShipmentDetail> DeleteOrerShipmentMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.DeleteOrderShipmentDetail(It.IsAny<int>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IOrderShipmentDetail> DeleteOrerShipmentMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.DeleteOrderShipmentDetail(It.IsAny<int>())).Returns(message);
+            return mockservice;
+        }
 
-      
+
 
         [Fact]
         public void GetAll_OkResult()
         {
             List<OrderShipmentDetail> list = new List<OrderShipmentDetail>();
             list.Add(test);
-            var controller = new OrderShipmentDetailController(GetAllMock(list).Object,orderMock().Object, orderdetailMock().Object,deliveryMock().Object,customerMock().Object);
+            var controller = new OrderShipmentDetailController(GetAllMock(list).Object, orderMock().Object, orderdetailMock().Object, deliveryMock().Object, customerMock().Object);
 
-//            var okresult = controller.GetAllOrderShipmentDetail();
-//            var output = okresult as OkObjectResult;
-//            Assert.IsType<OkObjectResult>(okresult);
-//            Assert.StrictEqual(200, output.StatusCode);
-//        }
+            var okresult = controller.GetAllOrderShipmentDetail();
+            var output = okresult as OkObjectResult;
+            Assert.IsType<OkObjectResult>(okresult);
+            Assert.StrictEqual(200, output.StatusCode);
+        }
 
-//        [Fact]
-//        public void GetAll_NotFoundResult()
-//        {
-//            Messages obj = new Messages();
-//            obj.Success = false;
-//            List<OrderShipmentDetail> list = null;
-      
-//            var controller = new OrderShipmentDetailController(GetAllMock(list).Object, orderMock().Object, orderdetailMock().Object, deliveryMock().Object, customerMock().Object);
+        [Fact]
+        public void GetAll_NotFoundResult()
+        {
+            Messages obj = new Messages();
+            obj.Success = false;
+            List<OrderShipmentDetail> list = null;
 
-//            var NotFoundResult = controller.GetAllOrderShipmentDetail();
-//            var output = NotFoundResult as NotFoundObjectResult;
-//            Assert.Equal("OrderShipmentDetail list is empty", output.Value);
-//            Assert.StrictEqual(404, output.StatusCode);
+            var controller = new OrderShipmentDetailController(GetAllMock(list).Object, orderMock().Object, orderdetailMock().Object, deliveryMock().Object, customerMock().Object);
+
+            var NotFoundResult = controller.GetAllOrderShipmentDetail();
+            var output = NotFoundResult as NotFoundObjectResult;
+            Assert.Equal("OrderShipmentDetail list is empty", output.Value);
+            Assert.StrictEqual(404, output.StatusCode);
 
         }
 
@@ -285,7 +285,7 @@ using static Food_Delivery.Models.Messages;
         [Fact]
         public void Insert_OrderDetailIdBadRequest()
         {
-            OrderShipmentRequest shipmentRequest = new OrderShipmentRequest {  ShipmentRequest=TestShipment()};
+            OrderShipmentRequest shipmentRequest = new OrderShipmentRequest { ShipmentRequest = TestShipment() };
             Messages msg = new Messages();
             msg.Success = false;
             msg.Message = "The ordershipment detail id field is required";
@@ -322,9 +322,9 @@ using static Food_Delivery.Models.Messages;
             obj.Message = "OrderShipmentDetail updated succesfully";
             OrderShipmentRequest obj1 = (new OrderShipmentRequest
             {
-               OrderShipmentDetailId = 1,
-               DeliveryPersonId=1,
-               ShipmentRequest=Shipment()
+                OrderShipmentDetailId = 1,
+                DeliveryPersonId = 1,
+                ShipmentRequest = Shipment()
             });
             List<OrderShipmentRequest> Obj = new List<OrderShipmentRequest>();
             Obj.Add(obj1);
@@ -387,7 +387,7 @@ using static Food_Delivery.Models.Messages;
         [Fact]
         public void Update_OrderdetailIdBadRequest()
         {
-            OrderShipmentDetail shipmentRequest = new OrderShipmentDetail {  OrderDetailId=0 , DeliveryPersonId=1, OrderShipmentDetailId=1 };
+            OrderShipmentDetail shipmentRequest = new OrderShipmentDetail { OrderDetailId = 0, DeliveryPersonId = 1, OrderShipmentDetailId = 1 };
             Messages msg = new Messages();
             msg.Success = false;
             msg.Message = "The orderdetail id field is required";

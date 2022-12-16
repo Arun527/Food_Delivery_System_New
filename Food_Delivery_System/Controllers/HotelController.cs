@@ -35,14 +35,14 @@ namespace Food_Delivery.Controllers
         public IActionResult GetHotelByName(string hotelName)
         {
             var hotel = _hotel.GetHotelDetailByName(hotelName);
-            return (!hotel.Any()) ? NotFound("The hotel is not found") : Ok(hotel);
+            return (hotel==null) ? NotFound("The hotel is not found") : Ok(hotel);
         }
 
         [HttpGet("HotelAgainstFood/{hotelName}")]
         public IActionResult GetHotelByNameAgainsFood(string hotelName)
         {
             var hotel = _hotel.GetFoodByHotelName(hotelName);
-            return (!hotel.Any()) ? NotFound("The food is not found") : Ok(hotel);
+            return (hotel==null) ? NotFound("The food is not found") : Ok(hotel);
         }
 
         [HttpPost]
@@ -70,7 +70,7 @@ namespace Food_Delivery.Controllers
         public  IActionResult GetHotelType(string hoteltype)
         {
             var type=_hotel.GetHotelType(hoteltype);
-            return (!type.Any()) ? NotFound("The food type not found") :Ok(type);
+            return (type==null) ? NotFound("The food type not found") :Ok(type);
         }
          public IActionResult Output(Messages result)
          {

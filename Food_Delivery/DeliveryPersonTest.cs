@@ -12,15 +12,15 @@ using System.Text;
 using System.Threading.Tasks;
 using static Food_Delivery.Models.Messages;
 
-//namespace Food_Delivery
-//{
-//    public class DeliveryPersonTest
-//    {
-//        private Mock<IDeliveryPerson> Mock()
-//        {
-//            var mockservice = new Mock<IDeliveryPerson>();
-//            return mockservice;
-//        }
+namespace Food_Delivery
+{
+    public class DeliveryPersonTest
+    {
+        private Mock<IDeliveryPerson> Mock()
+        {
+            var mockservice = new Mock<IDeliveryPerson>();
+            return mockservice;
+        }
 
         private Mock<IDeliveryPerson> getallMock(List<DeliveryPerson> listObj)
         {
@@ -52,7 +52,7 @@ using static Food_Delivery.Models.Messages;
             CreatedOn = DateTime.Now,
             IsActive = true
 
-//        };
+        };
 
         [Fact]
         public void GetAll()
@@ -65,7 +65,7 @@ using static Food_Delivery.Models.Messages;
             Assert.Equal(1, list.Count);
             Assert.NotNull(output);
 
-//        }
+        }
 
         [Fact]
         public void GetAllNotOk()
@@ -73,14 +73,14 @@ using static Food_Delivery.Models.Messages;
             Messages messages = new Messages();
             messages.Success = false;
             messages.Message = "Delivery person is not found";
-            messages.Status=Statuses.NotFound;
+            messages.Status = Statuses.NotFound;
             List<DeliveryPerson> list = null;
             var controller = new DeliveryPersonController(getallMock(list).Object);
             var notFoundObjectResult = controller.GetAllDeliveryPersons();
             var output = notFoundObjectResult as NotFoundObjectResult;
             Assert.Equal(messages.Message, output.Value);
             Assert.IsType<NotFoundObjectResult>(output);
-            Assert.StrictEqual(404,output.StatusCode);
+            Assert.StrictEqual(404, output.StatusCode);
 
         }
 
@@ -135,7 +135,7 @@ using static Food_Delivery.Models.Messages;
             messages.Message = "This Contact  Number  Already Taked";
             messages.Status = Statuses.Conflict;
             var mockservice = new Mock<IDeliveryPerson>();
-    
+
             mockservice.Setup(x => x.InsertDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
             var okinsert = controller.InsertDeliveryPerson(testData);
@@ -151,7 +151,7 @@ using static Food_Delivery.Models.Messages;
             Messages messages = new Messages();
             messages.Success = true;
             messages.Message = "Delivery person updated succesfully!!";
-            messages.Status=Statuses.Success;
+            messages.Status = Statuses.Success;
             var mockservice = new Mock<IDeliveryPerson>();
             mockservice.Setup(x => x.UpdateDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
@@ -161,7 +161,7 @@ using static Food_Delivery.Models.Messages;
             Assert.StrictEqual(200, output.StatusCode);
             Assert.Equal(messages.Message, output.Value);
 
-//        }
+        }
 
         [Fact]
         public void UpdatePhoneNumberConflictOk()
@@ -169,7 +169,7 @@ using static Food_Delivery.Models.Messages;
             Messages messages = new Messages();
             messages.Success = false;
             messages.Message = "This Contact  Number  Already Taked";
-            messages.Status =Statuses.Conflict;
+            messages.Status = Statuses.Conflict;
             var mockservice = new Mock<IDeliveryPerson>();
             mockservice.Setup(x => x.UpdateDeliveryPerson(It.IsAny<DeliveryPerson>())).Returns(messages);
             var controller = new DeliveryPersonController(mockservice.Object);
@@ -180,7 +180,7 @@ using static Food_Delivery.Models.Messages;
             Assert.Equal(messages.Message, output.Value);
 
 
-//        }
+        }
 
         [Fact]
         public void DeleteOk()
@@ -217,5 +217,5 @@ using static Food_Delivery.Models.Messages;
             Assert.Equal(messages.Message, output.Value);
         }
 
-//    }
-//}
+    }
+}

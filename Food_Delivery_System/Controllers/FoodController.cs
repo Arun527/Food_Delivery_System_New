@@ -60,10 +60,10 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpGet("GetType/{foodtype}")]
-        public IActionResult GetHotelType(string foodtype)
+        public IActionResult GetFoodType(string foodtype)
         {
             var food=_food.GetFoodType(foodtype);
-            return (food.Count() == 0) ? NotFound("The food type is not found") : Ok(food);
+            return (food == null) ? NotFound("The food type is not found") : Ok(food);
         }
 
         [HttpGet("HotelBy/{hotelId}")]
