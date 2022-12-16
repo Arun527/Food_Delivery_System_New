@@ -48,7 +48,8 @@ namespace Food_Delivery.Controllers
         public IActionResult InsertOrderShipmentDetail(OrderShipmentRequest orderShipment)
         {
             var orderShipmentDetail = _orderShipmentDetail.InsertOrderShipmentDetail(orderShipment);
-                return Output(orderShipmentDetail);
+                return (orderShipment.OrderShipmentDetailId==0)? BadRequest("The ordershipment detail id field is required") :
+                       (orderShipment.DeliveryPersonId==0)? BadRequest("The delivery person id field is required") : Output(orderShipmentDetail);
         }
 
         [HttpPut]

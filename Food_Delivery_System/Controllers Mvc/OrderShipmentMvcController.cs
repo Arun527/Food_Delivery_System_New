@@ -43,7 +43,6 @@ namespace Food_Delivery_System.Controllers_Mvc
             }));
             return View(shipment);
         }
-
         public IActionResult Add([FromBody] OrderShipmentRequest order)
         {
             var orderdetail = _orderShipmentDetail.InsertOrderShipmentDetail(order);

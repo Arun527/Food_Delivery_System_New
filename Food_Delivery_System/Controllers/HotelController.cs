@@ -72,7 +72,6 @@ namespace Food_Delivery.Controllers
             var type=_hotel.GetHotelType(hoteltype);
             return (!type.Any()) ? NotFound("The food type not found") :Ok(type);
         }
-
          public IActionResult Output(Messages result)
          {
             switch (result.Status)

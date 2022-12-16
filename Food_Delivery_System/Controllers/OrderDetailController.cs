@@ -12,15 +12,12 @@ namespace Food_Delivery.Controllers
     [ApiController]
     public class OrderDetailController : ControllerBase
     {
-
         IOrderDetail _orderDetail;
         ICustomer _customer;
         IHotel _hotel;
         IFood _food;
         IOrders _orders;
-
         public IOrderDetail Object { get; }
-
         public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel,IFood food , IOrders orders)
         {
             _orderDetail = orderDetail;
@@ -30,7 +27,6 @@ namespace Food_Delivery.Controllers
             _orders = orders;
         }
 
-       
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
@@ -45,29 +41,27 @@ namespace Food_Delivery.Controllers
             return (order!=null)?  Ok(order) : NotFound("OrderDetail id is not found");
         }
 
-        [HttpPost("")]
+        [HttpPost]
         public IActionResult InsertFoodType(OrderRequest food)
         {
             var orderDetail = _orderDetail.InsertOrderDetail(food);
             return Output(orderDetail);
         }
 
-        [HttpPut("")]
+        [HttpPut]
         public IActionResult UpdateOrderDetail(OrderDetail detail)
         {
            
             var orderDetail = _orderDetail.UpdateOrderDetail(detail);
             return Output(orderDetail);
         }
-          
+         
         [HttpDelete("{id}")]
-
         public IActionResult DeleteOrderDetail(int id)
         {
             var orderDetail = _orderDetail.DeleteOrderDetail(id);
             return Output(orderDetail);
         }
-
         public IActionResult Output(Messages messages)
         {
             switch (messages.Status)
@@ -84,6 +78,5 @@ namespace Food_Delivery.Controllers
             }
             return Ok(messages.Message);
         }
-
     }
 }

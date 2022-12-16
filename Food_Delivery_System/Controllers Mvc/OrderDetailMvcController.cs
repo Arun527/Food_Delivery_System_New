@@ -24,7 +24,6 @@ namespace Food_Delivery_System.Controllers_Mvc
             _food = food;
             _orders = orders;
         }
-
         List<InvoiceDetail> li = new List<InvoiceDetail>();
         public IActionResult Index()
         {
