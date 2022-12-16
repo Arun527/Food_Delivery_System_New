@@ -37,151 +37,151 @@ namespace Food_Delivery
             return mockservice;
         }
 
-//        private Mock<IHotel> GetAllMock(List<Hotel> hotels)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetAll()).Returns(hotels);
-//            return mockservice;
-//        }
+        private Mock<IHotel> GetAllMock(List<Hotel> hotels)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetAll()).Returns(hotels);
+            return mockservice;
+        }
 
-//        private Mock<IHotel> GetById(Hotel hotels)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(hotels);
-//            return mockservice;
-//        }
-//        private Mock<IHotel> GetByNumberMock(Hotel hotels)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetHotelDetailByNumber(It.IsAny<string>())).Returns(hotels);
-//            return mockservice;
-//        }
+        private Mock<IHotel> GetById(Hotel hotels)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(hotels);
+            return mockservice;
+        }
+        private Mock<IHotel> GetByNumberMock(Hotel hotels)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetHotelDetailByNumber(It.IsAny<string>())).Returns(hotels);
+            return mockservice;
+        }
 
-//        private Mock<IHotel> GetByEmailMock(Hotel hotels)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetHotelDetailByEmail(It.IsAny<string>())).Returns(hotels);
-//            return mockservice;
-//        }
+        private Mock<IHotel> GetByEmailMock(Hotel hotels)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetHotelDetailByEmail(It.IsAny<string>())).Returns(hotels);
+            return mockservice;
+        }
 
-//        private Mock<IHotel> AddHotelMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IHotel> AddHotelMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(message);
+            return mockservice;
+        }
 
-//        private Mock<IHotel> UpdateHotelMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IHotel> UpdateHotelMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.UpdateHotelDetail(It.IsAny<Hotel>())).Returns(message);
+            return mockservice;
+        }
 
-//        private Mock<IHotel> DeleteHotelMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IHotel> DeleteHotelMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(message);
+            return mockservice;
+        }
 
-//        private Mock<IHotel> GetHotelDetailByNameMock(List<Hotel> hotels)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetHotelDetailByName(It.IsAny<string>())).Returns(hotels);
-//            return mockservice;
-//        }
-
-
-//        private Mock<IHotel> GetHotelType(List<Hotel> hotels)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetHotelType(It.IsAny<string>())).Returns(hotels);
-//            return mockservice;
-//        }
-
-//        private Mock<IHotel> UpdateHotelDetailMock(Hotel id)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(id);
-//            return mockservice;
-
-//        }
-
-//        [Fact]
-//        public void HotelGetAll_OkResult()
-//        {
-//            Hotel obj = (new Hotel
-//            {
-//                HotelId = 1,
-//                HotelName = "saravanabhavan",
-//                Email = "Saravanabhavan123@gmail.com",
-//                ImageId = "d2f5",
-//                Type = "Veg",
-//                Address = "Madurai",
-//                ContactNumber = "9874563214"
-//            });
-//            List<Hotel> Lisobj = new List<Hotel>();
-//            Lisobj.Add(obj);
-//            var mockservice = new Mock<IHotel>();
-//            mockservice.Setup(x => x.GetAll()).Returns(Lisobj);
-//            var controller = new HotelController(mockservice.Object);
-
-//            var okresult = controller.GetHotelList();
-
-//            Assert.IsType<OkObjectResult>(okresult);
-//            Assert.Equal(1, Lisobj.Count);
-//            Assert.NotNull(okresult);
-//        }
-
-//        [Fact]
-//        public void HotelGetAll_NotFoundResult()
-//        {
-//            Messages obj = new Messages();
-//            obj.Success = false;
-//            List<Hotel> Lisobj = null;
-//            var mockservice = new Mock<IHotel>();
-//            mockservice.Setup(x => x.GetAll()).Returns(Lisobj);
-//            var controller = new HotelController(mockservice.Object);
-//            var NotFoundResult = controller.GetHotelList();
-//            var output = NotFoundResult as NotFoundObjectResult;
-//            Assert.Equal("Hotel list is not found", output.Value);
-
-//        }
+        private Mock<IHotel> GetHotelDetailByNameMock(List<Hotel> hotels)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetHotelDetailByName(It.IsAny<string>())).Returns(hotels);
+            return mockservice;
+        }
 
 
+        private Mock<IHotel> GetHotelType(List<Hotel> hotels)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetHotelType(It.IsAny<string>())).Returns(hotels);
+            return mockservice;
+        }
 
-//        [Fact]
-//        public void HotelGetById_OkResult()
-//        {
-//            var controller = new HotelController(GetById(TestData).Object);
-//            var okresult = controller.GetHotelById(2);
-//            var list = okresult as OkObjectResult;
-//            var result = list.Value as Hotel;
-//            Assert.IsType<OkObjectResult>(okresult);
-//            Assert.Equal(TestData.ContactNumber, result.ContactNumber);
-//            Assert.NotNull(result);
-//            Assert.StrictEqual(1, result.HotelId);
-//            Assert.True(result.IsActive);
-//            Assert.StrictEqual(200, list.StatusCode);
-//        }
+        private Mock<IHotel> UpdateHotelDetailMock(Hotel id)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(id);
+            return mockservice;
+
+        }
+
+        [Fact]
+        public void HotelGetAll_OkResult()
+        {
+            Hotel obj = (new Hotel
+            {
+                HotelId = 1,
+                HotelName = "saravanabhavan",
+                Email = "Saravanabhavan123@gmail.com",
+                ImageId = "d2f5",
+                Type = "Veg",
+                Address = "Madurai",
+                ContactNumber = "9874563214"
+            });
+            List<Hotel> Lisobj = new List<Hotel>();
+            Lisobj.Add(obj);
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetAll()).Returns(Lisobj);
+            var controller = new HotelController(mockservice.Object);
+
+            var okresult = controller.GetHotelList();
+
+            Assert.IsType<OkObjectResult>(okresult);
+            Assert.Equal(1, Lisobj.Count);
+            Assert.NotNull(okresult);
+        }
+
+        [Fact]
+        public void HotelGetAll_NotFoundResult()
+        {
+            Messages obj = new Messages();
+            obj.Success = false;
+            List<Hotel> Lisobj = null;
+            var mockservice = new Mock<IHotel>();
+            mockservice.Setup(x => x.GetAll()).Returns(Lisobj);
+            var controller = new HotelController(mockservice.Object);
+            var NotFoundResult = controller.GetHotelList();
+            var output = NotFoundResult as NotFoundObjectResult;
+            Assert.Equal("Hotel list is not found", output.Value);
+
+        }
 
 
-//        [Fact]
-//        public void HotelGetById_NotFoundResult()
-//        {
-//            Messages msg = new Messages();
-//            msg.Success = true;
-//            msg.Message = "The hotel id is not found";
-//            Hotel obj1 = null;
-//            var mockservice = new Mock<IHotel>();
-//            var controller = new HotelController(mockservice.Object);
-//            var NotFoundResult = controller.GetHotelById(2);
-//            var output = NotFoundResult as NotFoundObjectResult;
-//            Assert.IsType<NotFoundObjectResult>(NotFoundResult);
-//            Assert.StrictEqual(msg.Message, output.Value);
-//            Assert.StrictEqual(404, output.StatusCode);
-//        }
+
+        [Fact]
+        public void HotelGetById_OkResult()
+        {
+            var controller = new HotelController(GetById(TestData).Object);
+            var okresult = controller.GetHotelById(2);
+            var list = okresult as OkObjectResult;
+            var result = list.Value as Hotel;
+            Assert.IsType<OkObjectResult>(okresult);
+            Assert.Equal(TestData.ContactNumber, result.ContactNumber);
+            Assert.NotNull(result);
+            Assert.StrictEqual(1, result.HotelId);
+            Assert.True(result.IsActive);
+            Assert.StrictEqual(200, list.StatusCode);
+        }
+
+
+        [Fact]
+        public void HotelGetById_NotFoundResult()
+        {
+            Messages msg = new Messages();
+            msg.Success = true;
+            msg.Message = "The hotel id is not found";
+            Hotel obj1 = null;
+            var mockservice = new Mock<IHotel>();
+            var controller = new HotelController(mockservice.Object);
+            var NotFoundResult = controller.GetHotelById(2);
+            var output = NotFoundResult as NotFoundObjectResult;
+            Assert.IsType<NotFoundObjectResult>(NotFoundResult);
+            Assert.StrictEqual(msg.Message, output.Value);
+            Assert.StrictEqual(404, output.StatusCode);
+        }
 
 
 
@@ -207,7 +207,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Message = "This contact number id already exists";
             msg.Success = false;
-            msg.Status= Statuses.Conflict;
+            msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
             mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
             var controller = new HotelController(mockservice.Object);
@@ -226,7 +226,7 @@ namespace Food_Delivery
             msg.Success = false;
             msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
-           mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
+            mockservice.Setup(x => x.InsertHotelDetail(It.IsAny<Hotel>())).Returns(msg);
             var controller = new HotelController(mockservice.Object);
             var output = controller.AddHotelDetail(TestData);
             var result = output as ConflictObjectResult;
@@ -355,7 +355,7 @@ namespace Food_Delivery
             Messages msg = new Messages();
             msg.Success = false;
             msg.Message = "The hotel food is available for users";
-            msg.Status= Statuses.BadRequest;
+            msg.Status = Statuses.BadRequest;
             var mockservice = new Mock<IHotel>();
             mockservice.Setup(x => x.GetHotelById(It.IsAny<int>())).Returns(TestData);
             mockservice.Setup(x => x.DeleteHotelDetail(It.IsAny<int>())).Returns(msg);
@@ -366,5 +366,5 @@ namespace Food_Delivery
             Assert.StrictEqual(400, result.StatusCode);
         }
 
-//    }
-//}
+    }
+}

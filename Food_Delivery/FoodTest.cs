@@ -53,25 +53,25 @@ namespace Food_Delivery
             return mockservice;
         }
 
-//        private Mock<IFood> GetAllMock(List<Food> food)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetAll()).Returns(food);
-//            return mockservice;
-//        }
+        private Mock<IFood> GetAllMock(List<Food> food)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetAll()).Returns(food);
+            return mockservice;
+        }
 
-//        private Mock<IFood> GetById(Food food)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(food);
-//            return mockservice;
-//        }
-//        private Mock<IFood> GetFoodByName(List<Food> food)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetFoodByName(It.IsAny<string>())).Returns(food);
-//            return mockservice;
-//        }
+        private Mock<IFood> GetById(Food food)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetFoodTypeById(It.IsAny<int>())).Returns(food);
+            return mockservice;
+        }
+        private Mock<IFood> GetFoodByName(List<Food> food)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetFoodByName(It.IsAny<string>())).Returns(food);
+            return mockservice;
+        }
 
         private Mock<IFood> AddFoodMock(Messages message)
         {
@@ -91,19 +91,19 @@ namespace Food_Delivery
             return mockservice;
         }
 
-//        private Mock<IFood> DeleteFoodMock(Messages message)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.DeleteFoodType(It.IsAny<int>())).Returns(message);
-//            return mockservice;
-//        }
+        private Mock<IFood> DeleteFoodMock(Messages message)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.DeleteFoodType(It.IsAny<int>())).Returns(message);
+            return mockservice;
+        }
 
-//        private Mock<IFood> GetFoodByHotelIdMock(List<FoodList> food)
-//        {
-//            var mockservice = Mock();
-//            mockservice.Setup(x => x.GetFoodByHotelId(It.IsAny<int>())).Returns(food);
-//            return mockservice;
-//        }
+        private Mock<IFood> GetFoodByHotelIdMock(List<FoodList> food)
+        {
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetFoodByHotelId(It.IsAny<int>())).Returns(food);
+            return mockservice;
+        }
 
 
         [Fact]
@@ -124,10 +124,10 @@ namespace Food_Delivery
             mockservice.Setup(x => x.GetAll()).Returns(Lisobj);
             var controller = new FoodController(mockservice.Object,hotelMock().Object);
 
-//            var okresult = controller.GetAll();
+            var okresult = controller.GetAll();
 
-//            Assert.IsType<OkObjectResult>(okresult);
-//        }
+            Assert.IsType<OkObjectResult>(okresult);
+        }
 
         [Fact]
         public void FoodGetAll_NotFoundResult()
@@ -144,9 +144,9 @@ namespace Food_Delivery
             Assert.IsType<NotFoundObjectResult>(NotFoundResult);
             Assert.Equal("Food list is empty", output.Value);
 
-//        }
+            }
 
-        [Fact]
+            [Fact]
         public void FoodGetById_OkResult()
         {
             var controller = new FoodController(GetById(testData).Object,hotelMock().Object);
@@ -351,5 +351,5 @@ namespace Food_Delivery
 
 
 
-//    }
-//}
+            }
+        }

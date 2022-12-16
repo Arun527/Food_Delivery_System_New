@@ -157,6 +157,40 @@ namespace Food_Delivery
         }
 
         [Fact]
+        public void GetCustomerNumberFound()
+        {
+            Messages obj = new Messages();
+            obj.Success = true;
+            obj.Status = Statuses.Success;
+            List<Customer> Lisobj = new List<Customer>();
+            var controller = new CustomerController(GetByNumberMock(TestData).Object);
+            var okresult = controller.GetCustomerDetailByNumber("9791225793");
+            var output = okresult as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+            Assert.NotNull(Lisobj);
+            Assert.StrictEqual(200, output.StatusCode);
+
+
+        }
+        [Fact]
+
+        public void GetCustomerNumberNotFound()
+        {
+            Messages obj = new Messages();
+            obj.Success = false;
+            obj.Message = "Customer phone number is not found";
+            obj.Status = Statuses.NotFound;
+            Customer cus = null;
+            var controller = new CustomerController(GetByNumberMock(TestData).Object);
+            var okresult = controller.GetCustomerDetailByNumber("");
+            var output = okresult as NotFoundObjectResult;
+            Assert.Equal("Customer phone number is not found", output.Value);
+            Assert.IsType<NotFoundObjectResult>(output);
+            Assert.Null(cus);
+            Assert.StrictEqual(404, output.StatusCode);
+        }
+
+        [Fact]
         public void AddCustomerOK()
         {
             Messages messages = new Messages();
