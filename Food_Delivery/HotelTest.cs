@@ -292,7 +292,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "The food type not found";
+            msg.Message = "The hotel type not found";
             msg.Status=Statuses.NotFound;
             List<Hotel> hotel = null;
             var controller = new HotelController(GetHotelType(hotel).Object);
@@ -301,7 +301,7 @@ namespace Food_Delivery
             var result = list.Value as Hotel;
             Assert.IsType<NotFoundObjectResult>(okresult);
             Assert.StrictEqual(404, list.StatusCode);
-            Assert.Equal("The food type not found", list.Value);
+            Assert.Equal("The hotel type not found", list.Value);
         }
 
         [Fact]
@@ -309,7 +309,7 @@ namespace Food_Delivery
         {
             Messages msg = new Messages();
             msg.Success = true;
-            msg.Message = "Contact Number Already Taked";
+            msg.Message = "The hotel added succesfully";
             msg.Status = Statuses.Created;
             var controller = new HotelController(AddHotelMock(msg).Object);
             var output = controller.AddHotelDetail(TestData);
@@ -341,7 +341,7 @@ namespace Food_Delivery
         public void AddHotel_EmailConflict()
         {
             Messages msg = new Messages();
-            msg.Message = "Email Id Already Taked";
+            msg.Message = "The hotel email id already exist";
             msg.Success = false;
             msg.Status = Statuses.Conflict;
             var mockservice = new Mock<IHotel>();
