@@ -89,7 +89,7 @@ namespace Food_Delivery.Controllers
             var customerId = _order.GetOrder(orderId);
             return (customerId == null) ? NotFound("The order id is not found") : Ok(_orderShipmentDetail.TrackingStatus(orderId));
         }
-        public IActionResult Output(Messages result)
+        private IActionResult Output(Messages result)
         {
             switch (result.Status)
             {

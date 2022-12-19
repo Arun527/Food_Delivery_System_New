@@ -50,7 +50,7 @@ namespace Food_Delivery.Controllers
             var DeliveryPerson = _deliveryperson.DeleteDeliveryPerson(deliveryPersonId);
             return Output(DeliveryPerson);
         }
-        public IActionResult Output(Messages message)
+        private IActionResult Output(Messages message)
         {
             switch (message.Status)
             {

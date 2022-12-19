@@ -62,7 +62,7 @@ namespace Food_Delivery.Controllers
             var orderDetail = _orderDetail.DeleteOrderDetail(id);
             return Output(orderDetail);
         }
-        public IActionResult Output(Messages messages)
+        private IActionResult Output(Messages messages)
         {
             switch (messages.Status)
             {

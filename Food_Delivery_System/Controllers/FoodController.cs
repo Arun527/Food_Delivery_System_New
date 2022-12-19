@@ -73,7 +73,7 @@ namespace Food_Delivery.Controllers
             var foodType = _food.GetFoodByHotelId(hotelId);
             return (food == null) ? NotFound("The hotel id is not found") : Ok(foodType);
         }
-        public IActionResult Output(Messages result)
+        private IActionResult Output(Messages result)
         {
             switch (result.Status)
             {

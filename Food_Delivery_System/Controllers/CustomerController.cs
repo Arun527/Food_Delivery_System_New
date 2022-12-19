@@ -78,5 +78,5 @@ namespace Food_Delivery.Controllers
             }
             return Ok(result.Message);
         }
-    }
+    } 
 }
