@@ -53,7 +53,6 @@ namespace Food_Delivery.RepositoryService
                 {
 
                     msg.Success = false;
-                    msg.number = false;
                     msg.Message = "This contact number already exists";
                     msg.Status = Statuses.Conflict;
                     return msg;
@@ -105,7 +104,6 @@ namespace Food_Delivery.RepositoryService
 
                   
                     messages.Message = $"The ({customer.ContactNumber}), Phone number is already registered.";
-                    messages.number = false;
                     messages.Status = Statuses.Conflict;
                     return messages;
                 }
