@@ -15,14 +15,14 @@ namespace Food_Delivery.Controllers
             _customer = customer;
         }
 
-        [HttpGet("/api/Customer/Getall")]
+        [HttpGet("Getall")]
         public IActionResult GetAll()
         {
             var obj = _customer.GetAll();
             return (obj==null)? NotFound("Customer list is empty"):Ok(obj);
         }
 
-        [HttpGet("/api/Customer/{customerId}")]
+        [HttpGet("{customerId}")]
         public IActionResult GetCustomerDetailById(int customerId)
         {
             var obj = _customer.GetCustomerDetailById(customerId);
@@ -40,30 +40,30 @@ namespace Food_Delivery.Controllers
         public IActionResult GetCustomerDetailByNumber(string contactNumber)
         {
             var obj = _customer.GetCustomerDetailByNumber(contactNumber);
-            return  (obj==null)?NotFound("Customer id is not found"):Ok(obj);
+            return  (obj==null)?NotFound("Customer number is not found"):Ok(obj);
         }
 
-        [HttpPost("/api/Customer")]
+        [HttpPost]
         public IActionResult InsertCustomerDetail(Customer customer)
         {
             var insertCustomer = _customer.InsertCustomerDetail(customer);
             return Output(insertCustomer);
         }
 
-        [HttpPut("/api/Customer")]
+        [HttpPut]
         public IActionResult UpdateCustomerDetail([FromBody] Customer customer)
         {
             var updateCustomer = _customer.UpdateCustomerDetail(customer);
             return Output(updateCustomer);  
         }
 
-        [HttpDelete("/api/Customer/{customerId}")]
+        [HttpDelete("{customerId}")]
         public IActionResult DeleteCustomerDetail(int customerId)
         {  
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
             return Output(deleteCustomer);
         }
-        public IActionResult Output(Messages result)
+        private IActionResult Output(Messages result)
         {
             switch (result.Status)
             {

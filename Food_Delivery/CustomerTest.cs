@@ -48,7 +48,13 @@ namespace Food_Delivery
             mockservice.Setup(x => x.GetCustomerDetailByEmail(It.IsAny<string>())).Returns(obj);
             return mockservice;
         }
+        private Mock<ICustomer> GetByIsActiveMock(List<Customer> Lisobj )
+        {
 
+            var mockservice = Mock();
+            mockservice.Setup(x => x.GetCustomerDetailByIsActive(It.IsAny<bool>())).Returns(Lisobj);
+            return mockservice;
+        }
 
         private Mock<ICustomer> InsertMock(Messages msg)
         {
@@ -179,10 +185,10 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "Customer id is not found";
+            obj.Message = "Customer number is not found";
             obj.Status = Statuses.NotFound;
-            List<Customer> Lisobj = null;
-            var controller = new CustomerController(GetByNumberMock(TestData).Object);
+            Customer cus = null;
+            var controller = new CustomerController(GetByNumberMock(cus).Object);
             var okresult = controller.GetCustomerDetailByNumber("9874563214");
             var output = okresult as NotFoundObjectResult;
             Assert.Equal(obj.Message, output.Value);
@@ -190,19 +196,55 @@ namespace Food_Delivery
             Assert.StrictEqual(404, output.StatusCode);
         }
 
+
+        [Fact]
+
+        public void GetCustomerByIsactiveFound()
+        {
+
+            List<Customer> Lisobj = new List<Customer>();
+            Lisobj.Add(TestData);
+            var controller = new CustomerController(GetByIsActiveMock(Lisobj).Object);
+            var okresult = controller.GetCustomerDetailByIsActive(true);
+            var output = okresult as OkObjectResult;
+            Assert.IsType<OkObjectResult>(output);
+            Assert.NotNull(Lisobj);
+            Assert.StrictEqual(200, output.StatusCode);
+
+        }
+
+        [Fact]
+        public void GetCustomerByIsactiveNotFound()
+        {
+            Messages obj = new Messages();
+            obj.Success = false;
+            obj.Message = "Customer list is empty";
+            List<Customer> Lisobj = null;
+            var controller = new CustomerController(GetByIsActiveMock(Lisobj).Object);
+            var okresult = controller.GetCustomerDetailByIsActive(false);
+            var output = okresult as NotFoundObjectResult;
+            Assert.IsType<NotFoundObjectResult>(output);
+            Assert.Null(Lisobj);
+            Assert.Equal(obj.Message, output.Value);
+            Assert.StrictEqual(404, output.StatusCode);
+        }
+
+
+     
+
         [Fact]
         public void AddCustomerOK()
         {
             Messages messages = new Messages();
             messages.Success = true;
-            messages.Message = "This  Customer Added Succesfully";
+            messages.Message = "Customer Added Succesfully";
             messages.Status = Statuses.Created;
             List<Customer> list = new List<Customer>();
             list.Add(TestData);
             var controller = new CustomerController(InsertMock(messages).Object);
             var okinsert = controller.InsertCustomerDetail(TestData);
             var output = okinsert as CreatedResult;
-            Assert.Equal("This  Customer Added Succesfully", output.Value);
+            Assert.Equal("Customer Added Succesfully", output.Value);
             Assert.IsType<CreatedResult>(output);
             Assert.StrictEqual(201, output.StatusCode);
         }
@@ -212,7 +254,7 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "The Phone  Number Already Taked";
+            obj.Message = "This contact number already exists";
             obj.Status = Statuses.Conflict;
             var mockservice = new Mock<ICustomer>();
             mockservice.Setup(x => x.InsertCustomerDetail(It.IsAny<Customer>())).Returns(obj);
@@ -230,7 +272,7 @@ namespace Food_Delivery
         {
             Messages obj = new Messages();
             obj.Success = false;
-            obj.Message = "The Email  Id Already Taked";
+            obj.Message = "This email id already exists";
             obj.Status = Statuses.Conflict;
             var mockservice = new Mock<ICustomer>();
             mockservice.Setup(x => x.InsertCustomerDetail(It.IsAny<Customer>())).Returns(obj);
@@ -297,7 +339,7 @@ namespace Food_Delivery
         {
             Messages messages = new Messages();
             messages.Success = false;
-            messages.Message = "The Contact Number Already Taked";
+            messages.Message = "The contact number already exist";
             messages.Status = Statuses.Conflict;
             var mockservice = new Mock<ICustomer>();
             mockservice.Setup(x => x.UpdateCustomerDetail(It.IsAny<Customer>())).Returns(messages);
@@ -314,7 +356,7 @@ namespace Food_Delivery
             Messages messages = new Messages();
             messages.Success = false;
             messages.Status = Statuses.Conflict;
-            messages.Message = "The Email Already Taked";
+            messages.Message = "This email id already exists";
             var mockservice = new Mock<ICustomer>();
             mockservice.Setup(x => x.UpdateCustomerDetail(It.IsAny<Customer>())).Returns(messages);
             var controller = new CustomerController(mockservice.Object);
