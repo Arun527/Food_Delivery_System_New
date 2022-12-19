@@ -40,7 +40,7 @@ namespace Food_Delivery.Controllers
         public IActionResult GetCustomerDetailByNumber(string contactNumber)
         {
             var obj = _customer.GetCustomerDetailByNumber(contactNumber);
-            return  (obj!=null)?NotFound("Customer id is not found"):Ok();
+            return  (obj==null)?NotFound("Customer id is not found"):Ok(obj);
         }
 
         [HttpPost("/api/Customer")]
