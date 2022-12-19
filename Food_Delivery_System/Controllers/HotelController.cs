@@ -70,7 +70,7 @@ namespace Food_Delivery.Controllers
         public  IActionResult GetHotelType(string hoteltype)
         {
             var type=_hotel.GetHotelType(hoteltype);
-            return (type==null) ? NotFound("The food type not found") :Ok(type);
+            return (type==null) ? NotFound("The hotel type not found") :Ok(type);
         }
          public IActionResult Output(Messages result)
          {

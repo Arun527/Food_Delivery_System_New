@@ -283,7 +283,7 @@ namespace Food_Delivery
         }
 
         [Fact]
-        public void UpdateCustomerIdNotOKOk()
+        public void UpdateCustomerIdNotOK()
         {
             Messages messages = new Messages();
             messages.Success = false;
@@ -303,7 +303,7 @@ namespace Food_Delivery
 
         }
         [Fact]
-        public void UpdateQuantityNotOKOk()
+        public void UpdateQuantityNotOK()
         {
             Messages messages = new Messages();
             messages.Success = false;
@@ -323,7 +323,7 @@ namespace Food_Delivery
 
         }
         [Fact]
-        public void UpdateFoodIdNotOKOk()
+        public void UpdateFoodIdNotOK()
         {
             Messages messages = new Messages();
             messages.Success = false;
@@ -343,7 +343,7 @@ namespace Food_Delivery
 
         }
         [Fact]
-        public void UpdateHotelIdNotOKOk()
+        public void UpdateHotelIdNotOK()
         {
             Messages messages = new Messages();
             messages.Success = false;
@@ -363,7 +363,7 @@ namespace Food_Delivery
 
         }
         [Fact]
-        public void UpdateOrderIdNotOKOk()
+        public void UpdateOrderIdNotOK()
         {
             Messages messages = new Messages();
             messages.Success = false;
@@ -383,26 +383,6 @@ namespace Food_Delivery
 
         }
 
-        [Fact]
-        public void UpdateOrderDetailIdNotOKOk()
-        {
-            Messages messages = new Messages();
-            messages.Success = false;
-            messages.Message = "The customer id is not found";
-            messages.Status = Statuses.NotFound;
-            var orderDetailMock = new Mock<IOrderDetail>();
-            OrderDetail order = new OrderDetail
-            { CustomerId = 1, FoodId = 1, HotelId = 1, Quantity = 4, OrderId = 1, OrderDetailId = 0, OrderStatus = "Order Placed" };
-
-            orderDetailMock.Setup(x => x.UpdateOrderDetail(It.IsAny<OrderDetail>())).Returns(messages);
-            var controller = new OrderDetailController(UpdateOkMock(messages).Object, CustomerMock().Object, HotelMock().Object, FoodMock().Object, OrdersMock().Object);
-            var result = controller.UpdateOrderDetail(order);
-            var output = result as NotFoundObjectResult;
-            Assert.IsType<NotFoundObjectResult>(output);
-            Assert.Equal(404, output.StatusCode);
-
-
-        }
 
         [Fact]
         public void Update_BadRequest()

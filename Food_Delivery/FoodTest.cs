@@ -181,7 +181,7 @@ namespace Food_Delivery
             Assert.StrictEqual(404, output.StatusCode);
         }
         [Fact]
-        public void GetHoteltype_OkResult()
+        public void GetFoodtype_OkResult()
         {
             List<Food> hotel = new List<Food>();
             hotel.Add(testData);
@@ -194,7 +194,7 @@ namespace Food_Delivery
         }
 
         [Fact]
-        public void GetHoteltype_NotFound()
+        public void GetFoodtype_NotFound()
         {
             Messages msg = new Messages();
             msg.Success = true;
@@ -334,7 +334,7 @@ namespace Food_Delivery
 
 
         [Fact]
-        public void DeleteHotel_SuccessOK()
+        public void DeleteFood_SuccessOK()
         {
             Messages msg = new Messages();
             msg.Success = false;
@@ -351,7 +351,7 @@ namespace Food_Delivery
         }
 
         [Fact]
-        public void DeleteHotel_NotFound()
+        public void DeleteFood_NotFound()
         {
             Messages msg = new Messages();
             msg.Success = true;
@@ -366,7 +366,7 @@ namespace Food_Delivery
         }
 
         [Fact]
-        public void DeleteHotel_BadRequest()
+        public void DeleteFood_BadRequest()
         {
             Messages msg = new Messages();
             msg.Success = false;

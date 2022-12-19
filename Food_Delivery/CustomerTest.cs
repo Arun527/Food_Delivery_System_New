@@ -174,15 +174,14 @@ namespace Food_Delivery
 
         }
         [Fact]
-
         public void GetCustomerNumberNotFound()
         {
             Messages obj = new Messages();
             obj.Success = false;
             obj.Message = "Customer id is not found";
             obj.Status = Statuses.NotFound;
-            List<Customer> Lisobj = null;
-            var controller = new CustomerController(GetByNumberMock(TestData).Object);
+            Customer Lisobj = null;
+            var controller = new CustomerController(GetByNumberMock(Lisobj).Object);
             var okresult = controller.GetCustomerDetailByNumber("9874563214");
             var output = okresult as NotFoundObjectResult;
             Assert.Equal(obj.Message, output.Value);
