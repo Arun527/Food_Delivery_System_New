@@ -50,8 +50,11 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=FoodMvc}/{action=Explore}/{id?}");
 });
+
+
+
 
 //app.MapControllerRoute(
 //    name: "default",
