@@ -4,57 +4,48 @@
     ViewData["Title"] = "Admin";
 
 }
-
-
-<body id="body" >
-
-    <div align="center">
-        <h2 id="heading">Hotel Detail</h2>
-        <div class="mx-auto row row-cols-2 ">
-            <div id="text" >Hotel Id : </div>
-            <div>
-                @Html.DisplayFor(m => m.HotelId ,new { @class="form-control", required = "required" , maxlength = "50"})
-            </div>
+<div align="center" id="body">
+    <h2 id="heading">Hotel Detail</h2>
+    <div class="mx-auto row row-cols-2 ">
+        <div id="text" >Hotel Id : </div>
+        <div>
+            @Html.DisplayFor(m => m.HotelId ,new { @class="form-control", required = "required" , maxlength = "50"})
         </div>
+    </div>
 
-        <div id="box"  class="mx-auto row row-cols-2 ">
-            <div id="text" >Hotel Name : </div>
-
-            <div>
-                @Html.DisplayFor(m => m.HotelName ,new { @class="form-control", required = "required" , maxlength = "50"})
-            </div>
+    <div id="box"  class="mx-auto row row-cols-2 ">
+        <div id="text" >Hotel Name : </div>
+        <div>
+            @Html.DisplayFor(m => m.HotelName ,new { @class="form-control", required = "required" , maxlength = "50"})
         </div>
+    </div>
 
-        <div id="box" class="row row-cols-2 ">
-            <div id="text">Location : </div>
-            <div>
-                @Html.DisplayFor(m => m.Address ,new { @class="form-control", required = "required", maxlength = "50"})
-            </div>
+    <div id="box" class="row row-cols-2 ">
+        <div id="text">Location : </div>
+        <div>
+            @Html.DisplayFor(m => m.Address ,new { @class="form-control", required = "required", maxlength = "50"})
         </div>
+    </div>
 
-        <div id="box" class="mx-auto row row-cols-2 ">
-            <div id="text">Is Active : </div>
-            <div>
-                @Html.DisplayFor(m => m.Type ,new { @class="form-control", required = "required" , maxlength = "50"})
-            </div>
+    <div id="box" class="mx-auto row row-cols-2 ">
+        <div id="text">Is Active : </div>
+        <div>
+            @Html.DisplayFor(m => m.Type ,new { @class="form-control", required = "required" , maxlength = "50"})
         </div>
+    </div>
 
-
-        <div id="box" class="mx-auto row row-cols-2 ">
-            <div id="text">Is Active : </div>
-            <div>
-                @Html.DisplayFor(m => m.IsActive ,new { @class="form-control", required = "required" , maxlength = "50"})
-            </div>
+    <div id="box" class="mx-auto row row-cols-2 ">
+        <div id="text">Is Active : </div>
+        <div>
+            @Html.DisplayFor(m => m.IsActive ,new { @class="form-control", required = "required" , maxlength = "50"})
         </div>
+    </div>
 
     <div>
             <a  id="button" class=" btn btn-primary">Edit</a>
             <a href="/HotelMvc/FoodDetail?HotelId=@Model.HotelId" class=" btn btn-warning">Food Detail</a>
     </div> 
-
-</body>
- 
-
+</div>
 @section Scripts{
     <link href="~/css/css style/hoteldetail.css" rel="stylesheet" />
 }
