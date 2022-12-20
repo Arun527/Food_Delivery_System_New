@@ -17,7 +17,8 @@ namespace Food_Delivery.Controllers
         IHotel _hotel;
         IFood _food;
         IOrders _orders;
-        public IOrderDetail Object { get; }
+
+
         public OrderDetailController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel,IFood food , IOrders orders)
         {
             _orderDetail = orderDetail;

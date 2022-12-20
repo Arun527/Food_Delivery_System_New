@@ -1,4 +1,4 @@
-﻿using Blazorise;
+using Blazorise;
 using Food_Delivery.Controllers;
 using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
@@ -466,3 +466,4 @@ namespace Food_Delivery
 
     }
 }
+  
