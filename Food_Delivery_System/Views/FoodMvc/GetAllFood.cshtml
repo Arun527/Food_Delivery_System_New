@@ -7,22 +7,14 @@
 
 <div class="container-fluid p-5"> 
 <div class="row p-5 row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-3">
-   
         @foreach (FoodDto item in Model)
-            {
-
-        <div class="card p-0" >
-
-                        <img id="image1" src="/css/Image/@item.ImageId" multiple />
-
-
-                        <p><strong>Hotel @item.HotelName </strong> </p>
-
-                        <p>Food Name: @item.FoodName </p>
-
-                        <div class="row ms-lg-3" >
-                            
-                             <div class="col-md-6">Food Type: @item.Type </div>
+        {
+            <div class="card p-0" >
+                <img id="image1" src="/css/Image/@item.ImageId" multiple />
+                <p><strong>Hotel @item.HotelName </strong> </p>
+                <p>Food Name: @item.FoodName </p>
+                <div class="row ms-lg-3" >
+                    <div class="col-md-6">Food Type: @item.Type </div>
                     <div class="col-md-4 offset-1 btn " id="button"   href="/CustomerMvc/Update/@item.FoodId" >
                         Add <span class="bskt-icon mt-5"   id="button1" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
@@ -30,15 +22,12 @@
                             </svg>
                         </span>
                     </div>
-                        </div>
-
-                      <p>Price   ₹ @item.Price  </p>
                 </div>
-            }
+                <p>Price   ₹ @item.Price  </p>
+            </div>
+        }
     </div>
   </div>
-
-                                
 @section Scripts{
     <link href="~/css/css style/getallfood.css" rel="stylesheet" />
 }

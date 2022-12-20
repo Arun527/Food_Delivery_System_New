@@ -7,12 +7,12 @@
 <div style="margin-left:1%">
     <h2>Food Detail</h2>
 </div>
-@if (TempData["AlertMessage"] != null)
-{
-        <div class="alret alert-success">
-            <strong>Success !</strong>  @TempData["AlertMessage"]
-        </div>
-}
+    @if (TempData["AlertMessage"] != null)
+    {
+            <div class="alret alert-success">
+                <strong>Success !</strong>  @TempData["AlertMessage"]
+            </div>
+    }
 <div id="margin"  >
     <a class="btn btn-primary" href="/FoodMvc/Add?HotelId=@ViewBag.hotelId">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
@@ -26,28 +26,18 @@
 
         @foreach (FoodList item in Model)
         {
-           
-         
-             <div class="card me-3 mt-3 " id="border">
-
+            <div class="card me-3 mt-3 " id="border">
                 <img id="image2"  src="/css/Image/@item.ImageId" multiple />
                 <div class="row ms-lg-3">
-                   
                     <div class="col-md-7 offset-1">Food Name: @item.FoodName </div>
-
                     <div class="col-md-3 offset-0 btn">
                         <a href="/FoodMvc/UpdateFood?FoodId=@item.FoodId">
                             <span class=tooltiptext>Edit</span> <i id="icon"  class='fas'>&#xf044;</i>
                         </a>
-                        
                     </div>
-
                 </div>
-               
                 <div class="row ms-lg-3">
-
                     <div class="col-md-7 offset-1">Price   ₹ @item.Price</div>
-
                     <div class="col-md-3  btn " >
                         <a  href="/FoodMvc/DeleteFood?FoodId=@item.FoodId">
                             <span class=tooltiptext>Delete</span> <i id="icon1"  class='fas'>&#xf2ed;</i>
@@ -61,7 +51,6 @@
 </div>
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
-
 @section Scripts{
 <link href="~/css/css style/foodbyhotelid.css" rel="stylesheet" />
 }
