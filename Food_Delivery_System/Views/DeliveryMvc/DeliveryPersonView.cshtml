@@ -1,13 +1,11 @@
-﻿
-@model IEnumerable<Food_Delivery.Models.DeliveryPerson>
+﻿@model IEnumerable<Food_Delivery.Models.DeliveryPerson>
 @{
     ViewData["Title"] = "DeliveryPersonView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2 style="height:60px">Delivery Person Detail</h2>
 
-<body>
+
     @if (TempData["AlertMessage"] != null)
     {
         <div class="alret alert-success">
@@ -62,10 +60,11 @@
         </tfoot>
     </table>
 
-</body>
+
 
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
+
 @section scripts{
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
