@@ -111,64 +111,40 @@ namespace Food_Delivery.RepositoryService
                     msg.Success = false;
                     return msg;
                 }
-                else { 
-                    if (hotel != null)
-                    {
-                        if (updateEmail != null && updateNumber != null)
-                        {
-                            var hotelEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
-                            var id = hotelEmail.HotelId;
-                            var hotelnum = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
-                            var number = hotelnum.HotelId;
-
-                            if (id != null && hotelDetail.HotelId != id)
-                            {
-                                msg.Success = false;
-                                msg.Message = "This email id already exist";
-                                msg.Status = Statuses.Conflict;
-                                return msg;
-                            }
-                            if (number != null && hotelDetail.HotelId != number)
-                            {
-                                msg.Success = false;
-                                msg.Message = "This contact number  already exist";
-                                msg.Status = Statuses.Conflict;
-                                return msg;
-                            }
-                            else
-                            {
-                                hotel.Email = hotelDetail.Email;
-                                hotel.Type = hotelDetail.Type;
-                                hotel.ContactNumber = hotelDetail.ContactNumber;
-                                hotel.Address = hotelDetail.Address;
-                                hotel.HotelName = hotelDetail.HotelName;
-                                hotel.IsActive = hotelDetail.IsActive;
-                                db.Update(hotel);
-                                db.SaveChanges();
-                                msg.Success = true;
-                                msg.Message = "The hotel updated succesfully";
-                                msg.Status = Statuses.Success;
-                                return msg;
-                            }
-                        }
-                        else
-                        {
-                            hotel.Email = hotelDetail.Email;
-                            hotel.Type = hotelDetail.Type;
-                            hotel.ContactNumber = hotelDetail.ContactNumber;
-                            hotel.Address = hotelDetail.Address;
-                            hotel.HotelName = hotelDetail.HotelName;
-                            hotel.IsActive = hotelDetail.IsActive;
-                            db.Update(hotel);
-                            db.SaveChanges();
-                            msg.Success = true;
-                            msg.Message = "The hotel updated succesfully";
-                            msg.Status = Statuses.Success;
-                            return msg;
-                        }
-                    }
+                if (hotel == null)
+                {
+                    msg.Message = "Hotel id is not found";
+                    msg.Status = Statuses.NotFound;
                     return msg;
                 }
+                else if (updateNumber != null && updateNumber.HotelId != hotel.HotelId)
+                {
+                    msg.Message = $"The ({hotelDetail.ContactNumber}), Phone number is already registered.";
+                    msg.number = false;
+                    msg.Status = Statuses.Conflict;
+                    return msg;
+                }
+                else if (updateEmail != null && updateEmail.HotelId != hotel.HotelId)
+                {
+                    msg.Message = $"The ( {hotelDetail.Email}  ), Email id is already registered.";
+                    msg.Status = Statuses.Conflict;
+                    return msg;
+                }
+                else
+                {
+                    hotel.Email = hotelDetail.Email;
+                    hotel.Type = hotelDetail.Type;
+                    hotel.ContactNumber = hotelDetail.ContactNumber;
+                    hotel.Address = hotelDetail.Address;
+                    hotel.HotelName = hotelDetail.HotelName;
+                    hotel.IsActive = hotelDetail.IsActive;
+                    db.Update(hotel);
+                    db.SaveChanges();
+                    msg.Success = true;
+                    msg.Message = "The hotel updated succesfully";
+                    msg.Status = Statuses.Success;
+                }
+                return msg;
             }
             catch (Exception ex)
             {
@@ -216,7 +192,6 @@ namespace Food_Delivery.RepositoryService
         {
            var  hotelType = db.Hotel.Where(x=>x.Type==hoteltype).ToList();
            return hotelType;
-           
         }
     }
 }

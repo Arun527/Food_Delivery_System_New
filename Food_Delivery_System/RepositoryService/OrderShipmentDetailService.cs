@@ -125,7 +125,6 @@ namespace Food_Delivery.RepositoryService
             msg.Success = false;
             msg.Message = "Ordershipmentdetail id is not found";
             msg.Status = Statuses.NotFound;
-
             return msg;
         }
         public IEnumerable<InvoiceDeliveryPerson> GetdeliveryPersonById(int deliveryPersonId)
@@ -155,7 +154,6 @@ namespace Food_Delivery.RepositoryService
         }
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId)
         {
-
             var orderDetails = (from orderDetail in db.OrderDetail
                                 join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId
                                 join Hotel in db.Hotel on orderDetail.HotelId equals Hotel.HotelId
@@ -180,7 +178,6 @@ namespace Food_Delivery.RepositoryService
         }
         public IEnumerable<InvoiceDetail> GetAllInvoiceDetail()
         {
-        
             var orderDetails = (from orderDetail in db.OrderDetail
                                 join customer in db.Customer on orderDetail.CustomerId equals customer.CustomerId 
                                 join Hotel in db.Hotel on orderDetail.HotelId equals Hotel.HotelId
@@ -199,11 +196,9 @@ namespace Food_Delivery.RepositoryService
                                     TotalPrice = food.Price * orderDetail.Quantity
                                 }).ToList();
             return orderDetails;
-
         }
         public IEnumerable<TrackingDetail> TrackingStatus(int orderId)
         {
-
             var orderDetails = (from Orders in db.orders
                                 join orderdetail in db.OrderDetail on Orders.OrderId equals orderdetail.OrderId
                                 where orderdetail.OrderId == orderId
@@ -215,7 +210,6 @@ namespace Food_Delivery.RepositoryService
 
                                 }).ToList();
             return orderDetails;
-
         }
     }
 }

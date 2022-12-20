@@ -157,7 +157,6 @@ namespace Food_Delivery.RepositoryService
         {
             var foodType = db.Food.Where(x => x.Type == foodtype).ToList();
             return foodType;
-
         }
         public IEnumerable<FoodDto> GetAllFood()
         {
