@@ -65,9 +65,6 @@ $(document).ready(function () {
         var Request = {
             "CustomerId": id,
             "Food": foodDetails
-
-
-
         };
 
 
@@ -94,6 +91,7 @@ $(document).ready(function () {
                 }
                 else {
                     setTimeout(function () { window.location = '/OrderDetailMvc/Add'; }, 1000);
+                    alert("Please choose delivery person");
                 }
 
 
@@ -101,7 +99,7 @@ $(document).ready(function () {
 
             },
             error: function () {
-                alert("error");
+                alert("Pleae select a value");
             }
 
 
