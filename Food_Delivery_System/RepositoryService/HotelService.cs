@@ -2,145 +2,89 @@
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery_System.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using ServiceStack.Messaging;
 using System.Transactions;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.RepositoryService
 {
     public class HotelService: IHotel
     {
         private readonly FoodDeliveryDbContext db;
-
         public HotelService(FoodDeliveryDbContext obj)
         {
             db = obj;
         }
-
         public   IEnumerable<Hotel> GetAll()
         {
-            try
+            Messages msg = new Messages();
+            var hotel= db.Hotel.ToList();
+            if(!hotel.Any())
             {
-                var hotel= db.Hotel.ToList();
+                msg.Success = false;
+                msg.Message = "This hotel list is empty";
+                msg.Status = Statuses.NotFound;
+            }
                 return hotel;
-            }
-
-            catch(Exception)
-            {
-                throw;
-            }
-           
-        
-           
         }
         public Hotel GetHotelById(int hotelId)
         {
-
-
-            var hotel = db.Hotel.Find( hotelId);
-            return hotel;
-         
-       
+            return db.Hotel.FirstOrDefault(x=>x.HotelId==hotelId);
         }
         public Hotel GetHotelDetailByNumber(string Number)
         {
-
-            try
-            {
-                Message message = new Message();
-                var getId = db.Hotel.FirstOrDefault(x => x.ContactNumber == Number);
-                return getId;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
-
+              var getId = db.Hotel.FirstOrDefault(x => x.ContactNumber == Number);
+              return getId;  
         }
-
-
-
         public Hotel GetHotelDetailByEmail(String Email)
         {
-
-            try
-            {
-                Message message = new Message();
                 var getId = db.Hotel.FirstOrDefault(x => x.Email == Email);
-                return getId;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
-
+                return getId;  
         }
-
         public IEnumerable<Hotel> GetHotelDetailByName(String hotelName)
         {
-
-            try
-            {
-                Message message = new Message();
-                var getId = db.Hotel .Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
-             
-                return getId;
-            }
-
-            catch (Exception)
-            {
-                throw;
-            }
-
-
+                return db.Hotel .Where(x => EF.Functions.Like(x.HotelName,$"{hotelName}%")).ToList();
         }
-
-
         public IEnumerable<FoodList> GetFoodByHotelName(string HotelName)
         {
-
             {
-
                 var foodlist = (from food in db.Food
                                 join hotel in db.Hotel on food.HotelId equals hotel.HotelId
                                 where hotel.HotelName == HotelName 
-
                                 select new FoodList
                                 {
                                     HotelName = hotel.HotelName,
-                                   
                                     FoodName = food.FoodName,
                                     Price = food.Price,
                                     Type = food.Type,
-
                                 }).ToList();
                 return foodlist;
             }
         }
-
         public Messages InsertHotelDetail(Hotel hotelDetail)
         {
             Messages msg = new Messages();
             try
             {
                 var hotel = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
-                msg.Success = true;
-                if(hotel == null)
+                var email = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
+              
+                if(hotel == null && email==null)
                 {
                     db.Add(hotelDetail);
                     db.SaveChanges();
                     msg.Success=true;
-                    msg.Message = "The Hotel Added Succesfully";
+                    msg.Message = "The hotel added succesfully";
+                    msg.Status= Statuses.Created;
                 }
                 else
                 {
-                    msg.Success=false;
-                    msg.Message = "The Hotel Already Exist";
-                }
-               
+                    msg.Success = false;
+                    msg.Status = Statuses.Conflict; 
+                    var message = (hotel!=null) ? "The hotel contact number already exist" : "The hotel email id already exist";
+                    msg.Message = message;
+                }  
             }
             catch(Exception Ex)
             {
@@ -149,82 +93,67 @@ namespace Food_Delivery.RepositoryService
             }
             return msg;
         }
-
         public Messages UpdateHotelDetail(Hotel hotelDetail)
         {
             Messages msg = new Messages();
             try
             {
-               var hotel=db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail.HotelId);
-                var updateEmail= db.Hotel.FirstOrDefault(x=>x.Email==hotelDetail.Email);
+                var hotel = db.Hotel.FirstOrDefault(x => x.HotelId == hotelDetail.HotelId);
+                var updateEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
                 var updateNumber = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
-                msg.Message = "The hotel Id Not Registered";
+                msg.Message = "The hotel id not registered";
+                msg.Status = Statuses.NotFound;
                 msg.Success = false;
-                if (hotel != null)
+                if (hotelDetail.HotelId == 0)
                 {
-                        if (updateEmail!=null && updateNumber!=null)
-                        {
-                              var hotelEmail = db.Hotel.FirstOrDefault(x => x.Email == hotelDetail.Email);
-                              var id = hotelEmail.HotelId;
-                              var hotelnum = db.Hotel.FirstOrDefault(x => x.ContactNumber == hotelDetail.ContactNumber);
-                              var number = hotelnum.HotelId;
-
-                           if (id!=null && hotelDetail.HotelId!=id)
-                           {
-                                 msg.Success = false;
-                                 msg.Message = "This Email Id Already taked";
-                                 return msg;
-                           }
-                        if (number != null && hotelDetail.HotelId != number)
-                        {
-                            msg.Success = false;
-                            msg.Message = "This Contact Number  Already taked";
-                            return msg;
-                        }
-                        else
-                           {
-                            hotel.Email = hotelDetail.Email;
-                            hotel.Type = hotelDetail.Type;
-                            hotel.ContactNumber = hotelDetail.ContactNumber;
-                            hotel.Address = hotelDetail.Address;
-                            hotel.HotelName = hotelDetail.HotelName;
-                            hotel.IsActive = hotelDetail.IsActive;
-                            db.Update(hotel);
-                            db.SaveChanges();
-                            msg.Success = true;
-                            msg.Message = "The hotel updated succesfully";
-                            return msg;
-                           }
-                        }
-                     else
-                     {
-                        hotel.Email = hotelDetail.Email;
-                        hotel.Type = hotelDetail.Type;
-                        hotel.ContactNumber = hotelDetail.ContactNumber;
-                        hotel.Address = hotelDetail.Address;
-                        hotel.HotelName = hotelDetail.HotelName;
-                        hotel.IsActive = hotelDetail.IsActive;
-                        db.Update(hotel);
-                        db.SaveChanges();
-                        msg.Success = true;
-                        msg.Message = "The hotel updated succesfully";
-                        return msg;
-                     }
-
-               }
-               return msg;
+                    msg.Message = "The hotel field is required";
+                    msg.Status = Statuses.BadRequest;
+                    msg.Success = false;
+                    return msg;
+                }
+                if (hotel == null)
+                {
+                    msg.Message = "Hotel id is not found";
+                    msg.Status = Statuses.NotFound;
+                    return msg;
+                }
+                else if (updateNumber != null && updateNumber.HotelId != hotel.HotelId)
+                {
+                    msg.Message = $"The ({hotelDetail.ContactNumber}), Phone number is already registered.";
+                    msg.number = false;
+                    msg.Status = Statuses.Conflict;
+                    return msg;
+                }
+                else if (updateEmail != null && updateEmail.HotelId != hotel.HotelId)
+                {
+                    msg.Message = $"The ( {hotelDetail.Email}  ), Email id is already registered.";
+                    msg.Status = Statuses.Conflict;
+                    return msg;
+                }
+                else
+                {
+                    hotel.Email = hotelDetail.Email;
+                    hotel.Type = hotelDetail.Type;
+                    hotel.ContactNumber = hotelDetail.ContactNumber;
+                    hotel.Address = hotelDetail.Address;
+                    hotel.HotelName = hotelDetail.HotelName;
+                    hotel.IsActive = hotelDetail.IsActive;
+                    db.Update(hotel);
+                    db.SaveChanges();
+                    msg.Success = true;
+                    msg.Message = "The hotel updated succesfully";
+                    msg.Status = Statuses.Success;
+                }
+                return msg;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.Message = ex.Message;
                 msg.Success = false;
-                msg.Message=ex.Message;
-               
+                msg.Message = ex.Message;
             }
             return msg;
         }
-
-
         public Messages DeleteHotelDetail(int hotelDetail)
         {
             Messages msg = new Messages();
@@ -236,40 +165,33 @@ namespace Food_Delivery.RepositoryService
                 {
                     db.Remove(hotel);
                     db.SaveChanges();
-                    msg.Message = "The hotel Id deleted Succesfully";
+                    msg.Message = "The hotel id deleted succesfully";
                     msg.Success=true;
+                    msg.Status = Statuses.Success;
                 }
                 else if(food != null)
                 {
-                    msg.Message = "The hotel Food Is Available For Users";
+                    msg.Message = "This hotel already having food list, So Can't delete.";
                     msg.Success = false;
+                    msg.Status = Statuses.BadRequest;
                 }
-
                 else
                 {
-                    msg.Message = "The hotel Id Is Invalid";
+                    msg.Message = "The hotel id not found";
                     msg.Success = false;
+                    msg.Status = Statuses.NotFound;
                 }
-
-
             }
             catch(Exception ex)
             {
                 msg.Message = ex.Message;
-                
             }
             return msg ;
         }
-
-
         public IEnumerable<Hotel>  GetHotelType(string hoteltype)
         {
-
            var  hotelType = db.Hotel.Where(x=>x.Type==hoteltype).ToList();
            return hotelType;
-           
         }
-
-
     }
 }

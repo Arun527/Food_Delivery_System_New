@@ -1,6 +1,7 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers
 {
@@ -14,134 +15,68 @@ namespace Food_Delivery.Controllers
             _customer = customer;
         }
 
-        [HttpGet("/api/Customer/Getall")]
+        [HttpGet("Getall")]
         public IActionResult GetAll()
         {
-            Messages messages = new Messages();
-            messages.Message = "Customer List Is Empty";
             var obj = _customer.GetAll();
-            if (obj == null)
-            {
-                return NotFound(messages.Message);
-            }
-
-            return Ok(obj);
+            return (obj==null)? NotFound("Customer list is empty"):Ok(obj);
         }
-         
 
-        [HttpGet("/api/Customer/{customerId}")]
+        [HttpGet("{customerId}")]
         public IActionResult GetCustomerDetailById(int customerId)
         {
-            Messages messages = new Messages();
-            messages.Message = "Customer Id Is Not Found";
             var obj = _customer.GetCustomerDetailById(customerId);
-            if(obj == null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(obj);
+            return (obj==null)?NotFound("Customer id is not found") :Ok(obj);
         }
-        [HttpGet("IsActive/{isActive}")]
+
+        [HttpGet("IsActive/{isActive}")]   
         public IActionResult GetCustomerDetailByIsActive(bool isActive)
         {
-           
             var obj = _customer.GetCustomerDetailByIsActive(isActive);
-
-            if (obj == null)
-            {
-                return NotFound("Customer Id Is Not Found");
-            }
-
-            if (obj.Count() == 0)
-            {
-                return NotFound("Customer List Is Empty");
-            }
-            return Ok(obj);
+            return (obj==null)?NotFound("Customer list is empty"):Ok(obj);
         }
 
         [HttpGet("ContactNumber/{contactNumber}")]
         public IActionResult GetCustomerDetailByNumber(string contactNumber)
         {
-            Messages messages = new Messages();
-            messages.Message = "Customer Id Is Not Found";
             var obj = _customer.GetCustomerDetailByNumber(contactNumber);
-            if (obj == null)
-            {
-                return NotFound(messages.Message);
-            }
-            return Ok(obj);
+            return  (obj==null)?NotFound("Customer number is not found"):Ok(obj);
         }
 
-        [HttpPost("/api/Customer")]
+        [HttpPost]
         public IActionResult InsertCustomerDetail(Customer customer)
         {
-            Messages messages = new Messages();
-            var number = _customer.GetCustomerDetailByNumber(customer.ContactNumber);
-            var email=_customer.GetCustomerDetailByEmail(customer.Email);
-            
-
-            if (number != null)
-            {
-                messages.Message = "The Phone  Number Already Taked";
-                return Conflict(messages.Message);
-            }
-            if (email != null)
-            {
-                messages.Message = "The Email  Id Already Taked";
-                return Conflict(messages.Message);
-            }
             var insertCustomer = _customer.InsertCustomerDetail(customer);
-            
-            
-            return Created(customer.CustomerId+"",insertCustomer);
+            return Output(insertCustomer);
         }
 
-        [HttpPut("/api/Customer")]
+        [HttpPut]
         public IActionResult UpdateCustomerDetail([FromBody] Customer customer)
         {
-            Messages messages=new Messages();
-            if (customer.CustomerId == 0)
-            {
-               
-                return BadRequest("The CustomerId Field Is Required");
-            }
-            var id = _customer.GetCustomerDetailById(customer.CustomerId);
-            if (id == null)
-            {
-                return NotFound("The Customer Id Is Not Found");
-            }
             var updateCustomer = _customer.UpdateCustomerDetail(customer);
-
-            if (updateCustomer.Success==false)
-            {
-               
-                return Conflict(updateCustomer.Message);
-            }
-
-          
-
-            return Ok(updateCustomer);  
-                
+            return Output(updateCustomer);  
         }
 
-
-        [HttpDelete("/api/Customer/{customerId}")]
+        [HttpDelete("{customerId}")]
         public IActionResult DeleteCustomerDetail(int customerId)
-        {
-            Messages messages =new Messages();
-            var id = _customer.GetCustomerDetailById(customerId);
-            if (id == null)
-            {
-                return NotFound("The Customer Id Not Found");
-            }
-            
+        {  
             var deleteCustomer = _customer.DeleteCustomerDetail(customerId);
-            if (deleteCustomer.Success == false)
-            {
-                return BadRequest("The Customer Id Not Deleted,Because This Customer  Order The Product ");
-            }
-            return Ok(deleteCustomer);
+            return Output(deleteCustomer);
         }
-
-    }
+        private IActionResult Output(Messages result)
+        {
+            switch (result.Status)
+            {
+                case Statuses.BadRequest:
+                    return BadRequest(result.Message);
+                case Statuses.NotFound:
+                    return NotFound(result.Message);
+                case Statuses.Conflict:
+                    return Conflict(result.Message);
+                case Statuses.Created:
+                    return Created("",result.Message);
+            }
+            return Ok(result.Message);
+        }
+    } 
 }

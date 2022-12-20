@@ -8,7 +8,6 @@ namespace Food_Delivery_System.Controllers_Mvc
 {
     public class OrderShipmentMvcController : Controller
     {
-
         private readonly ILogger<OrderShipmentMvcController> _logger;
         ICustomer _customer;
         IHotel _hotel;
@@ -23,12 +22,9 @@ namespace Food_Delivery_System.Controllers_Mvc
             _deliveryPerson = person;
             _orderDetail = orderDetail;
             _orderShipmentDetail = orderShipmentDetail;
-
         }
         public IActionResult AddShipment()
         {
-
-
             OrderShipmentDto shipment = new OrderShipmentDto();
             shipment.DeliveryList = new List<SelectListItem>();
             shipment.DeliveryList.Add(new SelectListItem() { Value = "0", Text = "Select Delivery Person" });
@@ -42,27 +38,20 @@ namespace Food_Delivery_System.Controllers_Mvc
             shipment.ShipmentList.AddRange(_orderDetail.GetAll().Select(a => new SelectListItem
             {
                 Text = a.OrderDetailId.ToString(),
-                Value = a.OrderDetailId.ToString(),
+                Value = a.OrderDetailId.ToString(), 
             }));
             return View(shipment);
         }
-
         public IActionResult Add([FromBody] OrderShipmentRequest order)
         {
-
             var orderdetail = _orderShipmentDetail.InsertOrderShipmentDetail(order);
-
             return Json("AddShipment");
         }
-
-
         public IActionResult GetAllShipment()
         {
             var delivery = _orderShipmentDetail.GetAllInvoiceDetail();
             return View(delivery);
         }
-
-
         public IActionResult GetShipmentByUser(int customerId)
         {
             var delivery = _orderShipmentDetail.GetCustomerOrderDetailsById(customerId);

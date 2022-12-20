@@ -9,7 +9,6 @@ namespace Food_Delivery_System.Controllers_Mvc
 {
     public class OrderDetailMvcController : Controller
     {
-
         private readonly ILogger<OrderDetailMvcController> _logger;
 
         IOrderDetail _orderDetail;
@@ -17,7 +16,6 @@ namespace Food_Delivery_System.Controllers_Mvc
         IHotel _hotel;
         IFood _food;
         IOrders _orders;
-
         public OrderDetailMvcController(IOrderDetail orderDetail, ICustomer customer, IHotel hotel, IFood food, IOrders orders)
         {
             _orderDetail = orderDetail;
@@ -26,14 +24,11 @@ namespace Food_Delivery_System.Controllers_Mvc
             _food = food;
             _orders = orders;
         }
-
         List<InvoiceDetail> li = new List<InvoiceDetail>();
         public IActionResult Index()
         {
             return View();
         }
-
-       
         public IActionResult Add()
         {
             OrderRequest types = new OrderRequest();
@@ -46,18 +41,11 @@ namespace Food_Delivery_System.Controllers_Mvc
                 Value = a.CustomerId.ToString(),
             }));
             return View(types);
-        
-
         }
         public IActionResult AddOrder([FromBody] OrderRequest food)
-        {
-            
+        {   
             var orderDetail = _orderDetail.InsertOrderDetail(food);
             return Json(orderDetail);
-
         }
-
-
-
     }
 }
