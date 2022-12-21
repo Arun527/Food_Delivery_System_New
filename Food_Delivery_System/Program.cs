@@ -1,7 +1,11 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery.RepositoryService;
+using Food_Delivery_System.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +16,10 @@ builder.Services.AddDbContext<FoodDeliveryDbContext>(OPtions =>
     OPtions.UseSqlServer(builder.Configuration.GetConnectionString("ConStr"));
     OPtions.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation();
+
+builder.Services.AddTransient<IValidator<Customer>,CustomerValidator>();
+
 builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IHotel, HotelService>();
 builder.Services.AddScoped<IFood, FoodService>();

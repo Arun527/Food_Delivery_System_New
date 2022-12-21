@@ -44,6 +44,10 @@ namespace Food_Delivery.Controllers_Mvc
             }
             else 
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(customer);
+                }
                 TempData["AlertMessage"] = create.Message;
                 return View("CreateCustomer");
             }

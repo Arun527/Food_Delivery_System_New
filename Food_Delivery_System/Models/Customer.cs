@@ -6,6 +6,7 @@ using ServiceStack.DataAnnotations;
 
 using System;
 using Food_Delivery_System.Models;
+using FluentValidation;
 
 namespace Food_Delivery.Models
 {
@@ -32,4 +33,7 @@ namespace Food_Delivery.Models
         public bool IsActive { get; set; } = true;
 
     }
+
+
+   
 }
