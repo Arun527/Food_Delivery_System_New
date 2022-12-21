@@ -13,38 +13,27 @@ namespace Food_Delivery.RepositoryService
         {
             this.db = foodDeliveryDbContext;
         }
-
         public IEnumerable<OrderDetail> GetAll()
         {
             var order = db.OrderDetail.ToList();
             return order;
         }
-
         public IEnumerable<OrderDetail> GetAllDto()
         {
             var orderDetails = (from ordershipment in db.OrderShipmentDetail
-                               
                                 join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId
                                 where OrderDetail.OrderStatus == "Order placed"
                                 select new OrderDetail
                                 {
-                                    
                                     OrderDetailId = ordershipment.OrderDetailId,
-                                 
-                                
-
-                                    
-
                                 }).Distinct().ToList();
             return orderDetails;
-          
         }
         public OrderDetail GetOrderDetail(int orderDetailId)
         {
             var getId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetailId);
             return getId;
         }
-
         public Messages InsertOrderDetail(OrderRequest orderDetail)
         {   
             Messages msg = new Messages();
@@ -63,7 +52,6 @@ namespace Food_Delivery.RepositoryService
                 db.orders.Add(order);
                 db.SaveChanges();
                 var orderid = order.OrderId;
-
                 foreach (var FoodType in orderDetail.Food)
                 {
                     var foods = db.Food.Where(x => x.FoodId == FoodType.FoodId);
@@ -76,7 +64,6 @@ namespace Food_Delivery.RepositoryService
                         msg.Status = Statuses.NotFound;
                         return msg;
                     }
-
                     if (hotel.Count() == 0)
                     {
                         msg.Success = false;
@@ -84,7 +71,6 @@ namespace Food_Delivery.RepositoryService
                         msg.Status = Statuses.NotFound;
                         return msg;
                     }
-
                     if (quantity == 0)
                     {
                         msg.Success = false;
@@ -102,7 +88,6 @@ namespace Food_Delivery.RepositoryService
                             HotelId = FoodType.HotelId,
                             FoodId = FoodType.FoodId,
                             OrderStatus = orderDetail.OrderStatus
-
                         };
                         db.Add(foodtype);
                     }
@@ -110,7 +95,6 @@ namespace Food_Delivery.RepositoryService
                     msg.Success = true;
                     msg.Message = "Your order is placed!!";
                     msg.Status = Statuses.Created;
-                   
                 }
                 return msg;
             }
@@ -120,7 +104,6 @@ namespace Food_Delivery.RepositoryService
                 return msg;
             }
         }
-
         public Messages UpdateOrderDetail(OrderDetail orderDetail)
         {
             Messages msg = new Messages();
@@ -189,14 +172,12 @@ namespace Food_Delivery.RepositoryService
                 }
                 return msg;
             }
-
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
                 return msg;
             }
         }
-           
         public Messages DeleteOrderDetail(int orderDetailId)
         {
             Messages msg = new Messages();
@@ -218,14 +199,12 @@ namespace Food_Delivery.RepositoryService
                     msg.Status=Statuses.Success;
                     msg.Message = "Order deleted succesfully";
                 }
-               
                 else
                 {
                     msg.Success = false;
                     msg.Status = Statuses.NotFound;
                     msg.Message = "Order id  is not found";
                 }
-               
                 return msg;
             }
             catch (Exception ex)
@@ -233,7 +212,6 @@ namespace Food_Delivery.RepositoryService
                 msg.Message = ex.Message;
                 return msg;
             }
-
         }
     }
 }

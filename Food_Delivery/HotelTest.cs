@@ -316,6 +316,7 @@ namespace Food_Delivery
             var result = output as CreatedResult;
             Assert.IsType<CreatedResult>(output);
             Assert.StrictEqual(msg.Message, result.Value);
+            Assert.StrictEqual(msg, result.Value);
             Assert.StrictEqual(201, result.StatusCode);
         }
 

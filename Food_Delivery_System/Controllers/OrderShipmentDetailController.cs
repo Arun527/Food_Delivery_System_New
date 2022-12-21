@@ -24,6 +24,7 @@ namespace Food_Delivery.Controllers
             _deliveryPerson=deliveryPerson;
             _customer=customer;
         }
+
         [HttpGet("getall")]
         public IActionResult GetAllOrderShipmentDetail()
         {

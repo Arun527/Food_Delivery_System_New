@@ -12,7 +12,6 @@ namespace Food_Delivery.RepositoryService
         {
             this.db = foodDeliveryDbContext;
         }
-
         public IEnumerable<DeliveryPerson> GetAllDeliveryPersons()
         {
             return db.DeliveryPerson.ToList();
@@ -22,7 +21,6 @@ namespace Food_Delivery.RepositoryService
             var getId = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPersonId);
             return getId;
         }
-
         public DeliveryPerson GetDeliveryPersonByNumber(string Number)
         {
             try
@@ -68,34 +66,36 @@ namespace Food_Delivery.RepositoryService
             {
                 var updateDeliveryPerson = db.DeliveryPerson.FirstOrDefault(x => x.DeliveryPersonId == deliveryPerson.DeliveryPersonId);
                 var number = db.DeliveryPerson.FirstOrDefault(x => x.ContactNumber == deliveryPerson.ContactNumber);
-                if (updateDeliveryPerson != null )
+                if (deliveryPerson == null)
                 {
-                        updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
-                        updateDeliveryPerson.Gender = deliveryPerson.Gender;
-                        updateDeliveryPerson.VechileNo = deliveryPerson.VechileNo;
-                        db.Update(updateDeliveryPerson);
-                        db.SaveChanges();
-                        msg.Success = true;
-                        msg.Message = "Delivery person updated succesfully!!";
-                        return msg;
-                }
-               else 
-               {
-                    msg.Success = false;
-                    msg.Message = "Delivery person id not found";
+                    msg.Message = "Delivery person id is not found";
                     msg.Status = Statuses.NotFound;
                     return msg;
-               }
-
-               return msg;
-                
+                }
+                else if (number != null && number.DeliveryPersonId != updateDeliveryPerson.DeliveryPersonId)
+                {
+                    msg.Message = $"The ({deliveryPerson.ContactNumber}), Phone number is already registered.";
+                    msg.number = false;
+                    msg.Status = Statuses.Conflict;
+                    return msg;
+                }
+                else
+                {
+                    updateDeliveryPerson.DeliveryPersonName = deliveryPerson.DeliveryPersonName;
+                    updateDeliveryPerson.Gender = deliveryPerson.Gender;
+                    updateDeliveryPerson.VechileNo = deliveryPerson.VechileNo;
+                    db.Update(updateDeliveryPerson);
+                    db.SaveChanges();
+                    msg.Success = true;
+                    msg.Message = "Delivery person updated succesfully!!";
+                }
+                return msg;
             }
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
                 return msg;
             }
-         
         }
 
         public Messages DeleteDeliveryPerson(int deliveryPersonId)

@@ -1,4 +1,4 @@
-﻿using Food_Delivery.Controllers;
+using Food_Delivery.Controllers;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery.RepositoryService;
 using Blazorise;
@@ -188,40 +188,7 @@ namespace Food_Delivery
 
         }
 
-        //[Fact]
-        //public void GetDeliveryPersonById_Ok()
-        //{
-        //    Messages obj = new Messages();
-        //    obj.Success = true;
-
-        //    DeliveryPerson deliveryid = new DeliveryPerson();
-        //    var service = new Mock<IDeliveryPerson>();
-        //    service.Setup(x => x.GetDeliveryPerson(It.IsAny<int>())).Returns(testdeliveryperson);
-        //    var mockservice = new Mock<IOrderShipmentDetail>();
-        //    var controller = new OrderShipmentDetailController(mockservice(delivery).Object, orderMock().Object, orderdetailMock().Object, deliveryMock().Object, customerMock().Object);
-
-        //    var okResulut = controller.GetDeliveryPersonById(2);
-        //    var output = okResulut as OkObjectResult;
-        //    Assert.StrictEqual(200, output.StatusCode);
-        //    Assert.IsType<OkObjectResult>(output);
-        //}
-        
-        //[Fact]
-        //public void GetDeliveryPersonById_NotFound()
-        //{
-        //    Messages obj = new Messages();
-        //    obj.Success = false;
-        //    List<OrderShipmentDetail> list = null;
-
-        //    var controller = new OrderShipmentDetailController(GetAllMock(list).Object, orderMock().Object, orderdetailMock().Object, deliveryMock().Object, customerMock().Object);
-
-        //    var NotFoundResult = controller.GetAllOrderShipmentDetail();
-        //    var output = NotFoundResult as NotFoundObjectResult;
-        //    Assert.Equal("OrderShipmentDetail list is empty", output.Value);
-        //    Assert.StrictEqual(404, output.StatusCode);
-
-        //}
-
+      
         [Fact]
         public void GetById_OkResult()
         {

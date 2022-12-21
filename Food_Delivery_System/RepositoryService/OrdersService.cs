@@ -10,18 +10,15 @@ namespace Food_Delivery.RepositoryService
         {
             this.db = foodDeliveryDbContext;
         }
-
         public IEnumerable<Orders> GetAll()
         {
             return db.orders.ToList();
         }
-
         public Orders GetOrder(int orderId)
         {
             var getId = db.orders.FirstOrDefault(x => x.OrderId == orderId);
             return getId;
         }
-
         public Messages InsertOrder(Orders order)
         {
             Messages msg = new Messages();
@@ -65,7 +62,6 @@ namespace Food_Delivery.RepositoryService
                 }
                 return msg;
             }
-
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
@@ -85,7 +81,6 @@ namespace Food_Delivery.RepositoryService
             }
             return msg;
         }
-
     }
 }
 

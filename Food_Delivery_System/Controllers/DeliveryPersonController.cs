@@ -15,7 +15,7 @@ namespace Food_Delivery.Controllers
         {
             _deliveryperson = deliveryPerson;
         }
-
+        
         [HttpGet("Getall")]
         public IActionResult GetAllDeliveryPersons()
         {

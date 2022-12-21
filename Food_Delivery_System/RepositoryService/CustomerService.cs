@@ -14,33 +14,26 @@ namespace Food_Delivery.RepositoryService
         {
             this.db = foodDeliveryDbContext;
         }
-
         public IEnumerable<Customer> GetAll()
         {
             return db.Customer.ToList();
         }
-
         public Customer GetCustomerDetailById(int customerId)
         {
             return db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
         }
-
         public IEnumerable<Customer> GetCustomerDetailByIsActive(bool isActive)
         {
             return db.Customer.Where(x => x.IsActive == isActive).ToList();          
         }
-
         public Customer GetCustomerDetailByNumber(string Number)
         {
             return db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
-              
         }
-
         public Customer GetCustomerDetailByEmail(String Email)
         {
                return  db.Customer.FirstOrDefault(x => x.Email == Email);
         }  
-
         public Messages InsertCustomerDetail(Customer customer)
         {
             Messages msg = new Messages();
@@ -48,10 +41,8 @@ namespace Food_Delivery.RepositoryService
             {
                 var customerNum = db.Customer.FirstOrDefault(x => x.ContactNumber == customer.ContactNumber);
                 var customerEmail = db.Customer.FirstOrDefault(x => x.Email == customer.Email);
-
                 if (customerNum != null)
                 {
-
                     msg.Success = false;
                     msg.Message = "This contact number already exists";
                     msg.Status = Statuses.Conflict;
@@ -73,7 +64,6 @@ namespace Food_Delivery.RepositoryService
                     msg.Status = Statuses.Created;
                     return msg;
                 }
-                
             }
             catch (Exception ex)
             {
@@ -81,13 +71,11 @@ namespace Food_Delivery.RepositoryService
                 return msg;
             }
         }
-
         public Messages UpdateCustomerDetail(Customer customer)
         {
             Messages msg = new Messages();
             try
             {
-
                 Messages messages = new Messages();
                 messages.Success = false;
                 var userExist = GetCustomerDetailById(customer.CustomerId);
@@ -101,8 +89,6 @@ namespace Food_Delivery.RepositoryService
                 }
                 else if (phoneExist != null && phoneExist.CustomerId != userExist.CustomerId)
                 {
-
-                  
                     messages.Message = $"The ({customer.ContactNumber}), Phone number is already registered.";
                     messages.Status = Statuses.Conflict;
                     return messages;
@@ -127,10 +113,8 @@ namespace Food_Delivery.RepositoryService
                     messages.Status = Statuses.Success;
                     msg.Message = "Customer updated succesfully!!";
                 }
-
                 return msg;
             }
-
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
@@ -149,7 +133,6 @@ namespace Food_Delivery.RepositoryService
                 msg.Success = true;
                 msg.Message = "Customer deleted succesfully";
                 msg.Status= Statuses.Success;
-               
             }
             else if(order!=null)
             {
@@ -165,16 +148,12 @@ namespace Food_Delivery.RepositoryService
             }
             return msg;
         }
-
         public Customer  GetNumber(string Number)
         {
             var customer = db.Customer.FirstOrDefault(x => x.ContactNumber == Number);
             return customer;
-
         }
-      
     }
-
  }
     
    
