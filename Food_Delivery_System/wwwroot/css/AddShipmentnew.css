@@ -1,4 +1,9 @@
-﻿.card-registration .select-input.form-control[readonly]:not([disabled]) {
+﻿.errortag {
+    text-align: center;
+    font-size: 20px;
+    color: red;
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
     font-size: 1rem;
     line-height: 2.15;
     padding-left: .75em;
@@ -12,6 +17,7 @@
 #temp {
     margin-top: 100px;
 }
+
 .control-fluid, .container-fluid {
     padding-right: 15px;
     padding-left: 15px;
@@ -43,9 +49,4 @@
 #img {
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
-}
-.errortag {
-    text-align: center;
-    font-size: 20px;
-    color: red;
 }

@@ -7,15 +7,20 @@
                 <div class="card card-registration my-4">
                     <div class="row g-0">
                         <div class="col-xl-5">
-                            <div id="errormsg" class="errortag"></div>
-                            <div align="center" class="card-body p-md-5 text-black">
-                                <h3 class="mb-5 ">Registration form</h3>
-                                <div>
-                                    <div align="center" class="col-md-12">
-                                        <div class=" row m-5">
-                                            <div class="col-md-5">DeliveryPerson Name</div>
-                                            <div class="col-md-5">
-                                            @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
+
+                            <div id="errormsg" class="errortag" @*style="font-size:20px;text-align:center;color:red;"*@></div>
+                                <div align="center" class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 ">Registration form</h3>
+                                    <div>
+                                        <div align="center" class="col-md-12">
+
+                                      
+                                            <div class=" row m-5">
+                                                <div class="col-md-5">DeliveryPerson Name</div>
+                                                <div class="col-md-5">
+                                                @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
+                                                </div>
+
                                             </div>
                                         </div>
 
@@ -52,10 +57,19 @@
                 </div>
             </div>
         </div>
+
+     </div>
+
     </div>
+
 </section>
 @section Scripts{
+
+   
+    <link href="~/css/addshipmentnew.css" rel="stylesheet" />
+
     <link href="~/css/css style/foodstyle/addshipment.css" rel="stylesheet" />
+
     <script src="~/js/addshipment.js"></script>
     }
     <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
