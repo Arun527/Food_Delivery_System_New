@@ -75,7 +75,6 @@ namespace Food_Delivery.RepositoryService
                 else if (number != null && number.DeliveryPersonId != updateDeliveryPerson.DeliveryPersonId)
                 {
                     msg.Message = $"The ({deliveryPerson.ContactNumber}), Phone number is already registered.";
-                    msg.number = false;
                     msg.Status = Statuses.Conflict;
                     return msg;
                 }

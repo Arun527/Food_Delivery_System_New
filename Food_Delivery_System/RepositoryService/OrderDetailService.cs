@@ -116,59 +116,33 @@ namespace Food_Delivery.RepositoryService
                 var quantity = orderDetail.Quantity;
                 var orderDetaileId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetail.OrderDetailId);
                 var update = db.OrderDetail.FirstOrDefault(x => x.OrderStatus == orderDetail.OrderStatus);
-                if (customerid == null)
+                if(customerid!=null&& orderid!=null&& hotelId!=null&&foodId!=null&&quantity!=0&&orderDetaileId!=null)
                 {
-                    msg.Success = false;
-                    msg.Message = "This customer id not registered";
-                    msg.Status = Statuses.NotFound;
-                    return msg;
-                }
-                if (orderDetaileId == null)
-                {
-                    msg.Success = false;
-                    msg.Message = "This orderdetail id not registered";
-                    msg.Status = Statuses.NotFound;
-                    return msg;
-                }
-                if(orderid == null)
-                {
-                    msg.Success = false;
-                    msg.Message = "This order id not registered";
-                    msg.Status = Statuses.NotFound;
-                    return msg;
-                }
-                if (hotelId == null)
-                {
-                    msg.Success = false;
-                    msg.Message = "The hotel id is not found";
-                    msg.Status = Statuses.NotFound;
-                    return msg;
-                }
-                if(foodId == null)
-                {
-                    msg.Success = false;
-                    msg.Message = "The food id is not found";
-                    msg.Status = Statuses.NotFound;
-                    return msg;
-                }
-                if (quantity == 0)
-                {
-                    msg.Success = false;
-                    msg.Message = "The Quantity is Minimumof  1  ..!!";
-                    msg.Status = Statuses.BadRequest;
-                    return msg;
-                }
-                else
-                {
-                    orderDetaileId.CustomerId=orderDetail.CustomerId;
+                    orderDetaileId.CustomerId = orderDetail.CustomerId;
                     orderDetaileId.OrderId = orderDetail.OrderId;
-                    orderDetaileId.HotelId= orderDetail.HotelId;
+                    orderDetaileId.HotelId = orderDetail.HotelId;
                     orderDetaileId.FoodId = orderDetail.FoodId;
                     orderDetaileId.Quantity = orderDetail.Quantity;
                     db.Update(orderDetaileId);
                     db.SaveChanges();
                     msg.Success = true;
                     msg.Message = "Order updated succesfully!!";
+                } 
+                else if (quantity == 0)
+                {
+                    msg.Success = false;
+                    msg.Message = "The Quantity is Minimumof  1  ..!!";
+                    msg.Status = Statuses.BadRequest;
+                    return msg;
+                }
+                else 
+                {
+                    msg.Success = false;
+                    msg.Status = Statuses.NotFound;
+                    var message = (customerid == null) ? "This customer id not registered" : (orderDetaileId == null) ? "This orderdetail id not registered" :
+                                  (orderid == null) ? "This order id not registered" : (hotelId == null) ? "The hotel id is not found" : "The food id is not found";
+                    msg.Message = message;
+                    return msg;
                 }
                 return msg;
             }

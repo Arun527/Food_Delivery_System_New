@@ -3,43 +3,38 @@
     ViewData["Title"] = "DeliveryPersonView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body>
-    <table class="table" id="dataTable">
-        <thead>
-            <tr >
-              
-                <th id="t"> OrderId      </th>
-                <th id="t">Customer Name </th>
-                <th id="t">Customer Address </th>
-                <th id="t">Delivery Date </th>
-                
-            </tr>
-        </thead>
-        <tbody id="t1">
-            @foreach (var item in Model)
-            {
-                <tr id="t1">
-                    <td>@item.OrderId  </td>
-                    <td>@item.CustomerName </td>
-                    <td>@item.Address </td>
-                    <td>@item.OrderShipmentdateTime  </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-            </tr>
-        </tfoot>
-    </table>
 
-</body>
+<table class="table" id="dataTable">
+    <thead>
+        <tr >
+            <th id="t"> OrderId      </th>
+            <th id="t">Customer Name </th>
+            <th id="t">Customer Address </th>
+            <th id="t">Delivery Date </th>
+        </tr>
+    </thead>
+    <tbody id="t1">
+        @foreach (var item in Model)
+        {
+            <tr id="t1">
+                <td>@item.OrderId  </td>
+                <td>@item.CustomerName </td>
+                <td>@item.Address </td>
+                <td>@item.OrderShipmentdateTime  </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+        </tr>
+    </tfoot>
+</table>
+
 
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
 @section scripts{
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
-
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
     <script src="~/js/customer.js"></script>
     <script>
@@ -47,6 +42,5 @@
             $("#dataTable").DataTable();
         })
     </script>
-
     <link href="~/css/css style/deliverypersonview.css" rel="stylesheet" />
 }

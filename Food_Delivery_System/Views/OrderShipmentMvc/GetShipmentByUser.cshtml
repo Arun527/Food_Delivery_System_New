@@ -3,9 +3,6 @@
 
 <h2>Your Order Detail</h2>
 
-<body>
- 
-
     <table class="table" id="dataTable">
         <thead id="t">
             <tr id="t">
@@ -18,7 +15,6 @@
                 <th id="t">  Order Status </th>
             </tr>
         </thead>
-
 
         <tbody id="t1">
             @foreach (var item in Model)
@@ -34,23 +30,15 @@
                 </tr>
             }
         </tbody>
-
-
-
         <tfoot>
             <tr>
             </tr>
         </tfoot>
     </table>
 
-</body>
-
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-
 @section scripts{
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
-
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
     <script src="~/js/customer.js"></script>
     <script>

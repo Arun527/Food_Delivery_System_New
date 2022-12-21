@@ -1,4 +1,4 @@
-﻿
+
     var obj;
     var orderDetail=[];
     var Request;
@@ -77,12 +77,10 @@
                 alert("error");
             }
 
-
-
         });
 
-                });
-            });
+    });
+});
 
 
 
