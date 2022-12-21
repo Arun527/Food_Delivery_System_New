@@ -120,7 +120,7 @@ namespace Food_Delivery.RepositoryService
                 else if (updateNumber != null && updateNumber.HotelId != hotel.HotelId)
                 {
                     msg.Message = $"The ({hotelDetail.ContactNumber}), Phone number is already registered.";
-                    msg.number = false;
+                   
                     msg.Status = Statuses.Conflict;
                     return msg;
                 }

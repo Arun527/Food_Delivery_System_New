@@ -1,5 +1,8 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models.Commands;
+using Food_Delivery_System.Models.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Food_Delivery.Models.Messages;
@@ -11,18 +14,16 @@ namespace Food_Delivery.Controllers
     public class DeliveryPersonController : ControllerBase
     {
         IDeliveryPerson _deliveryperson;
-        public DeliveryPersonController(IDeliveryPerson deliveryPerson)
+        IMediator mediator;
+        public DeliveryPersonController(IDeliveryPerson deliveryPerson , IMediator _mediatR)
         {
             _deliveryperson = deliveryPerson;
+            mediator = _mediatR;
         }
 
         [HttpGet("Getall")]
-        public IActionResult GetAllDeliveryPersons()
-        {
-            var obj = _deliveryperson.GetAllDeliveryPersons();
-            return (obj != null)? Ok(obj) :  NotFound("Delivery person is not found");
-        }
-
+        public async Task<List<DeliveryPerson>> GetAllDeliveryPersons() => await mediator.Send(new GetAllDeliveryQuery());
+      
         [HttpGet("{deliveryPersonId}")]
         public IActionResult GetDeliveryPerson(int deliveryPersonId)
         {
@@ -31,11 +32,7 @@ namespace Food_Delivery.Controllers
         }
 
         [HttpPost("/api/DeliveryPerson")]
-        public IActionResult InsertDeliveryPerson(DeliveryPerson deliveryPerson)
-        {
-            var insertDeliveryPerson = _deliveryperson.InsertDeliveryPerson(deliveryPerson);
-            return Output(insertDeliveryPerson);
-        }
+        public async Task<DeliveryPerson> InsertDeliveryPerson([FromBody] DeliveryPerson deliveryPerson) => await mediator.Send(new InsertDeliveryCommand(deliveryPerson));
 
         [HttpPut("/api/DeliveryPerson")]
         public IActionResult UpdateDeliveryPerson([FromBody]DeliveryPerson deliveryPerson)
@@ -62,10 +59,8 @@ namespace Food_Delivery.Controllers
                     return NotFound(message.Message);
                 case Statuses.Created:
                     return Created("",message.Message);
-
             }
             return Ok(message.Message);
         }
-
     }
 }

@@ -2,7 +2,9 @@ using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
 using Food_Delivery.RepositoryService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options; 
+using MediatR;
+using Food_Delivery_System.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddDbContext<FoodDeliveryDbContext>(OPtions =>
     OPtions.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(typeof(EntryPoint).Assembly);
 builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IHotel, HotelService>();
 builder.Services.AddScoped<IFood, FoodService>();
