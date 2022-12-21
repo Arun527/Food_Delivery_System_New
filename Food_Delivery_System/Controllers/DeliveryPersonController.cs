@@ -20,7 +20,7 @@ namespace Food_Delivery.Controllers
             _deliveryperson = deliveryPerson;
             mediator = _mediatR;
         }
-
+        
         [HttpGet("Getall")]
         public async Task<List<DeliveryPerson>> GetAllDeliveryPersons() => await mediator.Send(new GetAllDeliveryQuery());
       

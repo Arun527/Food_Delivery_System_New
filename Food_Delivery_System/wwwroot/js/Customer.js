@@ -1,14 +1,4 @@
-﻿
-
-
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
-
-
-
-
-
+﻿<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
      src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"
      src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"
      src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"
@@ -66,21 +56,16 @@
                             "searchable": true
                         },
                         {
-
                             "searchable": false,
                             'render': function (data, type, row) {
                                 return "<a href=/CustomerMvc/UpdateCustomer?customerId=" + row.customerId + " class='btn '> <span class=tooltiptext>Edit</span> <i style='font-size:24px;color:cornflowerblue' class='fas'>&#xf044;</i> </a> <a href=/CustomerMvc/Delete?customerId=" + row.customerId + " class='btn '>  <span class=tooltiptext>Delete</span> <i style='font-size:24px;color:red' class='fas'>&#xf2ed;</i> </a>"
 
                             }
-
-
                         },
 
                     ]
                 });
         }
 
-
-    </script>
-    <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
 

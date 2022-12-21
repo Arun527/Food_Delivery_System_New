@@ -1,20 +1,21 @@
-﻿
+
     var obj;
     var orderDetail=[];
     var Request;
-
+    var id;
+    var orderId;
     $(document).ready(function () {
 
         $('#addid').click(function (e) {
-
+            debugger;
             e.preventDefault();
-            var id = $('#DeliveryPersonId').val();
-            var orderId = $('#OrderId').val();
-            if (DeliveryPersonId == null || DeliveryPersonId == 0) {
-                $('#errormsg').html("Delivery Person  is required");
+            id = $('#DeliveryPersonId').val();
+            orderId = $('#OrderId').val();
+           
+            if (orderId == null || orderId == 0) {
+                $('#errormsg').html("Order id  is required");
                 return;
             }
-
 
             obj = { "OrderDetailId": orderId }
 
@@ -47,8 +48,14 @@
 
     $('#btnsubmit').click(function (e) {
 
-
-
+        if (id == null || id == 1) {
+            $('#errormsg').html("Delivery Person  is required");
+            return;
+        }
+        if (orderId == null || orderId == 1) {
+            $('#errormsg').html("Delivery Person  is required");
+            return;
+        }
 
         $.ajax({
 
@@ -70,12 +77,10 @@
                 alert("error");
             }
 
-
-
         });
 
-                });
-            });
+    });
+});
 
 
 
