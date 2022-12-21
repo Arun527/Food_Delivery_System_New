@@ -20,6 +20,7 @@ namespace Food_Delivery.Models
         [System.ComponentModel.DataAnnotations.Range(1, 2147483647)]
         public int Price { get; set; }
 
+
         public string? ImageId { get; set; }
 
         public  int? HotelId { get; set; }
@@ -33,8 +34,8 @@ namespace Food_Delivery.Models
 
         public string? Type { get; set; }
 
-        //[NotMapped]
-        //public IFormFile? CoverPhoto { get; set; }
+        [NotMapped]
+        public IFormFile? CoverPhoto { get; set; }
 
     }
 

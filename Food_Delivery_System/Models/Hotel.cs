@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
 using StringLengthAttribute = System.ComponentModel.DataAnnotations.StringLengthAttribute;
 using ForeignKeyAttribute = System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Food_Delivery.Models
 {
@@ -16,13 +16,13 @@ namespace Food_Delivery.Models
 
         [StringLength(30, MinimumLength = 2)]
         [Required(ErrorMessage = "Please enter the Hotel name")]
-   
         public string HotelName { get; set; }
 
         [Required]
 
         public string Email { get; set; }
 
+        public string? ImageId { get; set; }
 
 
         public string? Type { get; set; }
@@ -40,6 +40,10 @@ namespace Food_Delivery.Models
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedOn { get; set; }= DateTime.Now;
+
+
+        [NotMapped]
+        public IFormFile? CoverPhoto { get; set; }
 
     }
 }

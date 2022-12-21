@@ -14,6 +14,8 @@ namespace Food_Delivery.RepositoryInterface
         public IEnumerable<InvoiceDetail> GetCustomerOrderDetailsById(int CustomerId);
         public IEnumerable<InvoiceDeliveryPerson> GetdeliveryPersonById(int deliveryPersonId);
         public IEnumerable<TrackingDetail> TrackingStatus(int orderId);
-           public IEnumerable<InvoiceDetail> GetAllInvoiceDetail();
+        public IEnumerable<InvoiceDetail> GetAllInvoiceDetail();
+
+       
     }
 }

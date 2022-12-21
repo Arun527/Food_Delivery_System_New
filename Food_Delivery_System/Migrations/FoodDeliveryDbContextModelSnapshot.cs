@@ -115,8 +115,8 @@ namespace FoodDeliverySystem.Migrations
 
                     b.Property<string>("FoodName")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int?>("HotelId")
                         .HasColumnType("int");
@@ -128,7 +128,9 @@ namespace FoodDeliverySystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.HasKey("FoodId");
 
@@ -159,12 +161,15 @@ namespace FoodDeliverySystem.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HotelName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -175,6 +180,9 @@ namespace FoodDeliverySystem.Migrations
                     b.HasKey("HotelId");
 
                     b.HasIndex("ContactNumber")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Hotel");
@@ -232,6 +240,9 @@ namespace FoodDeliverySystem.Migrations
 
                     b.Property<int>("OrderDetailId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderShipmentdateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TrackingStatus")
                         .HasColumnType("nvarchar(max)");

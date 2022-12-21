@@ -1,0 +1,20 @@
+﻿#text {
+    color: mediumblue
+}
+
+#box {
+    height: 50px;
+    width: 30%;
+}
+
+#button {
+    margin-left: 30px
+}
+
+#heading {
+    height: 70px;
+}
+
+#body {
+    color: black
+}

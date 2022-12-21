@@ -20,6 +20,9 @@ builder.Services.AddScoped<IOrders, OrdersService>();
 builder.Services.AddScoped<IOrderDetail, OrderDetailService>();
 builder.Services.AddScoped<IDeliveryPerson, DeliveryPersonService>();
 builder.Services.AddScoped<IOrderShipmentDetail, OrderShipmentDetailService>();
+
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,7 +32,11 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -37,8 +44,33 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseAuthentication();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=FoodMvc}/{action=Explore}/{id?}");
+});
+
+
+
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
+
+app.UseSwagger(options =>
+{
+    options.SerializeAsV2 = true;
+});
 
 app.Run();

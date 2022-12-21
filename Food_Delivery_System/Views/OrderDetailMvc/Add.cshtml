@@ -1,0 +1,35 @@
+﻿@model Food_Delivery.Models.OrderRequest
+
+@{
+    ViewData["Title"] = "AddProduct";
+}
+
+<div class="row m-5">
+    <div id="errormsg" class="errortag"></div>
+    <div class="row m-5">
+        <div class="col-md-3" id="name">Customer Name <span id="mandatory"> * </span> </div>
+        <div class="col-md-3"> @Html.DropDownListFor(m=>m.CustomerId,Model.CustomerList, new {@class="form-control",id="customerid"})</div>
+        <div class=" col-md-2 offset-2 btn btn-primary">  <a href="/FoodMvc/Explore" id="white" >Continue Shopping</a></div>
+
+        <div class=" col-md-2 offset-0 ">  <input type="submit" id="btnsubmit" id="white" class="btn btn-primary" value="Check Out"></div>
+    </div>
+
+
+    <table id="productList" class="table">
+        <tr>
+            <th id="col">HotelName</th>    
+            <th id="col">Food Name</th>
+            <th id="col">Image</th>
+            <th id="col">Price</th>
+            <th id="col">Quantity</th>
+            <th id="col">Total</th>
+            <th id="col">Action</th>
+        </tr>
+    </table>
+
+</div>
+@section Scripts{
+    <script src="~/js/addorderdetail.js"></script>
+    <link href="~/css/css style/orderdetailaddcss.css" rel="stylesheet" />
+}
+   

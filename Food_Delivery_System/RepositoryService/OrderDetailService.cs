@@ -1,6 +1,8 @@
 ﻿using Food_Delivery.Models;
 using Food_Delivery.RepositoryInterface;
+using Food_Delivery_System.Models;
 using ServiceStack.Messaging;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.RepositoryService
 {
@@ -11,18 +13,27 @@ namespace Food_Delivery.RepositoryService
         {
             this.db = foodDeliveryDbContext;
         }
-
         public IEnumerable<OrderDetail> GetAll()
         {
-            return db.OrderDetail.ToList();
+            var order = db.OrderDetail.ToList();
+            return order;
         }
-
+        public IEnumerable<OrderDetail> GetAllDto()
+        {
+            var orderDetails = (from ordershipment in db.OrderShipmentDetail
+                                join OrderDetail in db.OrderDetail on ordershipment.OrderDetailId equals OrderDetail.OrderDetailId
+                                where OrderDetail.OrderStatus == "Order placed"
+                                select new OrderDetail
+                                {
+                                    OrderDetailId = ordershipment.OrderDetailId,
+                                }).Distinct().ToList();
+            return orderDetails;
+        }
         public OrderDetail GetOrderDetail(int orderDetailId)
         {
             var getId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetailId);
             return getId;
         }
-
         public Messages InsertOrderDetail(OrderRequest orderDetail)
         {   
             Messages msg = new Messages();
@@ -30,29 +41,62 @@ namespace Food_Delivery.RepositoryService
             {
                 Orders order = new Orders();
                 order.CustomerId = orderDetail.CustomerId;
+                var cusid= db.Customer.FirstOrDefault(x => x.CustomerId == orderDetail.CustomerId);
+                if (cusid == null)
+                {
+                    msg.Success = false;
+                    msg.Message = "The customer id is not found";
+                    msg.Status = Statuses.NotFound;
+                    return msg;
+                }
                 db.orders.Add(order);
                 db.SaveChanges();
                 var orderid = order.OrderId;
-
                 foreach (var FoodType in orderDetail.Food)
                 {
-                    var foodtype = new OrderDetail()
+                    var foods = db.Food.Where(x => x.FoodId == FoodType.FoodId);
+                    var hotel = db.Hotel.Where(x => x.HotelId == FoodType.HotelId);
+                    var quantity = FoodType.Quantity;
+                    if (foods == null)
                     {
-                        CustomerId = orderDetail.CustomerId,
-                        OrderId = orderid,
-                        Quantity = FoodType.Quantity,
-                        HotelId = FoodType.HotelId,
-                        FoodId = FoodType.FoodId,
-                        OrderStatus=orderDetail.OrderStatus
-
-                    };
-                    db.Add(foodtype);
+                        msg.Success = false;
+                        msg.Message = "The food id is not found";
+                        msg.Status = Statuses.NotFound;
+                        return msg;
+                    }
+                    if (hotel.Count() == 0)
+                    {
+                        msg.Success = false;
+                        msg.Message = "The hotel id is not found";
+                        msg.Status = Statuses.NotFound;
+                        return msg;
+                    }
+                    if (quantity == 0)
+                    {
+                        msg.Success = false;
+                        msg.Message = "The Quantity is Minimumof  1  ..!!";
+                        msg.Status = Statuses.BadRequest;
+                        return msg;
+                    }
+                    else
+                    {
+                        var foodtype = new OrderDetail()
+                        {
+                            CustomerId = orderDetail.CustomerId,
+                            OrderId = orderid,
+                            Quantity = FoodType.Quantity,
+                            HotelId = FoodType.HotelId,
+                            FoodId = FoodType.FoodId,
+                            OrderStatus = orderDetail.OrderStatus
+                        };
+                        db.Add(foodtype);
+                    }
+                    db.SaveChanges();
+                    msg.Success = true;
+                    msg.Message = "Your order is placed!!";
+                    msg.Status = Statuses.Created;
                 }
-                db.SaveChanges();
-                msg.Success = true;
-                msg.Message = "Your Order Is Placed!!";
                 return msg;
-
             }
             catch (Exception ex)
             {
@@ -60,52 +104,80 @@ namespace Food_Delivery.RepositoryService
                 return msg;
             }
         }
-
-
-
-
         public Messages UpdateOrderDetail(OrderDetail orderDetail)
         {
             Messages msg = new Messages();
             try
             {
-                msg.Success = false;
-                msg.Message = "This OrderId not registered";
-                var updateOrder = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetail.OrderDetailId);
+                var customerid = db.Customer.FirstOrDefault(x => x.CustomerId == orderDetail.CustomerId);
+                var orderid=db.orders.FirstOrDefault(x=>x.OrderId == orderDetail.OrderId);  
+                var hotelId=db.Hotel.FirstOrDefault(x => x.HotelId == orderDetail.HotelId);
+                var foodId=db.Food.FirstOrDefault(x => x.FoodId == orderDetail.FoodId);
+                var quantity = orderDetail.Quantity;
+                var orderDetaileId = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetail.OrderDetailId);
                 var update = db.OrderDetail.FirstOrDefault(x => x.OrderStatus == orderDetail.OrderStatus);
-                if (updateOrder != null && update.OrderStatus=="Order Placed")
+                if(customerid!=null&& orderid!=null&& hotelId!=null&&foodId!=null&&quantity!=0&&orderDetaileId!=null)
                 {
-                    updateOrder.HotelId= orderDetail.HotelId;
-                    updateOrder.FoodId = orderDetail.FoodId;
-                    updateOrder.Quantity = orderDetail.Quantity;
-                    db.Update(updateOrder);
+                    orderDetaileId.CustomerId = orderDetail.CustomerId;
+                    orderDetaileId.OrderId = orderDetail.OrderId;
+                    orderDetaileId.HotelId = orderDetail.HotelId;
+                    orderDetaileId.FoodId = orderDetail.FoodId;
+                    orderDetaileId.Quantity = orderDetail.Quantity;
+                    db.Update(orderDetaileId);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "Order Updated Succesfully!!";
+                    msg.Message = "Order updated succesfully!!";
+                } 
+                else if (quantity == 0)
+                {
+                    msg.Success = false;
+                    msg.Message = "The Quantity is Minimumof  1  ..!!";
+                    msg.Status = Statuses.BadRequest;
+                    return msg;
+                }
+                else 
+                {
+                    msg.Success = false;
+                    msg.Status = Statuses.NotFound;
+                    var message = (customerid == null) ? "This customer id not registered" : (orderDetaileId == null) ? "This orderdetail id not registered" :
+                                  (orderid == null) ? "This order id not registered" : (hotelId == null) ? "The hotel id is not found" : "The food id is not found";
+                    msg.Message = message;
+                    return msg;
                 }
                 return msg;
             }
-
             catch (Exception ex)
             {
                 msg.Message = ex.Message;
                 return msg;
             }
         }
-           
-
         public Messages DeleteOrderDetail(int orderDetailId)
         {
             Messages msg = new Messages();
             try
             {
                 var deleteOrder = db.OrderDetail.FirstOrDefault(x => x.OrderDetailId == orderDetailId);
-                if (deleteOrder != null)
+                var order=db.OrderShipmentDetail.FirstOrDefault(x=>x.OrderDetailId==orderDetailId);
+                if (order != null)
+                {
+                    msg.Success = false;
+                    msg.Status = Statuses.BadRequest;
+                    msg.Message = "Order cancellation is failed..because food is delivered..!! ";
+                }
+                else if (deleteOrder != null)
                 {
                     db.Remove(deleteOrder);
                     db.SaveChanges();
                     msg.Success = true;
-                    msg.Message = "Order Deleted Succesfully";
+                    msg.Status=Statuses.Success;
+                    msg.Message = "Order deleted succesfully";
+                }
+                else
+                {
+                    msg.Success = false;
+                    msg.Status = Statuses.NotFound;
+                    msg.Message = "Order id  is not found";
                 }
                 return msg;
             }
@@ -114,8 +186,6 @@ namespace Food_Delivery.RepositoryService
                 msg.Message = ex.Message;
                 return msg;
             }
-
         }
-
     }
 }

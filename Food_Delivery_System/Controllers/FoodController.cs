@@ -2,6 +2,7 @@
 using Food_Delivery.RepositoryInterface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Food_Delivery.Models.Messages;
 
 namespace Food_Delivery.Controllers
 {
@@ -9,7 +10,6 @@ namespace Food_Delivery.Controllers
     [ApiController]
     public class FoodController : ControllerBase
     {
-
         IFood _food;
         IHotel _hotel;
 
@@ -18,108 +18,76 @@ namespace Food_Delivery.Controllers
             _food = food;
             _hotel = hotel;
         }
-
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            Messages messages = new Messages();
-            messages.Message = "Food List Is Empty";
             var food = _food.GetAll();
-            if(food == null)
-            {
-                return NotFound("The Food Id Not Found");
-            }
-            return Ok(food);
+            return (food == null) ? NotFound("Food list is empty") : Ok(food);
         }
 
         [HttpGet("{Id}")]
-        public IActionResult GetAll(int Id)
+        public IActionResult GetById(int Id)
         {
             var hotel = _food.GetFoodTypeById(Id);
-            if(hotel == null)
-            {
-                return NotFound("The Food Id Not Found");
-            }
-            var food = _food.GetFoodTypeById(Id);
-            return Ok(food);
+            return (hotel == null) ? NotFound("The food id not found") : Ok(hotel);
+        }
+          
+        [HttpGet("FoodByName/{name}")]
+        public IActionResult GetByFoodName(string name)
+        {
+            var hotel = _food.GetFoodByName(name);
+            return (hotel == null) ? NotFound("The food id not found") : Ok(hotel);
         }
 
         [HttpPost("")]
         public IActionResult InsertFoodType(Food food)
         {
-            Messages messages = new Messages();
-            if (food.HotelId == 0)
-            {
-                return BadRequest("The HotelId Field Is Required");
-            }
-            var hotel = _hotel.GetHotelById(food.HotelId.Value);
-            if(hotel == null)
-            {
-                return NotFound("The Hotel Id Not Found");
-            }
-            var fooddetail = _food.InsertFoodType(food);
-            return Ok(fooddetail);
+            var fooddetail = _food.InsertFoodType(food);  
+            return (food.HotelId==null)? BadRequest ("The hotel field is required") : Output(fooddetail);
         }
 
         [HttpPut("")]
         public IActionResult UpdateFoodType(Food food)
         {
-            var detail = _food.GetFoodTypeById(food.FoodId);
-            if(detail == null)
-            {
-                return NotFound("The Food Id Not Found");
-            }
-           
-
             var fooddetail = _food.UpdateFood(food);
-            if (fooddetail.Success == false)
-            {
-                return NotFound("The Hotel Id Not Found");
-            }
-            return Ok(fooddetail);
+            return Output(fooddetail);
         }
 
         [HttpDelete("{foodId}")]
         public IActionResult DeleteFoodType(int foodId)
         {
-            var food =_food.GetFoodTypeById(foodId);
-            if (food == null)
-            {
-                return NotFound("The Food Id Not Found");
-            }
-            var hotel = _food.DeleteFoodType(foodId);
-
-            if(hotel.Success == false)
-            {
-                return BadRequest("The Food Id Is Not Deleted Because Order The Customer");
-            }
-            return Ok(hotel);
+            var food = _food.DeleteFoodType(foodId);
+            return Output(food);
         }
 
         [HttpGet("GetType/{foodtype}")]
-
-        public IActionResult GetHotelType(string foodtype)
+        public IActionResult GetFoodType(string foodtype)
         {
             var food=_food.GetFoodType(foodtype);
-            if (food.Count() == 0)
-            {
-                return NotFound("The Food Type Is Not Found");
-            }
-            var foodType = _food.GetFoodType(foodtype);
-            return Ok(foodType);
+            return (food == null) ? NotFound("The food type is not found") : Ok(food);
         }
 
         [HttpGet("HotelBy/{hotelId}")]
         public IActionResult GetHotelType(int hotelId)
         {
             var food = _hotel.GetHotelById(hotelId);
-            if (food == null)
-            {
-                return NotFound("The Food Type Is Not Found");
-            }
             var foodType = _food.GetFoodByHotelId(hotelId);
-            return Ok(foodType);
+            return (food == null) ? NotFound("The hotel id is not found") : Ok(foodType);
         }
-
+        private IActionResult Output(Messages result)
+        {
+            switch (result.Status)
+            {
+                case Statuses.BadRequest:
+                    return BadRequest(result.Message);
+                case Statuses.NotFound:
+                    return NotFound(result.Message);
+                case Statuses.Conflict:
+                    return Conflict(result.Message);
+                case Statuses.Created:
+                    return Created("", result.Message);
+            }
+            return Ok(result.Message);
+        }
     }
 }

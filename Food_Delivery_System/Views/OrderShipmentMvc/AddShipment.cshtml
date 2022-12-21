@@ -1,0 +1,62 @@
+﻿@using Food_Delivery.Models
+@model OrderShipmentDto
+<section class="h-100 ">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-5">
+                            <div id="errormsg" class="errortag"></div>
+                            <div align="center" class="card-body p-md-5 text-black">
+                                <h3 class="mb-5 ">Registration form</h3>
+                                <div>
+                                    <div align="center" class="col-md-12">
+                                        <div class=" row m-5">
+                                            <div class="col-md-5">DeliveryPerson Name</div>
+                                            <div class="col-md-5">
+                                                @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
+                                            </div>
+                                        </div>
+
+                                        <div class=" row m-5">
+                                            <div class="col-md-5">OrderId</div>
+                                            <div class="col-md-5">
+                                                @Html.DropDownListFor(model=>model.OrderDetailId,Model.ShipmentList, new {@class="form-control",id="OrderId"})
+                                            </div>
+                                            <div class="col-md-2 btn" id="addid"> <span class=tooltiptext>Add More Orders</span><i style='font-size:14px' class='fas'>&#xf067;</i> </div>
+                                        </div>
+                                        <div class=" justify-content-center mt-5 col-md-6 offset-3">  <input type="submit" id="btnsubmit" class="btn btn-danger" value="Register" /></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 d-none d-xl-block" id="temp">
+                            <table id="idList" class="table">
+                                <tr>
+                                    <th id="col">Id</th>
+
+                                    <th id="col">Action</th>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-xl-5 d-none d-xl-block">
+                            <img src="~/css/Image/delivery.jpg"
+                                 alt="Sample photo" class="img-fluid"
+                                 id="img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <link href="~/css/addshipmentnew.css" rel="stylesheet" />
+    <script src="~/js/addshipment.js"></script>
+    }
+    <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>

@@ -1,0 +1,32 @@
+﻿@using Food_Delivery.Models
+@model List<Hotel>
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid " id="container" >
+    <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-3">
+        @foreach (Hotel item in Model)
+        {
+            <div class="card me-4 mt-4 " id="card">
+                <a id="card2" href="/FoodMvc/UserByHotelId?hotelId=@item.HotelId">
+                    <img id="img1" src="/css/Image/@item.ImageId" multiple />
+                    <div class="row ms-lg-3">
+
+                        <div class="col-md-8 offset-1"><strong>@item.HotelName</strong>  </div>
+                    </div>
+                    <div class="row ms-lg-3">
+                        <div class="col-md-8 offset-1">   @item.Address</div>
+                    </div>
+
+                </a>
+
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    <link href="~/css/css style/gethotelbyname.css" rel="stylesheet" />
+
+}
+
