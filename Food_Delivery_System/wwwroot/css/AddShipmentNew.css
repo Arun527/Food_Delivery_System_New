@@ -1,0 +1,52 @@
+﻿.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}
+
+#temp {
+    margin-top: 100px;
+}
+
+.control-fluid, .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.control-section .control-wrapper {
+    width: 80%;
+    margin: 0 auto;
+    min-width: 185px;
+}
+
+.e-bigger .control-section .control-wrapper {
+    width: 100%;
+}
+
+.property-section .right-side {
+    padding-left: 10px;
+}
+
+.property-section .left-side {
+    padding: 5px;
+    width: 25%
+}
+
+.control-styles {
+    padding-top: 30px
+}
+
+#img {
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+.errortag {
+    text-align: center;
+    font-size: 20px;
+    color: red;
+}

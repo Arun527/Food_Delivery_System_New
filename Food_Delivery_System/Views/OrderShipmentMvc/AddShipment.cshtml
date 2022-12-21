@@ -15,7 +15,7 @@
                                         <div class=" row m-5">
                                             <div class="col-md-5">DeliveryPerson Name</div>
                                             <div class="col-md-5">
-                                            @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
+                                                @Html.DropDownListFor(model=>model.DeliveryPersonId,Model.DeliveryList, new {@class="form-control",id="DeliveryPersonId"})
                                             </div>
                                         </div>
 
@@ -32,13 +32,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-2 d-none d-xl-block" id="temp"  >
+                        <div class="col-xl-2 d-none d-xl-block" id="temp">
                             <table id="idList" class="table">
                                 <tr>
                                     <th id="col">Id</th>
 
                                     <th id="col">Action</th>
-                               
+
                                 </tr>
                             </table>
                         </div>
@@ -55,7 +55,7 @@
     </div>
 </section>
 @section Scripts{
-    <link href="~/css/css style/foodstyle/addshipment.css" rel="stylesheet" />
+    <link href="~/css/addshipmentnew.css" rel="stylesheet" />
     <script src="~/js/addshipment.js"></script>
     }
     <link rel="stylesheet" href="~/css/jquerytable.css" asp-append-version="true" />
