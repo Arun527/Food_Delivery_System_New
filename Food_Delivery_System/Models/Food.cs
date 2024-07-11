@@ -33,9 +33,6 @@ namespace Food_Delivery.Models
 
         public string? Type { get; set; }
 
-        //[NotMapped]
-        //public IFormFile? CoverPhoto { get; set; }
-
     }
 
   
