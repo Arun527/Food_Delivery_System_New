@@ -10,11 +10,11 @@ namespace Food_Delivery.Models
         [Key]
         public int DeliveryPersonId { get; set; }
 
-        public string DeliveryPersonName { get; set; }
+        public string? DeliveryPersonName { get; set; }
       
 
-        public string VechileNo { get; set; }
-        public string ContactNumber { get; set; }
+        public string? VechileNo { get; set; }
+        public string? ContactNumber { get; set; }
 
 
         public string? Gender { get; set; }

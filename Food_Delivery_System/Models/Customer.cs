@@ -18,11 +18,11 @@ namespace Food_Delivery.Models
 
         [System.ComponentModel.DataAnnotations.StringLength(32, MinimumLength = 2)]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please enter the CustomerName Minimum length of 2 maximum length of 32")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [System.ComponentModel.DataAnnotations.StringLength(13, MinimumLength = 10)]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please enter the Correct Customer Number")]
-        public string ContactNumber { get; set; }
+        public string? ContactNumber { get; set; }
         public string? Gender { get; set; }
 
 
